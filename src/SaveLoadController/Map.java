@@ -13,7 +13,7 @@ public class Map {
     private final int mapWidth;
     private final int mapHeight;
 
-    private final ArrayList<Square> squares;
+    private ArrayList<GameObjectSLC> objects;
 
     /**
      * Create a new map with empty squares.
@@ -21,56 +21,52 @@ public class Map {
      * @param newMapHeight height of the map
      */
     public Map(int newMapWidth, int newMapHeight) {
-        squares = new ArrayList<>();
+        objects = new ArrayList<>();
         this.mapWidth = newMapWidth;
         this.mapHeight = newMapHeight;
 
-        placeEmptySquares();
+        populateWithEmptyObjects();
     }
 
-    //Populate the squares array with empty squares
-    private void placeEmptySquares() {
-        for (int hight = 0; hight < getMapHeight(); hight++) {
-            for (int widht = 0; widht < getMapWidth(); widht++) {
-                Square square =
-                        new Square(
-                                new GridPosition(widht, hight)
-                        );
-                getSquares().add(square);
+    /**
+     * Sets the map's objects to the passed list,
+     * assigning appropriate grid position for each game object.
+     * @param objectsToSet the object to set
+     */
+    public void setAllObjectsTo(ArrayList<GameObjectSLC> objectsToSet) {
+        //Simple error check
+        if (getObjects().size() == objectsToSet.size()) {
+            //Change positions of objects based on their index in list
+            for (int i = 0; i < objectsToSet.size(); i++) {
+                objectsToSet.get(i).setGridPosition(
+                        indexToGrid(i)
+                );
             }
+            setObjects(objectsToSet);
         }
     }
 
     /**
-     * Sets a game object at the provided coordinate.
-     * @param coordinate the square coordinate to set
-     * @param gameObjectSLC teh object to set
+     * Returns the object at the provided coordinate.
+     * @param coordinate coordinate to get object at
+     * @return Object at the coordinate
      */
-    public void setSquareAt(
-            GridPosition coordinate, GameObjectSLC gameObjectSLC) {
-        Square squareToSet = getSquareAt(coordinate);
-        if (squareToSet != null) {
-            squareToSet.setGameObject(gameObjectSLC);
-        } else {
-            //Not ideal error handling
-            System.out.println(
-                    "Invalid Coordinate: "
-                            + coordinate);
-        }
-
-    }
-
-    /**
-     * Returns the square object at the provided coordinate.
-     * @param coordinate the square coordinate to get
-     * @return Square object at the coordinate
-     */
-    public Square getSquareAt(GridPosition coordinate) {
+    public GameObjectSLC getObjectAt(GridPosition coordinate) {
         int index = gridToIndex(coordinate);
         if (index == -1) {
             return null;
         }
-        return getSquares().get(index);
+        return getObjects().get(index);
+    }
+
+    /**
+     * Place game object on the map, based on its position.
+     * @param gameObject object to place
+     */
+    public void placeObjectOnMap(GameObjectSLC gameObject) {
+        int index = gridToIndex(gameObject.getGridPosition());
+        //TODO is this good enough lol?
+        getObjects().set(index, gameObject);
     }
 
     /**
@@ -88,11 +84,11 @@ public class Map {
     }
 
     /**
-     * Returns squares populating the map.
-     * @return an ArrayList of squares
+     * Returns list of game objects on the map.
+     * @return list of game objects
      */
-    public ArrayList<Square> getSquares() {
-        return squares;
+    public ArrayList<GameObjectSLC> getObjects() {
+        return objects;
     }
 
     /**
@@ -115,12 +111,26 @@ public class Map {
      * @return first instance of player object if one exists, null otherwise
      */
     public PlayerObjectSLC getPlayerObjectReference() {
-        for (Square square: getSquares()) {
-            if (square.getGameObject() instanceof PlayerObjectSLC) {
-                return (PlayerObjectSLC) square.getGameObject();
+        for (GameObjectSLC object: getObjects()) {
+            if (object instanceof PlayerObjectSLC) {
+                return (PlayerObjectSLC) object;
             }
         }
         return null;
+    }
+
+    private void populateWithEmptyObjects() {
+        for (int maxMapPositions = 0;
+             maxMapPositions < getMapHeight() * getMapWidth();
+             maxMapPositions++) {
+            //TODO create a setting method, that handles null inputs
+            getObjects().add(null);
+        }
+
+    }
+
+    private void setObjects(ArrayList<GameObjectSLC> objects) {
+        this.objects = objects;
     }
 
     //Uses Row major order index
