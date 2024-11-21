@@ -28,9 +28,9 @@ public class SaveLoadController {
             Scanner reader = new Scanner(fileToRead);
             while (reader.hasNextLine()) {
                 if (isMapSizeRead) {
-                    String data = reader.nextLine();
-                    if (!data.equals("-")) {
-                        for (char c: data.toCharArray()) {
+                    String line = reader.nextLine();
+                    if (!line.equals("-")) {
+                        for (char c: line.toCharArray()) {
                             objects.add(getObjectFromChar(c));
                         }
                     } else {
@@ -68,9 +68,9 @@ public class SaveLoadController {
             writer.println(mapWidth + " " + mapHeight);
 
             int charsWritten = 0;
-            for (Square square: mapToSave.getSquares()) {
+            for (GameObjectSLC gameObject: mapToSave.getObjects()) {
                 writer.print(
-                        getCharFromObject(square.getGameObject()));
+                        getCharFromObject(gameObject));
                 charsWritten++;
                 if (charsWritten % mapWidth == 0) {
                     writer.println();
@@ -116,11 +116,7 @@ public class SaveLoadController {
         }
     }
     private Map populateMapWithObjects(Map map, ArrayList<GameObjectSLC> objects) {
-        for (int i = 0; i < objects.size(); i++) {
-            GameObjectSLC objectToAdd = objects.get(i);
-            GridPosition objectCoordinate = map.indexToGrid(i);
-            map.setSquareAt(objectCoordinate, objectToAdd);
-        }
+        map.setAllObjectsTo(objects);
         return map;
     }
 
