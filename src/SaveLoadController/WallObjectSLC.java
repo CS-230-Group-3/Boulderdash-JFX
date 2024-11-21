@@ -8,15 +8,22 @@ package SaveLoadController;
 public class WallObjectSLC extends GameObjectSLC {
     private static final String FILE_PATH_TO_WALL_TILE = "SaveLoadController/assets/wall.png";
 
-    @Override
-    public String toString() {
-        return " WallObject";
+    /**
+     * Creates new wall object at position (0,0) and
+     * with a predefined sprite.
+     */
+    public WallObjectSLC() {
+        super(FILE_PATH_TO_WALL_TILE,
+                new GridPosition(0, 0));
     }
 
     /**
-     * Creates a new wall object with predefined sprite.
+     * Creates a new wall object at the passed grid position and
+     * with a predefined sprite.
+     * @param gridPosition the position to set object to
      */
-    public WallObjectSLC() {
-        super(FILE_PATH_TO_WALL_TILE);
+    public WallObjectSLC(GridPosition gridPosition) {
+        super(FILE_PATH_TO_WALL_TILE,
+                gridPosition);
     }
 }

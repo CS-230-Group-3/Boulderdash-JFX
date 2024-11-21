@@ -23,7 +23,21 @@ public class PlayerObjectSLC extends GameObjectSLC {
      * Assign its diamonds and keys to empty.
      */
     public PlayerObjectSLC() {
-        super(FILE_PATH_TO_PLAYER_SPRITE);
+        super(FILE_PATH_TO_PLAYER_SPRITE,
+                new GridPosition(0, 0));
+        setDiamondsCollected(0);
+        setKeysCollected(0);
+    }
+
+    /**
+     * Creates a new player object at the passed grid position and
+     * with a predefined sprite.
+     * Assign its diamonds and keys to empty.
+     * @param gridPosition the position to set player to
+     */
+    public PlayerObjectSLC(GridPosition gridPosition) {
+        super(FILE_PATH_TO_PLAYER_SPRITE,
+                gridPosition);
         setDiamondsCollected(0);
         setKeysCollected(0);
     }

@@ -14,9 +14,21 @@ public class DirtObjectSLC extends GameObjectSLC {
     }
 
     /**
-     * Creates new dirt object with predefined sprite.
+     * Creates new dirt object at position (0,0) and
+     * with a predefined sprite.
      */
     public DirtObjectSLC() {
-        super(FILE_PATH_TO_DIRT_TILE);
+        super(FILE_PATH_TO_DIRT_TILE,
+                new GridPosition(0, 0));
+    }
+
+
+    /**
+     * Creates a new dirt object at the passed grid position and
+     * with a predefined sprite.
+     * @param gridPosition the position to set object to
+     */
+    public DirtObjectSLC(GridPosition gridPosition) {
+        super(FILE_PATH_TO_DIRT_TILE, gridPosition);
     }
 }

@@ -9,13 +9,15 @@ import javafx.scene.image.Image;
  */
 public abstract class GameObjectSLC {
     private final Image sprite;
+    private GridPosition gridPosition;
 
     /**
      * Create a new object with the specified sprite.
      * @param spritePath file path to sprite
      */
-    public GameObjectSLC(String spritePath) {
+    public GameObjectSLC(String spritePath, GridPosition gridPosition) {
         this.sprite = new Image(spritePath);
+        this.gridPosition = gridPosition;
     }
 
     /**
@@ -24,6 +26,22 @@ public abstract class GameObjectSLC {
      */
     public Image getSprite() {
         return sprite;
+    }
+
+    /**
+     * Returns the object's grid position.
+     * @return a grid position object
+     */
+    public GridPosition getGridPosition() {
+        return gridPosition;
+    }
+
+    /**
+     * Set the grid position.
+     * @param gridPosition the position to set
+     */
+    public void setGridPosition(GridPosition gridPosition) {
+        this.gridPosition = gridPosition;
     }
 
 }
