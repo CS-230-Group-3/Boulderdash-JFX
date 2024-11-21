@@ -149,13 +149,13 @@ public class SaveLoadController {
     //Saving Helpers
     private char getCharFromObject(GameObjectSLC object) {
         switch (object.getClass().getSimpleName()) {
-            case  "PathObject":
+            case  "PathObjectSLC":
                 return 'P';
-            case "WallObject":
+            case "WallObjectSLC":
                 return 'W';
-            case "DirtObject":
+            case "DirtObjectSLC":
                 return 'D';
-            case "PlayerObject":
+            case "PlayerObjectSLC":
                 return 'R';
             default:
                 return '*';

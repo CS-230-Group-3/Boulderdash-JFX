@@ -26,13 +26,10 @@ public class SLCTestStage extends Application {
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
 
-        for (Square square: mapToDisplay.getSquares()) {
-            gc.drawImage(square.getGameObject().getSprite(),
-
-                    //TODO a more robust "displaying system"
-                    square.getPosition().getX() * SPRITE_SIZE,
-                    square.getPosition().getY() * SPRITE_SIZE
-            );
+        for (GameObjectSLC object: mapToDisplay.getObjects()) {
+            gc.drawImage(object.getSprite(),
+                    object.getGridPosition().getX() * SPRITE_SIZE,
+                    object.getGridPosition().getY() * SPRITE_SIZE);
         }
         slc.saveMapToFile(mapToDisplay);
         root.getChildren().add(canvas);
