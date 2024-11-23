@@ -1,15 +1,21 @@
 /**
- * <p>This Abstract Entity class extends GameObject and is intended to hold information related to its living state
- * as well as hold an abstract movement method.</p>
+ * Abstract Entity class derived from abstract GameObject class. Includes new abstract move method.
  *
- * @author Joseph Parish.
- * @version 1.0.0
- * Last Changed: 18/11/24
+ * @author Oscar and Ahmed.
+ * @version 1.0.2
+ * Last changed: 22/11/2024
  */
-public abstract class Entity extends GameObject
-{
 
-    private boolean livingState; // Living state
+public abstract class Entity extends GameObject {
 
-    public abstract void move(); // Movement
+    public Entity(String pathToSprite, int[] position, int[] centreOfSprite, int updateRate) {
+        super(pathToSprite, position, centreOfSprite, updateRate);
+    }
+
+    public Entity() {}
+
+    /**
+     * Changes the entity's position.
+     */
+    public abstract void move();
 }

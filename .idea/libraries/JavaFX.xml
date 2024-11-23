@@ -1,0 +1,21 @@
+<component name="libraryTable">
+  <library name="JavaFX">
+    <CLASSES>
+      <root url="file://$USER_HOME$/Documents/JavaFX/lib" />
+    </CLASSES>
+    <JAVADOC />
+    <NATIVE>
+      <root url="file://$USER_HOME$/Documents/JavaFX/lib" />
+    </NATIVE>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/Documents/JavaFX/src.zip!/javafx.base" />
+      <root url="jar://$USER_HOME$/Documents/JavaFX/src.zip!/javafx.controls" />
+      <root url="jar://$USER_HOME$/Documents/JavaFX/src.zip!/javafx.fxml" />
+      <root url="jar://$USER_HOME$/Documents/JavaFX/src.zip!/javafx.graphics" />
+      <root url="jar://$USER_HOME$/Documents/JavaFX/src.zip!/javafx.media" />
+      <root url="jar://$USER_HOME$/Documents/JavaFX/src.zip!/javafx.swing" />
+      <root url="jar://$USER_HOME$/Documents/JavaFX/src.zip!/javafx.web" />
+    </SOURCES>
+    <jarDirectory url="file://$USER_HOME$/Documents/JavaFX/lib" recursive="false" />
+  </library>
+</component>
