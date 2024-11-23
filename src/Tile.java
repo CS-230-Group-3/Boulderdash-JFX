@@ -12,8 +12,8 @@ public abstract class Tile extends GameObject {
     private boolean walkable;
     private boolean destroyable;
 
-    public Tile(Sprite sprite, int[] position, int[] centreOfSprite, int updateRate) {
-        super(sprite, position, centreOfSprite, updateRate);
+    public Tile(String pathToSprite, int[] position, int[] centreOfSprite, int updateRate) {
+        super(pathToSprite, position, centreOfSprite, updateRate);
     }
 
     /**

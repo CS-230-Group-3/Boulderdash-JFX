@@ -10,19 +10,22 @@
 
 public abstract class GameObject {
 
-    private Sprite sprite;
+    private String pathToSprite;
     private int[] position;
     private int[] centreOfSprite;
     private int updateRate; // The rate at which the game object updates in ticks.
     private boolean isColliding;
+    private int collisionRate;
 
-    public GameObject(Sprite sprite, int[] position, int[] centreOfSprite, int updateRate) {
-        this.sprite = sprite;
+    public GameObject(String pathToSprite, int[] position, int[] centreOfSprite, int updateRate) {
+        this.pathToSprite = pathToSprite;
         this.position = position;
         this.centreOfSprite = centreOfSprite;
         this.updateRate = updateRate;
         this.isColliding = false;
     }
+
+    public GameObject() {}
 
     /**
      * Updates the state of the game object.
