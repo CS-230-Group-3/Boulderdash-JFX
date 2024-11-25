@@ -1,0 +1,68 @@
+// Not Finished
+
+public class Frog extends PathfindingEnemy
+{
+    private int[] pos;
+    private String pathToSprite;
+
+    public Frog(int[] pos)
+    {
+        this.pos = pos;
+        this.pathToSprite = "frog_sprite.png";
+    }
+
+    @Override
+    public void update()
+    {
+        //List<int[]> path = AStarAlgorithm(GameController.getMap, pos[0], pos[1], Player.getPosition[0], Player.getPosition[1]);
+
+        //if (path != null && !path.isEmpty())
+        //{
+        //    position = path.get(0);
+        //}
+    }
+
+    @Override
+    public boolean collisionCheck()
+    {
+        // Check if the frog collides with anything (to be implemented)
+        return false;
+    }
+
+    @Override
+    public void onCollision() {
+        // Handle frog collision (to be implemented)
+    }
+
+    @Override
+    public void playerCollisionCheck(boolean isColliding) 
+    {
+        // Check if the frog collides with player (to be implemented)
+        if (isColliding) 
+        {
+            if (pos[0] == Player.getPosition()[0] && pos[1] == Player.getPosition()[1])
+            {
+                onPlayerCollision();
+            }
+            else
+            {
+                onCollision();
+            }
+        }
+    }
+
+    @Override
+    public void onPlayerCollision() {
+        // Handle frog collision (to be implemented)
+    }
+
+    @Override
+    public void delete() {
+        // Delete the frog object (to be implemented)
+    }
+
+    @Override
+    public void move() {
+        // Implement frog movement (e.g., following the calculated path)
+    }
+}
