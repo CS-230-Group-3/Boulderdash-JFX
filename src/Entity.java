@@ -8,11 +8,9 @@
 
 public abstract class Entity extends GameObject {
 
-    public Entity(String pathToSprite, int[] position, int[] centreOfSprite, int updateRate) {
-        super(pathToSprite, position, centreOfSprite, updateRate);
+    public Entity(String pathToSprite, GridPosition position) {
+        super(pathToSprite, position);
     }
-
-    public Entity() {}
 
     /**
      * Changes the entity's position.
