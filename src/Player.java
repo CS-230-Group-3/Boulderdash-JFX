@@ -11,11 +11,42 @@ public class Player extends Entity {
         this.keyChain = null;
     }
 
-    public void underwaterCountDown(int number){ // Play with timers here, but we should be coolin
+    public void underwaterCountDown(int number) { // Play with timers here, but we should be coolin
         System.out.println(number);
     }
 
-    public void move(Direction dir){
+    /**
+     * Adds a key to the player's keychain and logs the action.
+     *
+     * @param key the key to be added to the keychain
+     */
+    public void takeKey(Key key) {
+        System.out.println("Key" + key.toString() + "Obtained");
+        keyChain.add(key);
+    }
+
+    /**
+     * Unlocks the given door.
+     *
+     * @param door the locked door to be unlocked
+     */
+    public void unlockDoor(LockedDoor door) {
+        System.out.println("Door" + door.toString() + "unlocked");
+        door.unlock();
+    }
+
+    /**
+     * Retrieves the current position of the player.
+     *
+     * @return an array of integers representing the player's position (e.g., [x, y])
+     */
+    public int[] getPosition() {
+        return this.position;
+    }
+
+
+    @Override
+    public void move() {
         if (dir == Direction.UP) {
             System.out.println("Going Up");
         } else if (dir == Direction.RIGHT) {
@@ -27,33 +58,21 @@ public class Player extends Entity {
         }
     }
 
-    public void takeKey(Key key){
-        System.out.println("Key" + key.toString() + "Obtained");
-        keyChain.add(key);
-    }
-
-    public void unlockDoor(){
-        System.out.println("Door Unlocked");
-    }
-
-    public int[] getPosition(){
-        return new int[]{1,2}; //Weird but seems to be the way that works for these.
-    }
-
-
-    @Override
-    public void move() {
-
-    }
-
     @Override
     public void update() {
+        move(); // Doing everything in
+        collisionCheck();
 
     }
 
     @Override
     public boolean collisionCheck() {
-        return false;
+        if (true) { // FIX LATER - If colliding
+            onCollision();
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
@@ -62,7 +81,11 @@ public class Player extends Entity {
     }
 
     @Override
-    public void delete() {
-
+    public void delete() { // For graphics controller?
+    }
+    private void die() {
+        this.livingState = false;
+        System.out.println("Player Died");
+        this.delete();
     }
 }

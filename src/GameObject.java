@@ -11,7 +11,7 @@
 public abstract class GameObject {
 
     private String pathToSprite;
-    private int[] position;
+    protected int[] position;
     private int[] centreOfSprite;
     private int updateRate; // The rate at which the game object updates in ticks.
     private boolean isColliding;

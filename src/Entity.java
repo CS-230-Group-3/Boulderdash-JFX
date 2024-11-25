@@ -17,5 +17,5 @@ public abstract class Entity extends GameObject {
     /**
      * Changes the entity's position.
      */
-    public abstract void move();
+    public abstract void move(Direction dir);
 }
