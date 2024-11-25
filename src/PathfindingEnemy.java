@@ -12,6 +12,10 @@ public abstract class PathfindingEnemy extends Enemy
     int[] dx = {-1, 1, 0, 0};  // Directions: left, right, up, down
     int[] dy = {0, 0, -1, 1};  // Directions: left, right, up, down
 
+    public PathfindingEnemy(String pathToSprite, GridPosition position) {
+        super(pathToSprite, position);
+    }
+
     // Initialize walkable tiles (nodes that can be traversed)
     private void initializeWalkableTiles(int[][] map)
     {
