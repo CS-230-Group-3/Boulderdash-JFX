@@ -8,6 +8,11 @@
 
 public abstract class Entity extends GameObject {
 
+    /**
+     * Creates a new entity.
+     * @param pathToSprite path to the sprite
+     * @param position initial position of object
+     */
     public Entity(String pathToSprite, GridPosition position) {
         super(pathToSprite, position);
     }

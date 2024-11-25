@@ -18,6 +18,11 @@ public abstract class GameObject {
     private boolean isColliding;
     private int collisionRate;
 
+    /**
+     * Creates a new game object.
+     * @param pathToSprite path to the sprite
+     * @param position initial position of object
+     */
     public GameObject(String pathToSprite, GridPosition position) {
         this.sprite = new Image(pathToSprite);
         this.gridPosition = position;

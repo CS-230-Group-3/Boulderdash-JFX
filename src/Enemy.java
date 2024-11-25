@@ -9,6 +9,11 @@
 public abstract class Enemy extends Entity {
     private int[][] path; // Path of future movement
 
+    /**
+     * Creates a new enemy.
+     * @param pathToSprite path to the sprite
+     * @param position initial position of object
+     */
     public Enemy(String pathToSprite, GridPosition position) {
         super(pathToSprite, position);
     }

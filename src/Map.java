@@ -63,7 +63,6 @@ public class Map {
      */
     public void placeObjectOnMap(GameObject gameObject) {
         int index = gridToIndex(gameObject.getPosition());
-        //TODO is this good enough lol?
         getObjects().set(index, gameObject);
     }
 
@@ -121,7 +120,6 @@ public class Map {
         for (int maxMapPositions = 0;
              maxMapPositions < getMapHeight() * getMapWidth();
              maxMapPositions++) {
-            //TODO create a setting method, that handles null inputs
             getObjects().add(null);
         }
 

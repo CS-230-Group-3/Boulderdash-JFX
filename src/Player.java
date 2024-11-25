@@ -5,12 +5,20 @@ public class Player extends Entity {
     private static final String SPRITE_PATH = "";
     private ArrayList<Key> keyChain = new ArrayList<>();
 
+    /**
+     * Creates a new player object.
+     * Position is set to (0,0)
+     */
     public Player() {
         super(SPRITE_PATH, new GridPosition(0, 0));
         this.livingState = true;
         this.keyChain = null;
     }
 
+    /**
+     * Creates a new player object.
+     * @param position the position to set player to
+     */
     public Player(GridPosition position) {
         super(SPRITE_PATH, position);
         this.livingState = true;
@@ -79,6 +87,11 @@ public class Player extends Entity {
     @Override
     public void delete() { // For graphics controller?
     }
+
+    public ArrayList<Key> getKeyChain() {
+        return this.keyChain;
+    }
+
     private void die() {
         this.livingState = false;
         System.out.println("Player Died");
