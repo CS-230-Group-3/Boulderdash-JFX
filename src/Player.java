@@ -1,12 +1,18 @@
-import java.lang.reflect.Array;
 import java.security.Key;
-import java.util.Timer;
 import java.util.ArrayList;
 public class Player extends Entity {
     private Boolean livingState;
+    private static final String SPRITE_PATH = "";
     private ArrayList<Key> keyChain = new ArrayList<>();
 
     public Player() {
+        super(SPRITE_PATH, new GridPosition(0, 0));
+        this.livingState = true;
+        this.keyChain = null;
+    }
+
+    public Player(GridPosition position) {
+        super(SPRITE_PATH, position);
         this.livingState = true;
         this.keyChain = null;
     }
@@ -35,18 +41,8 @@ public class Player extends Entity {
         door.unlock();
     }
 
-    /**
-     * Retrieves the current position of the player.
-     *
-     * @return an array of integers representing the player's position (e.g., [x, y])
-     */
-    public int[] getPosition() {
-        return this.position;
-    }
-
-
     @Override
-    public void move() {
+    public void move(Direction dir) {
         if (dir == Direction.UP) {
             System.out.println("Going Up");
         } else if (dir == Direction.RIGHT) {
@@ -60,7 +56,7 @@ public class Player extends Entity {
 
     @Override
     public void update() {
-        move(); // Doing everything in
+//        move(); // Doing everything in
         collisionCheck();
 
     }
