@@ -6,9 +6,12 @@
  * @version 1.0.2
  * Last Changed: 18/11/24
  */
-public abstract class Enemy extends Entity
-{
+public abstract class Enemy extends Entity {
     private int[][] path; // Path of future movement
+
+    public Enemy(String pathToSprite, GridPosition position) {
+        super(pathToSprite, position);
+    }
     
     public abstract int[][] findPath(int[][] map, int[] enemyPos, int[] playerPos); // Finds path
     public abstract void onPlayerCollision(); // Reacts to players touch
