@@ -65,7 +65,7 @@ public abstract class GameObject {
      * Updates the position of the game object.
      * @param newPos the new position as an array [x, y].
      */
-    protected void setPosition(GridPosition newPos) {
+    public void setPosition(GridPosition newPos) {
         this.gridPosition = newPos;
     }
 

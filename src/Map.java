@@ -1,5 +1,3 @@
-package SaveLoadController;
-
 import java.util.ArrayList;
 
 /**
@@ -13,7 +11,7 @@ public class Map {
     private final int mapWidth;
     private final int mapHeight;
 
-    private ArrayList<GameObjectSLC> objects;
+    private ArrayList<GameObject> objects;
 
     /**
      * Create a new map with empty game objects.
@@ -33,12 +31,12 @@ public class Map {
      * assigning appropriate grid position for each game object.
      * @param objectsToSet the object to set
      */
-    public void setAllObjectsTo(ArrayList<GameObjectSLC> objectsToSet) {
+    public void setAllObjectsTo(ArrayList<GameObject> objectsToSet) {
         //Simple error check
         if (getObjects().size() == objectsToSet.size()) {
             //Change positions of objects based on their index in list
             for (int i = 0; i < objectsToSet.size(); i++) {
-                objectsToSet.get(i).setGridPosition(
+                objectsToSet.get(i).setPosition(
                         indexToGrid(i)
                 );
             }
@@ -51,7 +49,7 @@ public class Map {
      * @param coordinate coordinate to get object at
      * @return Object at the coordinate
      */
-    public GameObjectSLC getObjectAt(GridPosition coordinate) {
+    public GameObject getObjectAt(GridPosition coordinate) {
         int index = gridToIndex(coordinate);
         if (index == -1) {
             return null;
@@ -63,8 +61,8 @@ public class Map {
      * Place game object on the map, based on its position.
      * @param gameObject object to place
      */
-    public void placeObjectOnMap(GameObjectSLC gameObject) {
-        int index = gridToIndex(gameObject.getGridPosition());
+    public void placeObjectOnMap(GameObject gameObject) {
+        int index = gridToIndex(gameObject.getPosition());
         //TODO is this good enough lol?
         getObjects().set(index, gameObject);
     }
@@ -87,7 +85,7 @@ public class Map {
      * Returns list of game objects on the map.
      * @return list of game objects
      */
-    public ArrayList<GameObjectSLC> getObjects() {
+    public ArrayList<GameObject> getObjects() {
         return objects;
     }
 
@@ -110,10 +108,10 @@ public class Map {
      * Returns a references to player object on the map.
      * @return first instance of player object if one exists, null otherwise
      */
-    public PlayerObjectSLC getPlayerObjectReference() {
-        for (GameObjectSLC object: getObjects()) {
-            if (object instanceof PlayerObjectSLC) {
-                return (PlayerObjectSLC) object;
+    public Player getPlayerObjectReference() {
+        for (GameObject object: getObjects()) {
+            if (object instanceof Player) {
+                return (Player) object;
             }
         }
         return null;
@@ -129,7 +127,7 @@ public class Map {
 
     }
 
-    private void setObjects(ArrayList<GameObjectSLC> objects) {
+    private void setObjects(ArrayList<GameObject> objects) {
         this.objects = objects;
     }
 
