@@ -1,3 +1,5 @@
+import javafx.scene.image.Image;
+
 /**
  * Abstract GameObject class that holds the sprite, centre of sprite, position, update rate and collision
  * status of game objects. Includes abstract methods update, collisionCheck, onCollision, and delete, as
@@ -10,22 +12,18 @@
 
 public abstract class GameObject {
 
-    private String pathToSprite;
-    protected int[] position;
-    private int[] centreOfSprite;
+    private final Image sprite;
+    private GridPosition gridPosition;
     private int updateRate; // The rate at which the game object updates in ticks.
     private boolean isColliding;
     private int collisionRate;
 
-    public GameObject(String pathToSprite, int[] position, int[] centreOfSprite, int updateRate) {
-        this.pathToSprite = pathToSprite;
-        this.position = position;
-        this.centreOfSprite = centreOfSprite;
-        this.updateRate = updateRate;
+    public GameObject(String pathToSprite, GridPosition position) {
+        this.sprite = new Image(pathToSprite);
+        this.gridPosition = position;
         this.isColliding = false;
     }
 
-    public GameObject() {}
 
     /**
      * Updates the state of the game object.
@@ -48,36 +46,29 @@ public abstract class GameObject {
     public abstract void delete();
 
     /**
-     * Retrieves the current position of the game object.
-     * @return the current position as an array [x, y].
+     * Returns the object's sprite.
+     * @return javaFx Image instance.
      */
-    protected int[] getPosition() {
-        return this.position;
+    public Image getSprite() {
+        return sprite;
+    }
+
+    /**
+     * Retrieves the current position of the game object.
+     * @return the current position as a grid object.
+     */
+    protected GridPosition getPosition() {
+        return this.gridPosition;
     }
 
     /**
      * Updates the position of the game object.
      * @param newPos the new position as an array [x, y].
      */
-    protected void setPosition(int[] newPos) {
-        this.position = newPos;
+    protected void setPosition(GridPosition newPos) {
+        this.gridPosition = newPos;
     }
 
-    /**
-     * Retrieves the centre of the game object's sprite.
-     * @return the centre as an array [x, y].
-     */
-    protected int[] getCentreOfSprite() {
-        return this.centreOfSprite;
-    }
-
-    /**
-     * Updates the centre of the game object's sprite.
-     * @param newCentre the new centre as an array [x, y].
-     */
-    protected void setCentreOfSprite(int[] newCentre) {
-        this.centreOfSprite = newCentre;
-    }
 
     /**
      * Retrieves the update rate of the game object.
