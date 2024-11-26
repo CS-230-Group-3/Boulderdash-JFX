@@ -2,7 +2,7 @@ import java.security.Key;
 import java.util.ArrayList;
 public class Player extends Entity {
     private Boolean livingState;
-    private static final String SPRITE_PATH = "";
+    private static final String SPRITE_PATH = "resources/assets/player.png";
     private ArrayList<Key> keyChain = new ArrayList<>();
 
     /**
