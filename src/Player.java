@@ -9,11 +9,27 @@ import java.util.ArrayList;
 
 public class Player extends Entity {
     private Boolean livingState;
+    private static final String SPRITE_PATH = "";
     private Boolean isUnderwater;
     private ArrayList<Key> keyChain = new ArrayList<>();
     private int[] position = {0, 0}; // Default position, to avoid null references
 
+    /**
+     * Creates a new player object.
+     * Position is set to (0,0)
+     */
     public Player() {
+        super(SPRITE_PATH, new GridPosition(0, 0));
+        this.livingState = true;
+        this.keyChain = null;
+    }
+
+    /**
+     * Creates a new player object.
+     * @param position the position to set player to
+     */
+    public Player(GridPosition position) {
+        super(SPRITE_PATH, position);
         this.livingState = true;
         this.isUnderwater = false;
     }
@@ -161,6 +177,12 @@ public class Player extends Entity {
         System.out.println("Player object removed from the game.");
         // Add logic to remove the player object from the game world
     }
+
+    public ArrayList<Key> getKeyChain() {
+        return this.keyChain;
+    }
+
+    private void die() {
 
     /**
      * Sets the player's living state to false and performs cleanup.
