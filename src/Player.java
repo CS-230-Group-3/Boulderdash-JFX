@@ -3,7 +3,8 @@ import java.util.ArrayList;
 public class Player extends Entity {
     private Boolean livingState;
     private static final String SPRITE_PATH = "resources/assets/player.png";
-    private ArrayList<Key> keyChain = new ArrayList<>();
+    private ArrayList<Key> keyChain;
+    private int diamonds;
 
     /**
      * Creates a new player object.
@@ -12,7 +13,8 @@ public class Player extends Entity {
     public Player() {
         super(SPRITE_PATH, new GridPosition(0, 0));
         this.livingState = true;
-        this.keyChain = null;
+        this.keyChain = new ArrayList<>();
+        this.diamonds = 0;
     }
 
     /**
@@ -22,7 +24,8 @@ public class Player extends Entity {
     public Player(GridPosition position) {
         super(SPRITE_PATH, position);
         this.livingState = true;
-        this.keyChain = null;
+        this.keyChain = new ArrayList<>();
+        this.diamonds = 0;
     }
 
     public void underwaterCountDown(int number) { // Play with timers here, but we should be coolin
@@ -96,5 +99,13 @@ public class Player extends Entity {
         this.livingState = false;
         System.out.println("Player Died");
         this.delete();
+    }
+
+    public int getDiamonds() {
+        return diamonds;
+    }
+
+    public void setDiamonds(int diamonds) {
+        this.diamonds = diamonds;
     }
 }
