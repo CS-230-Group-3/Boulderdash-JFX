@@ -3,8 +3,8 @@
  * @author Yuliia & Spas
  */
 public class GridPosition {
-    private final int x;
-    private final int y;
+    private int x;
+    private int y;
     private static final String PRINTABLE_VECTOR_FORMAT =
         "(%d, %d)";
 
@@ -18,6 +18,13 @@ public class GridPosition {
         this.x = x;
         this.y = y;
 
+    }
+
+    public GridPosition add(GridPosition offset) {
+        this.x = getX() + offset.getX();
+        this.y = getY() + offset.getY();
+
+        return this;
     }
 
     @Override

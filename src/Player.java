@@ -65,6 +65,12 @@ public class Player extends Entity {
         }
     }
 
+    public void move(GridPosition offset) {
+        setPosition(
+                getPosition().add(offset)
+        );
+    }
+
     @Override
     public void update() {
 //        move(); // Doing everything in
