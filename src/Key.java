@@ -1,3 +1,11 @@
+/**
+ * Abstract Entity class derived from abstract GameObject class. Includes new abstract move method.
+ *
+ * @author Bailey Cockett, Ollie Jones
+ * @version 1.0.2
+ * Last changed: 25/11/2024
+ */
+
 import java.util.Objects;
 
 public class Key {
@@ -16,6 +24,11 @@ public class Key {
         return id;
     }
 
+    /**
+     * Formats information about the key into a string and returns it
+     *
+     * @return a string representation of e
+     */
     @Override
     public String toString() {
         return "Key{id=" + id + "}";

@@ -9,16 +9,18 @@ import java.util.ArrayList;
 
 public class Player extends Entity {
     private Boolean livingState;
+    private int score; // high score perhaps
     private Boolean isUnderwater;
     private ArrayList<Key> keyChain = new ArrayList<>();
     private int[] position = {0, 0}; // Default position, to avoid null references
+    // Note, change above to be gridPosition later once it comes up.
 
     public Player() {
         this.livingState = true;
         this.isUnderwater = false;
     }
 
-    /**
+    /**x`
      * Starts a countdown from x number of seconds, resulting in the
      * player drowning if they stay underwater too long.
      *
