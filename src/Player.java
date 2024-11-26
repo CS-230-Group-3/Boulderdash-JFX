@@ -13,6 +13,7 @@ public class Player extends Entity {
     private Boolean isUnderwater;
     private ArrayList<Key> keyChain = new ArrayList<>();
     private int[] position = {0, 0}; // Default position, to avoid null references
+    private int diamonds;
 
     /**
      * Creates a new player object.
@@ -22,6 +23,7 @@ public class Player extends Entity {
         super(SPRITE_PATH, new GridPosition(0, 0));
         this.livingState = true;
         this.keyChain = null;
+        this.diamonds = 0;
     }
 
     /**
@@ -32,6 +34,7 @@ public class Player extends Entity {
         super(SPRITE_PATH, position);
         this.livingState = true;
         this.isUnderwater = false;
+        this.diamonds = 0;
     }
 
     /**
@@ -178,6 +181,10 @@ public class Player extends Entity {
         // Add logic to remove the player object from the game world
     }
 
+    /**
+     * Returns the players collection of keys.
+     * @return array list representing all player collected keys
+     */
     public ArrayList<Key> getKeyChain() {
         return this.keyChain;
     }
@@ -187,5 +194,21 @@ public class Player extends Entity {
      */
     public void die() { //Set alive to false
         this.livingState = false;
+    }
+
+    /**
+     * Returns the diamonds collected by the player.
+     * @return amount of diamonds collected
+     */
+    public int getDiamonds() {
+        return diamonds;
+    }
+
+    /**
+     * Sets the diamonds collected for the player.
+     * @param diamondsCollected amount
+     */
+    public void setDiamonds(int diamondsCollected) {
+        this.diamonds = diamondsCollected;
     }
 }

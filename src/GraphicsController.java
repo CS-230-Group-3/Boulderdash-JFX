@@ -44,19 +44,19 @@ public class GraphicsController {
         switch (event.getCode()) {
             case RIGHT:
             case D:
-                player.move(new GridPosition(1, 0));
+                player.move(Direction.RIGHT);
                 break;
             case LEFT:
             case A:
-                player.move(new GridPosition(-1, 0));
+                player.move(Direction.LEFT);
                 break;
             case UP:
             case W:
-                player.move(new GridPosition(0, -1));
+                player.move(Direction.UP);
                 break;
             case DOWN:
             case S:
-                player.move(new GridPosition(0, 1));
+                player.move(Direction.DOWN);
                 break;
             default:
                 // Do nothing for all other keys.
