@@ -1,10 +1,18 @@
-import java.security.Key;
+/**
+ * Abstract Entity class derived from abstract GameObject class. Includes new abstract move method.
+ *
+ * @author Bailey Cockett
+ * @version 1.0.1
+ * Last changed: 25/11/2024
+ */
 import java.util.ArrayList;
+
 public class Player extends Entity {
     private Boolean livingState;
     private static final String SPRITE_PATH = "resources/assets/player.png";
-    private ArrayList<Key> keyChain;
-    private int diamonds;
+    private Boolean isUnderwater;
+    private ArrayList<Key> keyChain = new ArrayList<>();
+    private int[] position = {0, 0}; // Default position, to avoid null references
 
     /**
      * Creates a new player object.
@@ -13,8 +21,7 @@ public class Player extends Entity {
     public Player() {
         super(SPRITE_PATH, new GridPosition(0, 0));
         this.livingState = true;
-        this.keyChain = new ArrayList<>();
-        this.diamonds = 0;
+        this.keyChain = null;
     }
 
     /**
@@ -24,12 +31,26 @@ public class Player extends Entity {
     public Player(GridPosition position) {
         super(SPRITE_PATH, position);
         this.livingState = true;
-        this.keyChain = new ArrayList<>();
-        this.diamonds = 0;
+        this.isUnderwater = false;
     }
 
-    public void underwaterCountDown(int number) { // Play with timers here, but we should be coolin
-        System.out.println(number);
+    /**
+     * Starts a countdown from x number of seconds, resulting in the
+     * player drowning if they stay underwater too long.
+     *
+     * @param number the number of seconds for the player to drown
+     */
+    public void underwaterCountDown(int number) throws InterruptedException {
+        for (int i = number; i > 0; i--) {
+            System.out.println("Time remaining underwater: " + i + " seconds");
+            Thread.sleep(1000);
+            if (!isUnderwater) {
+                System.out.println("Player surfaced in time!");
+                return;
+            }
+        }
+        System.out.println("Player has drowned.");
+        die();
     }
 
     /**
@@ -38,80 +59,133 @@ public class Player extends Entity {
      * @param key the key to be added to the keychain
      */
     public void takeKey(Key key) {
-        System.out.println("Key" + key.toString() + "Obtained");
+        System.out.println("Key " + key.toString() + " obtained.");
         keyChain.add(key);
     }
 
     /**
-     * Unlocks the given door.
+     * Unlocks the given door if the player has the required key.
      *
      * @param door the locked door to be unlocked
      */
-    public void unlockDoor(LockedDoor door) {
-        System.out.println("Door" + door.toString() + "unlocked");
-        door.unlock();
+    public void unlockDoor(final LockedDoor door) {
+        for (Key key : keyChain) {
+            if (door.unlock(key)) {
+                System.out.println("Door " + door + " unlocked.");
+                return;
+            }
+        }
+        System.out.println("You don't have the required key to unlock this door.");
     }
 
+    /**
+     * Retrieves the current position of the player.
+     *
+     * @return an array of integers representing the player's position (e.g., [x, y])
+     */
+    public int[] getPlayerPosition() {
+        return position;
+    }
+
+    /**
+     * Sets the player's position.
+     *
+     * @param position the new position to set
+     */
+    public void setPosition(int[] position) {
+        this.position = position;
+    }
+
+    /**
+     * Moves the player in the direction specified by keyboard input by updating its position.
+     *
+     * @param dir the direction to move (UP, RIGHT, DOWN, or LEFT)
+     */
     @Override
-    public void move(Direction dir) {
+    public void move(final Direction dir) {
+        int x = position[0];
+        int y = position[1];
+
         if (dir == Direction.UP) {
             System.out.println("Going Up");
+            setPosition(new int[] {x, y + 1});
         } else if (dir == Direction.RIGHT) {
             System.out.println("Going Right");
+            setPosition(new int[] {x + 1, y});
         } else if (dir == Direction.DOWN) {
             System.out.println("Going Down");
+            setPosition(new int[] {x, y - 1});
         } else if (dir == Direction.LEFT) {
             System.out.println("Going Left");
+            setPosition(new int[] {x - 1, y});
         }
     }
 
-    public void move(GridPosition offset) {
-        setPosition(
-                getPosition().add(offset)
-        );
-    }
-
+    /**
+     * Updates the player's state based on input or game events.
+     */
     @Override
     public void update() {
-//        move(); // Doing everything in
+        // Check if dead first, if dead then do endgame method in gameController
+        // Example: Replace with actual keyboard input handling
+        String buttonPressed = "X"; // Temporary placeholder
+        if (buttonPressed.equals("W")) {
+            move(Direction.UP);
+        }
         collisionCheck();
-
     }
 
+    /**
+     * Checks if the player is colliding with something.
+     *
+     * @return true if colliding, false otherwise
+     */
     @Override
-    public boolean collisionCheck() {
-        if (true) { // FIX LATER - If colliding
+    public boolean collisionCheck() { // takes in direction and position, returns if the movement is valid.
+        // Example placeholder logic for collision detection
+        boolean isColliding = false; // Replace with actual collision logic
+        if (isColliding) {
             onCollision();
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
+    /**
+     * Handles collision logic for the player.
+     */
     @Override
     public void onCollision() {
-
+        System.out.println("Player collided with an obstacle.");
+        die();
     }
 
+    /**
+     * Handles logic for a player picking up a key
+     * @param keyToPickUp the key the player should pick up
+     */
+    public void pickUpKey(final Key keyToPickUp) {
+        keyChain.add(keyToPickUp);
+        // BEFORE FINALISING - delete the key afterwards
+    }
+
+    /**
+     * Deletes the player object from the game.
+     */
     @Override
-    public void delete() { // For graphics controller?
+    public void delete() {
+        System.out.println("Player object removed from the game.");
+        // Add logic to remove the player object from the game world
     }
 
     public ArrayList<Key> getKeyChain() {
         return this.keyChain;
     }
 
-    private void die() {
+    /**
+     * Sets the player's living state to false and performs cleanup.
+     */
+    public void die() { //Set alive to false
         this.livingState = false;
-        System.out.println("Player Died");
-        this.delete();
-    }
-
-    public int getDiamonds() {
-        return diamonds;
-    }
-
-    public void setDiamonds(int diamonds) {
-        this.diamonds = diamonds;
     }
 }
