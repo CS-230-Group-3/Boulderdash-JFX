@@ -3,11 +3,12 @@
  * touched the enemy, what to do and its future moves.</p>
  *
  * @author Joseph Parish.
- * @version 1.0.2
+ * @version 1.0.3
  * Last Changed: 18/11/24
  */
 public abstract class Enemy extends Entity
 {
+    private Boolean livingState;
     private int[][] path; // Path of future movement
     
     public abstract int[][] findPath(int[][] map, int[] enemyPos, int[] playerPos); // Finds path
