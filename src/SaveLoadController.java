@@ -100,9 +100,9 @@ public class SaveLoadController {
         }
         return null;
     }
-    private void populatePlayerItem(char item, int amount, Player player) {
+    private void populatePlayerItem(String item, int amount, Player player) {
         switch (item) {
-            case 'D':
+            case "D":
             player.setDiamonds(amount);
             break;
             //TODO define (our)Key class, fix keyChain in player
@@ -113,7 +113,9 @@ public class SaveLoadController {
 
     }
     private Map populateMapWithObjects(Map map, ArrayList<GameObject> objects) {
-        map.setAllObjectsTo(objects);
+        if (map != null) {
+            map.setAllObjectsTo(objects);
+        }
         return map;
     }
 
@@ -134,10 +136,15 @@ public class SaveLoadController {
 
     private void parsePlayerData(Scanner r, Player player) {
         while (r.hasNextLine()) {
-            if (r.nextLine().isEmpty()) {
-                char itemToBeRead = r.next().toCharArray()[0];
-                int amountToAdd = Integer.parseInt(r.next());
-                populatePlayerItem(itemToBeRead, amountToAdd, player);
+            String nextLine = r.nextLine();
+            if (!nextLine.isEmpty()) {
+                //Split the line by 'space'
+                String[] parts = nextLine.split("\\s+");
+                if (parts.length == 2) {
+                    String itemToBeRead = parts[0];
+                    int amountToAdd = Integer.parseInt(parts[1]);
+                    populatePlayerItem(itemToBeRead, amountToAdd, player);
+                }
             }
 
         }
@@ -172,5 +179,3 @@ public class SaveLoadController {
     }
 }
 
-//TODO : Make some concrete classes - to get this of the ground
-//TODO change the way keys and diamonds are looked up for the player.
