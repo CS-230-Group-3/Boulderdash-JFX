@@ -83,7 +83,7 @@ public class Player extends Entity {
      *
      * @return an array of integers representing the player's position (e.g., [x, y])
      */
-    public int[] getPosition() {
+    public int[] getPlayerPosition() {
         return position;
     }
 
@@ -182,12 +182,10 @@ public class Player extends Entity {
         return this.keyChain;
     }
 
-    private void die() {
-
     /**
      * Sets the player's living state to false and performs cleanup.
      */
-    private void die() { //Set alive to false
+    public void die() { //Set alive to false
         this.livingState = false;
     }
 }
