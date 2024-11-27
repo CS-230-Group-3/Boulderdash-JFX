@@ -10,36 +10,17 @@ import java.util.ArrayList;
 public class Player extends Entity {
     private Boolean livingState;
     private int score; // high score perhaps
-    private static final String SPRITE_PATH = "resources/assets/player.png";
     private Boolean isUnderwater;
     private ArrayList<Key> keyChain = new ArrayList<>();
     private int[] position = {0, 0}; // Default position, to avoid null references
     // Note, change above to be gridPosition later once it comes up.
-    private int diamonds;
 
-    /**
-     * Creates a new player object.
-     * Position is set to (0,0)
-     */
     public Player() {
-        super(SPRITE_PATH, new GridPosition(0, 0));
-        this.livingState = true;
-        this.keyChain = null;
-        this.diamonds = 0;
-    }
-
-    /**
-     * Creates a new player object.
-     * @param position the position to set player to
-     */
-    public Player(GridPosition position) {
-        super(SPRITE_PATH, position);
         this.livingState = true;
         this.isUnderwater = false;
-        this.diamonds = 0;
     }
 
-    /**
+    /**x`
      * Starts a countdown from x number of seconds, resulting in the
      * player drowning if they stay underwater too long.
      *
@@ -184,33 +165,9 @@ public class Player extends Entity {
     }
 
     /**
-     * Returns the players collection of keys.
-     * @return array list representing all player collected keys
-     */
-    public ArrayList<Key> getKeyChain() {
-        return this.keyChain;
-    }
-
-    /**
      * Sets the player's living state to false and performs cleanup.
      */
-    public void die() { //Set alive to false
+    private void die() { //Set alive to false
         this.livingState = false;
-    }
-
-    /**
-     * Returns the diamonds collected by the player.
-     * @return amount of diamonds collected
-     */
-    public int getDiamonds() {
-        return diamonds;
-    }
-
-    /**
-     * Sets the diamonds collected for the player.
-     * @param diamondsCollected amount
-     */
-    public void setDiamonds(int diamondsCollected) {
-        this.diamonds = diamondsCollected;
     }
 }

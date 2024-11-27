@@ -10,16 +10,7 @@ public abstract class Enemy extends Entity
 {
     private Boolean livingState;
     private int[][] path; // Path of future movement
-
-    /**
-     * Creates a new enemy.
-     * @param pathToSprite path to the sprite
-     * @param position initial position of object
-     */
-    public Enemy(String pathToSprite, GridPosition position) {
-        super(pathToSprite, position);
-    }
-
+    
     public abstract int[][] findPath(int[][] map, int[] enemyPos, int[] playerPos); // Finds path
     public abstract void onPlayerCollision(); // Reacts to players touch
     public abstract boolean playerCollisionCheck(boolean Collision); // Checks if touching player

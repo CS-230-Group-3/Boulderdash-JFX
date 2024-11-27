@@ -12,13 +12,8 @@ public abstract class Tile extends GameObject {
     private boolean walkable;
     private boolean destroyable;
 
-    /**
-     * Creates a new tile.
-     * @param pathToSprite path to the sprite
-     * @param position initial position of tile
-     */
-    public Tile(String pathToSprite, GridPosition position) {
-        super(pathToSprite, position);
+    public Tile(String pathToSprite, int[] position, int[] centreOfSprite, int updateRate) {
+        super(pathToSprite, position, centreOfSprite, updateRate);
     }
 
     /**
