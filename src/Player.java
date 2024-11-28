@@ -83,14 +83,14 @@ public class Player extends Entity {
         System.out.println("You don't have the required key to unlock this door.");
     }
 
-    /**
-     * Retrieves the current position of the player.
-     *
-     * @return an array of integers representing the player's position (e.g., [x, y])
-     */
-    public int[] getPosition() {
-        return position;
-    }
+//    /**
+//     * Retrieves the current position of the player.
+//     *
+//     * @return an array of integers representing the player's position (e.g., [x, y])
+//     */
+//    public int[] getPosition() {
+//        return position;
+//    }
 
     /**
      * Sets the player's position.
