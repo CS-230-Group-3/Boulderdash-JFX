@@ -1,25 +1,15 @@
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyEvent;
 
 
 public class GraphicsController {
 
-    private final Canvas canvas;
-
-    private final Map mapToDisplay;
-
-    public GraphicsController(Canvas canvas, Map mapToDisplay) {
-        this.canvas = canvas;
-        this.mapToDisplay = mapToDisplay;
-    }
-
-    public void drawGame() {
-        GraphicsContext gc = getCanvas().getGraphicsContext2D();
+    public void drawGame(Canvas canvas, Map mapToDraw) {
+        GraphicsContext gc = canvas.getGraphicsContext2D();
 
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        for (GameObject object: getMapToDisplay().getObjects()) {
+        for (GameObject object: mapToDraw.getObjects()) {
             if (!(object instanceof Player)) {
                 gc.drawImage(object.getSprite(),
                         object.getPosition().getX()
@@ -29,7 +19,7 @@ public class GraphicsController {
             }
         }
         //Render player last to prevent Z-ordering issues
-        Player player = getMapToDisplay().getPlayerObjectReference();
+        Player player = mapToDraw.getPlayerObjectReference();
         Image playerSprite = player.getSprite();
         gc.drawImage(playerSprite,
                 player.getPosition().getX()
@@ -37,41 +27,4 @@ public class GraphicsController {
                 player.getPosition().getY()
                         * playerSprite.getWidth());
     }
-
-    //Todo tmp here, will abstract to InputController
-    public void handleEvent(KeyEvent event) {
-        Player player = getMapToDisplay().getPlayerObjectReference();
-        switch (event.getCode()) {
-            case RIGHT:
-            case D:
-                player.move(Direction.RIGHT);
-                break;
-            case LEFT:
-            case A:
-                player.move(Direction.LEFT);
-                break;
-            case UP:
-            case W:
-                player.move(Direction.UP);
-                break;
-            case DOWN:
-            case S:
-                player.move(Direction.DOWN);
-                break;
-            default:
-                // Do nothing for all other keys.
-                break;
-        }
-        drawGame();
-
-        event.consume();
-    }
-
-    public Canvas getCanvas() {
-        return canvas;
-    }
-    public Map getMapToDisplay() {
-        return mapToDisplay;
-    }
-
 }
