@@ -5,6 +5,11 @@ import javafx.scene.image.Image;
 
 public class GraphicsController {
 
+    /**
+     * Draws the passed map on the provided canvas.
+     * @param canvas canvas to draw to
+     * @param mapToDraw map to draw to canvas
+     */
     public void drawGame(Canvas canvas, Map mapToDraw) {
         GraphicsContext gc = canvas.getGraphicsContext2D();
 

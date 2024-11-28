@@ -10,13 +10,23 @@ public class GameController {
 
     private int currentScene; //Maybe of type Scene instead?
 
-
+    /**
+     * Creates a Game Controller,
+     * responsible for displaying & handling logic for the game.
+     * @param canvasToDisplayGame the canvas to display the game on
+     */
     public GameController(Canvas canvasToDisplayGame) {
         this.canvas = canvasToDisplayGame;
         this.saveLoadController = new SaveLoadController();
         this.graphicsController = new GraphicsController();
     }
 
+    /**
+     * Creates a Game Controller,
+     * responsible for displaying & handling logic for the game.
+     * @param canvasToDisplayGame the canvas to display the game on
+     * @param filePath file path to the level
+     */
     public GameController(Canvas canvasToDisplayGame, String filePath) {
         this.canvas = canvasToDisplayGame;
         this.saveLoadController = new SaveLoadController();
@@ -25,7 +35,11 @@ public class GameController {
         displayMapFromFilePth(filePath);
     }
 
-    //TODO name change or decouple
+    /**
+     * Displays map from the provided file path, whenever
+     * a map has not been assigned.
+     * @param filePath file path to the level
+     */
     public void displayMapFromFilePth(String filePath) {
         if (getMap() == null) {
             this.map = saveLoadController.loadFromFile(filePath);
@@ -62,6 +76,9 @@ public class GameController {
         event.consume();
     }
 
+    /**
+     * @return the current map
+     */
     public Map getMap() {
         return map;
     }
