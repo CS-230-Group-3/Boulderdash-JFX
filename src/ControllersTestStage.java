@@ -16,17 +16,15 @@ public class ControllersTestStage extends Application {
         Scene scene = new Scene(root, 640, 400, bg);
 
 
-        SaveLoadController slc = new SaveLoadController();
-        Map mapToDisplay = slc.loadFromFile("src/resources/levels/level1.txt");
-
+        String levelOne = "src/resources/levels/level1.txt";
         Canvas canvas = new Canvas(640, 400);
 
-        GraphicsController graphicsController =
-                new GraphicsController(canvas, mapToDisplay);
-        graphicsController.drawGame();
+        GameController gameController = new GameController(canvas, levelOne);
+
+
 
         scene.addEventFilter(KeyEvent.KEY_PRESSED,
-                graphicsController::handleEvent);
+                gameController::handleEvent);
 
 //        slc.saveMapToFile(mapToDisplay);
         root.getChildren().add(canvas);
