@@ -7,6 +7,7 @@ public class GraphicsController {
 
     /**
      * Draws the passed map on the provided canvas.
+     * GameObjects are draw on the screen based on their position.
      * @param canvas canvas to draw to
      * @param mapToDraw map to draw to canvas
      */
@@ -31,5 +32,15 @@ public class GraphicsController {
                         * playerSprite.getHeight(),
                 player.getPosition().getY()
                         * playerSprite.getWidth());
+    }
+
+    /**
+     * Updates each GameObject on the passed map.
+     * @param map map to update
+     */
+    public void updateGameObjectsOnMap(Map map) {
+        for (GameObject object: map.getObjects()) {
+            object.update(map);
+        }
     }
 }
