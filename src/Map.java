@@ -116,6 +116,38 @@ public class Map {
         return null;
     }
 
+    /**
+     * Returns the passed object's neighbour at the provided location,
+     * if one exists, null otherwise.
+     * @param object object to get neighbour of
+     * @param direction direction relative to object to check
+     * @return the neighbouring game object, if one exists, null otherwise
+     */
+    public GameObject getNeighbourOf(GameObject object, Direction direction) {
+        GridPosition offset = directionToOffset(direction);
+        GridPosition positionOfNeighbour = new GridPosition(
+                object.getPosition().getX() + offset.getX(),
+                object.getPosition().getY() + offset.getY()
+        );
+        if (!isInBounds(positionOfNeighbour)) {
+            return null;
+        } else {
+            return getObjectAt(positionOfNeighbour);
+        }
+
+    }
+
+    private GridPosition directionToOffset(Direction dir) {
+        return switch (dir) {
+            case RIGHT -> new GridPosition(1, 0);
+            case LEFT -> new GridPosition(-1, 0);
+            case UP -> new GridPosition(0, -1);
+            //For DOWN
+            default -> new GridPosition(0, 1);
+        };
+
+    }
+
     private void populateWithEmptyObjects() {
         for (int maxMapPositions = 0;
              maxMapPositions < getMapHeight() * getMapWidth();

@@ -67,6 +67,9 @@ public class GameController {
             case S:
                 player.move(Direction.DOWN);
                 break;
+            case SPACE:
+                graphicsController.updateGameObjectsOnMap(map);
+                graphicsController.drawGame(canvas, map);
             default:
                 // Do nothing for all other keys.
                 break;
