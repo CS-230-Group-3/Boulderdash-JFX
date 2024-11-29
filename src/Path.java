@@ -17,7 +17,7 @@ public class Path extends Tile {
     }
 
     @Override
-    public void onCollision() {
+    public void onCollision(GameObject collidingObject) {
 
     }
 

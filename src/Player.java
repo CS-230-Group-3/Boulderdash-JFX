@@ -146,13 +146,7 @@ public class Player extends Entity {
      * @return true if colliding, false otherwise
      */
     @Override
-    public boolean collisionCheck() { // takes in direction and position, returns if the movement is valid.
-        // Example placeholder logic for collision detection
-        boolean isColliding = false; // Replace with actual collision logic
-        if (isColliding) {
-            onCollision();
-            return true;
-        }
+    public boolean collisionCheck() {
         return false;
     }
 
@@ -160,7 +154,7 @@ public class Player extends Entity {
      * Handles collision logic for the player.
      */
     @Override
-    public void onCollision() {
+    public void onCollision(GameObject objectColliding) {
         System.out.println("Player collided with an obstacle.");
         die();
     }

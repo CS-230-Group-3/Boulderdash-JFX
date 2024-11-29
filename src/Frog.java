@@ -44,13 +44,11 @@ public class Frog extends PathfindingEnemy
     }
 
     @Override
-    public boolean collisionCheck(int[] pos)
-    {
-
-    }
+    public boolean collisionCheck()
+    {}
 
     @Override
-    public void onCollision()
+    public void onCollision(GameObject collidingObject)
     {
         // Handle frog collision (to be implemented)
     }
@@ -64,10 +62,6 @@ public class Frog extends PathfindingEnemy
             if (pos[0] == Player.getPosition()[0] && pos[1] == Player.getPosition()[1])
             {
                 onPlayerCollision();
-            }
-            else
-            {
-                onCollision();
             }
         }
     }

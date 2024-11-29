@@ -17,7 +17,7 @@ public class Wall extends Tile {
     }
 
     @Override
-    public void onCollision() {
+    public void onCollision(GameObject collidingObject) {
 
     }
 

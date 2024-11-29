@@ -43,7 +43,7 @@ public abstract class GameObject {
     /**
      * Determines what the game object does when it collides with another game object.
      */
-    public abstract void onCollision();
+    public abstract void onCollision(GameObject collidingObject);
 
     /**
      * Removes the game object from the level.
