@@ -33,7 +33,7 @@ public abstract class GameObject {
     /**
      * Updates the state of the game object.
      */
-    public abstract void update();
+    public abstract void update(Map map);
 
     /**
      * Checks for collisions with other game objects.

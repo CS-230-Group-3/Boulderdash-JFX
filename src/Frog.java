@@ -38,7 +38,7 @@ public class Frog extends PathfindingEnemy
     }
 
     @Override
-    public void update()
+    public void update(Map map)
     {
         move();
     }

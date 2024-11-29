@@ -130,7 +130,7 @@ public class Player extends Entity {
      * Updates the player's state based on input or game events.
      */
     @Override
-    public void update() {
+    public void update(Map map) {
         // Check if dead first, if dead then do endgame method in gameController
         // Example: Replace with actual keyboard input handling
         String buttonPressed = "X"; // Temporary placeholder

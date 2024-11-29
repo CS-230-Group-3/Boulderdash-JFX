@@ -7,7 +7,7 @@ public class Path extends Tile {
     }
 
     @Override
-    public void update() {
+    public void update(Map map) {
 
     }
 
