@@ -42,6 +42,8 @@ public class GameController {
      */
     public void displayMapFromFilePth(String filePath) {
         if (getMap() == null) {
+            //Only create a TimeController if there is a map.
+            new TimeController(this);
             this.map = saveLoadController.loadFromFile(filePath);
             graphicsController.drawGame(canvas, getMap());
         }
@@ -86,4 +88,19 @@ public class GameController {
         return map;
     }
 
+    /**
+     * Returns the canvas the games is displayed on.
+     * @return canvas object containing the game
+     */
+    public Canvas getCanvas() {
+        return canvas;
+    }
+
+    /**
+     * Returns the graphics controller for game.
+     * @return graphics controller instance
+     */
+    public GraphicsController getGraphicsController() {
+        return graphicsController;
+    }
 }
