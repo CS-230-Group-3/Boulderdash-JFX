@@ -15,6 +15,10 @@ public class GraphicsController {
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+
+        //Render background
+        drawBackGround(canvas, mapToDraw);
+
         for (GameObject object: mapToDraw.getObjects()) {
             if (!(object instanceof Player)) {
                 gc.drawImage(object.getSprite(),
@@ -43,4 +47,19 @@ public class GraphicsController {
             object.update(map);
         }
     }
+
+    private void drawBackGround(Canvas canvas, Map mapToCover) {
+        final String pathToBackGround = "resources/assets/path.png";
+        Image bgImage = new Image(pathToBackGround);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+
+        for (GameObject object: mapToCover.getObjects()) {
+            gc.drawImage(bgImage,
+                    object.getPosition().getX()
+                            * object.getSprite().getHeight(),
+                    object.getPosition().getY()
+                            * object.getSprite().getWidth());
+        }
+    }
+
 }

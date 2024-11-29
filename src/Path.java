@@ -1,6 +1,6 @@
 public class Path extends Tile {
 
-    private static final String FILE_PATH = "resources/assets/path.png";
+    private static final String FILE_PATH = "resources/assets/path_transparent.png";
 
     public Path() {
         super(FILE_PATH, new GridPosition(0, 0));

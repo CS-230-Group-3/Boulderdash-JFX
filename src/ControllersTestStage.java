@@ -12,8 +12,8 @@ public class ControllersTestStage extends Application {
         Group root = new Group();
 
         // Create a scene based on the pane.
-        Color bg = Color.web("#4B2C3D");
-        Scene scene = new Scene(root, 640, 400, bg);
+//        Color bg = Color.web("#4B2C3D");
+        Scene scene = new Scene(root, 640, 400, Color.GRAY);
 
 
         String levelOne = "src/resources/levels/level1.txt";
