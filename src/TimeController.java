@@ -25,7 +25,9 @@ public class TimeController {
 
     private void handleTick() {
         //💀
-        //TODO keep track of performed ticks
+        //keep track of performed ticks
+        tickCount++;
+
         gameController.getGraphicsController().updateGameObjectsOnMap(
                 gameController.getMap()
         );
@@ -34,5 +36,9 @@ public class TimeController {
                 gameController.getMap()
         );
 
+        //return the tick count
+        public int getTickCount() {
+            return tickCount;
+        }
     }
 }
