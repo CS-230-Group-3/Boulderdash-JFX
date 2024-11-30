@@ -5,6 +5,7 @@ public class GameController {
     private final Canvas canvas;
     private final SaveLoadController saveLoadController;
     private final GraphicsController graphicsController;
+    private TimeController timeController;
 
     private Map map; //Check w spas
 
@@ -43,7 +44,7 @@ public class GameController {
     public void displayMapFromFilePth(String filePath) {
         if (getMap() == null) {
             //Only create a TimeController if there is a map.
-            new TimeController(this);
+            this.timeController = new TimeController(this);
             this.map = saveLoadController.loadFromFile(filePath);
             graphicsController.drawGame(canvas, getMap());
         }
@@ -70,8 +71,10 @@ public class GameController {
                 player.move(Direction.DOWN);
                 break;
             case SPACE:
-                graphicsController.updateGameObjectsOnMap(map);
-                graphicsController.drawGame(canvas, map);
+//                graphicsController.updateGameObjectsOnMap(map);
+//                graphicsController.drawGame(canvas, map);
+            case ESCAPE:
+                timeController.handlePause();
             default:
                 // Do nothing for all other keys.
                 break;

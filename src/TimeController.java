@@ -4,8 +4,12 @@ import javafx.animation.Timeline;
 import javafx.util.Duration;
 
 public class TimeController {
-    final GameController gameController;
     private static final int MILLIS_BETWEEN_TICK = 200;
+    private final GameController gameController;
+    private final Timeline tickTimeline;
+    private boolean isPaused;
+
+    private int tickCount = 0;
 
     /**
      * Creates a new time controller, the game from the passed
@@ -14,8 +18,9 @@ public class TimeController {
      */
     public TimeController(GameController gameController) {
         this.gameController = gameController;
+        this.isPaused = false;
 
-        Timeline tickTimeline = new Timeline(
+        tickTimeline = new Timeline(
                 new KeyFrame(Duration.millis(MILLIS_BETWEEN_TICK),
                         event -> handleTick())
         );
@@ -24,7 +29,6 @@ public class TimeController {
     }
 
     private void handleTick() {
-        //💀
         //keep track of performed ticks
         tickCount++;
 
@@ -35,10 +39,26 @@ public class TimeController {
                 gameController.getCanvas(),
                 gameController.getMap()
         );
+    }
 
-        //return the tick count
-        public int getTickCount() {
-            return tickCount;
+    /**
+     * Pauses the games ticks if active,
+     * resumes otherwise.
+     */
+    public void handlePause() {
+        if (isPaused) {
+            tickTimeline.play();
+            isPaused = false;
+        } else {
+            tickTimeline.pause();
+            isPaused = true;
         }
+    }
+
+    /**
+     * @return Numbers of ticks since game start.
+     */
+    public int getTickCount() {
+        return tickCount;
     }
 }
