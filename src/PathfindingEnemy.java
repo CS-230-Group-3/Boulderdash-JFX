@@ -2,7 +2,7 @@ import java.util.*;
 
 // DOES NOT WORK ATM
 
-public abstract class PathfindingEnemy extends Entity {
+public abstract class PathfindingEnemy extends Enemy {
     Node start, end;
     ArrayList<Node> walkableTiles = new ArrayList<>();
     ArrayList<Node> walkedTiles = new ArrayList<>();
