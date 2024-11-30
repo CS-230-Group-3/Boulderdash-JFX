@@ -4,9 +4,10 @@ import javafx.animation.Timeline;
 import javafx.util.Duration;
 
 public class TimeController {
-    private static final int MILLIS_BETWEEN_TICK = 200;
+    private static final int MILLIS_BETWEEN_TICKS = 200;
     private final GameController gameController;
     private final Timeline tickTimeline;
+
     private boolean isPaused;
 
     private int tickCount = 0;
@@ -21,7 +22,7 @@ public class TimeController {
         this.isPaused = false;
 
         tickTimeline = new Timeline(
-                new KeyFrame(Duration.millis(MILLIS_BETWEEN_TICK),
+                new KeyFrame(Duration.millis(MILLIS_BETWEEN_TICKS),
                         event -> handleTick())
         );
         tickTimeline.setCycleCount(Animation.INDEFINITE);
@@ -39,6 +40,20 @@ public class TimeController {
                 gameController.getCanvas(),
                 gameController.getMap()
         );
+
+        //Check if player is dead or on top of an exit
+        Player player = gameController.getMap().getPlayerObjectReference();
+        if (!player.getLivingState()) {
+            handlePause();
+            System.out.println("Dead lol");
+        } else {
+            Exit exit = gameController.getMap().getExitObjectReference();
+            if (exit != null
+                    && player.getPosition().equals(exit.getPosition())) {
+                System.out.println("Wow you won, impressive :)");
+                handlePause();
+            }
+        }
     }
 
     /**
@@ -60,5 +75,12 @@ public class TimeController {
      */
     public int getTickCount() {
         return tickCount;
+    }
+
+    /**
+     * @return the state of the timeline
+     */
+    public boolean isPaused() {
+        return isPaused;
     }
 }

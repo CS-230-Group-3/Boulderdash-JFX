@@ -71,8 +71,8 @@ public class GameController {
                 player.move(Direction.DOWN);
                 break;
             case SPACE:
-//                graphicsController.updateGameObjectsOnMap(map);
-//                graphicsController.drawGame(canvas, map);
+                map.getPlayerObjectReference().die();
+                break;
             case ESCAPE:
                 timeController.handlePause();
             default:

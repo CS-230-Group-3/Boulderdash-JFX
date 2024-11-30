@@ -207,4 +207,11 @@ public class Player extends Entity {
     public void setDiamonds(int diamondsCollected) {
         this.diamonds = diamondsCollected;
     }
+
+    /**
+     * @return the current state of player
+     */
+    public Boolean getLivingState() {
+        return livingState;
+    }
 }
