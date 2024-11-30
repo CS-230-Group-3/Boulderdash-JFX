@@ -52,36 +52,38 @@ public class GameController {
 
     //Todo tmp here, will abstract to InputController
     public void handleEvent(KeyEvent event) {
-        Player player = getMap().getPlayerObjectReference();
-        switch (event.getCode()) {
-            case RIGHT:
-            case D:
-                player.move(Direction.RIGHT);
-                break;
-            case LEFT:
-            case A:
-                player.move(Direction.LEFT);
-                break;
-            case UP:
-            case W:
-                player.move(Direction.UP);
-                break;
-            case DOWN:
-            case S:
-                player.move(Direction.DOWN);
-                break;
-            case SPACE:
-                map.getPlayerObjectReference().die();
-                break;
-            case ESCAPE:
-                timeController.handlePause();
-            default:
-                // Do nothing for all other keys.
-                break;
-        }
-        graphicsController.drawGame(canvas, getMap());
+        if (!timeController.isPaused()) {
+            Player player = getMap().getPlayerObjectReference();
+            switch (event.getCode()) {
+                case RIGHT:
+                case D:
+                    player.move(Direction.RIGHT);
+                    break;
+                case LEFT:
+                case A:
+                    player.move(Direction.LEFT);
+                    break;
+                case UP:
+                case W:
+                    player.move(Direction.UP);
+                    break;
+                case DOWN:
+                case S:
+                    player.move(Direction.DOWN);
+                    break;
+                case SPACE:
+                    map.getPlayerObjectReference().die();
+                    break;
+                case ESCAPE:
+                    timeController.handlePause();
+                default:
+                    // Do nothing for all other keys.
+                    break;
+            }
+            graphicsController.drawGame(canvas, getMap());
 
-        event.consume();
+            event.consume();
+        }
     }
 
     /**

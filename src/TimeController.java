@@ -8,7 +8,7 @@ public class TimeController {
     private final GameController gameController;
     private final Timeline tickTimeline;
 
-    private boolean isPaused;
+    private static boolean isPaused;
 
     private int tickCount = 0;
 
@@ -19,7 +19,7 @@ public class TimeController {
      */
     public TimeController(GameController gameController) {
         this.gameController = gameController;
-        this.isPaused = false;
+        isPaused = false;
 
         tickTimeline = new Timeline(
                 new KeyFrame(Duration.millis(MILLIS_BETWEEN_TICKS),
