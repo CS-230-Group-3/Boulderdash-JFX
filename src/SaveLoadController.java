@@ -105,7 +105,7 @@ public class SaveLoadController {
             case "D":
             player.setDiamonds(amount);
             break;
-            //TODO define (our)Key class, fix keyChain in player
+            //TODO
 //            case 'K':
 //            player.setKeysCollected(amount);
 //            break;
@@ -129,6 +129,14 @@ public class SaveLoadController {
                 return new Dirt();
             case 'R':
                 return new Player();
+            case 'A':
+                return new Water();
+            case 'G':
+                return new MagicWall();
+            case 'T':
+                return new TitaniumWall();
+            case 'E':
+                return new Exit();
             default:
                 return new Path();
         }
@@ -154,14 +162,22 @@ public class SaveLoadController {
     //TODO Extend for each concrete GameObject
     private char getCharFromObject(GameObject object) {
         switch (object.getClass().getSimpleName()) {
-            case  "Path":
+            case "Path":
                 return 'P';
             case "Wall":
                 return 'W';
+            case "MagicWall":
+                return 'G';
+            case "TitaniumWall":
+                return 'T';
             case "Dirt":
                 return 'D';
             case "Player":
                 return 'R';
+            case "Water":
+                return 'A';
+            case "Exit":
+                return 'E';
             default:
                 return '*';
         }
