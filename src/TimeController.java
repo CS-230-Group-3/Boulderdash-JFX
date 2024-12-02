@@ -10,7 +10,7 @@ public class TimeController {
 
     private static boolean isPaused;
 
-    private int tickCount = 0;
+    private static int tickCount = 0;
 
     /**
      * Creates a new time controller, the game from the passed
@@ -73,7 +73,7 @@ public class TimeController {
     /**
      * @return Numbers of ticks since game start.
      */
-    public int getTickCount() {
+    public static int getTickCount() {
         return tickCount;
     }
 
