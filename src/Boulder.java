@@ -56,6 +56,7 @@ public class Boulder extends Entity {
 
     }
 
+    @Override
     public boolean collisionCheck() {
         return false;
     }
@@ -80,5 +81,10 @@ public class Boulder extends Entity {
     @Override
     public void move(Direction dir) {
 
+    }
+
+    @Override
+    public boolean collisionCheck(Direction dir) {
+        return false;
     }
 }

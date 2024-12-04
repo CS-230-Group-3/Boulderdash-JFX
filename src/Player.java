@@ -13,7 +13,7 @@ public class Player extends Entity {
     private static final String SPRITE_PATH = "resources/assets/player.png";
     private Boolean isUnderwater;
     private ArrayList<Key> keyChain = new ArrayList<>();
-    private int[] position = {0, 0}; // Default position, to avoid null references
+    private GridPosition position = new GridPosition(0, 0);
     // Note, change above to be gridPosition later once it comes up.
     private int diamonds;
 
@@ -83,21 +83,16 @@ public class Player extends Entity {
         System.out.println("You don't have the required key to unlock this door.");
     }
 
-//    /**
-//     * Retrieves the current position of the player.
-//     *
-//     * @return an array of integers representing the player's position (e.g., [x, y])
-//     */
-//    public int[] getPosition() {
-//        return position;
-//    }
+    public GridPosition getPosition() {
+        return position;
+    }
 
     /**
      * Sets the player's position.
      *
      * @param position the new position to set
      */
-    public void setPosition(int[] position) {
+    public void setPosition(GridPosition position) {
         this.position = position;
     }
 
@@ -108,21 +103,29 @@ public class Player extends Entity {
      */
     @Override
     public void move(final Direction dir) {
-        int x = position[0];
-        int y = position[1];
+        int x = position.getX();
+        int y = position.getY();
 
         if (dir == Direction.UP) {
             System.out.println("Going Up");
-            setPosition(new int[] {x, y + 1});
+            int[] delta = new int[] {x, y - 1}; // Flipped Y value. It hurts me too I know
+            position = new GridPosition(delta[0], delta[1]);
+            System.out.println("New position: " + position);
         } else if (dir == Direction.RIGHT) {
             System.out.println("Going Right");
-            setPosition(new int[] {x + 1, y});
+            int[] delta = new int[] {x + 1, y};
+            position = new GridPosition(delta[0], delta[1]);
+            System.out.println("New position: " + position);
         } else if (dir == Direction.DOWN) {
             System.out.println("Going Down");
-            setPosition(new int[] {x, y - 1});
+            int[] delta = new int[] {x, y+1}; // Flipped Y value. It hurts me too I know.
+            position = new GridPosition(delta[0], delta[1]);
+            System.out.println("New position: " + position);
         } else if (dir == Direction.LEFT) {
             System.out.println("Going Left");
-            setPosition(new int[] {x - 1, y});
+            int[] delta = new int[] {x - 1, y};
+            position = new GridPosition(delta[0], delta[1]);
+            System.out.println("New position: " + position);
         }
     }
 
@@ -140,14 +143,19 @@ public class Player extends Entity {
         collisionCheck();
     }
 
+    @Override
+    public boolean collisionCheck() {
+        return false;
+    }
+
     /**
      * Checks if the player is colliding with something.
      *
      * @return true if colliding, false otherwise
      */
     @Override
-    public boolean collisionCheck() {
-        return false;
+    public boolean collisionCheck(Direction dir) {
+        return true;
     }
 
     /**
