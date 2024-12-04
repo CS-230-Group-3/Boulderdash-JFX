@@ -16,7 +16,7 @@ public class GameController {
     private final GraphicsController graphicsController;
     private TimeController timeController;
 
-    private Map map; //Check w spas
+    private Map map;
 
     private int currentScene; //Maybe of type Scene instead?
 
