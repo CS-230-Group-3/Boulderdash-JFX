@@ -117,18 +117,6 @@ public class Map {
     }
 
     /**
-     * @return first instance of exit object if one exists, null otherwise
-     */
-    public Exit getExitObjectReference() {
-        for (GameObject object: getObjects()) {
-            if (object instanceof Exit) {
-                return (Exit) object;
-            }
-        }
-        return null;
-    }
-
-    /**
      * Returns the passed object's neighbour at the provided location,
      * if one exists, null otherwise.
      * @param object object to get neighbour of

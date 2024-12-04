@@ -20,12 +20,6 @@ public class GridPosition {
 
     }
 
-    /**
-     * Increases the positions x & y
-     * based on the passed positions x & y.
-     * @param offset grid position to add
-     * @return position after the increase
-     */
     public GridPosition add(GridPosition offset) {
         this.x = getX() + offset.getX();
         this.y = getY() + offset.getY();
@@ -40,19 +34,6 @@ public class GridPosition {
                 getX(),
                 getY()
         );
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-        if (!(obj instanceof GridPosition posToCompare)) {
-            return false;
-        }
-
-        return this.getX() == posToCompare.getX()
-                && this.getY() == posToCompare.getY();
     }
 
     /**

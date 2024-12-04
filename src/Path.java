@@ -4,8 +4,6 @@ public class Path extends Tile {
 
     public Path() {
         super(FILE_PATH, new GridPosition(0, 0));
-        walkable = true;
-        destroyable = false;
     }
 
     @Override

@@ -13,7 +13,7 @@ public class Player extends Entity {
     private static final String SPRITE_PATH = "resources/assets/player.png";
     private Boolean isUnderwater;
     private ArrayList<Key> keyChain = new ArrayList<>();
-    private GridPosition position = new GridPosition(0, 0);
+    private int[] position = {0, 0}; // Default position, to avoid null references
     // Note, change above to be gridPosition later once it comes up.
     private int diamonds;
 
@@ -83,16 +83,21 @@ public class Player extends Entity {
         System.out.println("You don't have the required key to unlock this door.");
     }
 
-    public GridPosition getPosition() {
-        return position;
-    }
+//    /**
+//     * Retrieves the current position of the player.
+//     *
+//     * @return an array of integers representing the player's position (e.g., [x, y])
+//     */
+//    public int[] getPosition() {
+//        return position;
+//    }
 
     /**
      * Sets the player's position.
      *
      * @param position the new position to set
      */
-    public void setPosition(GridPosition position) {
+    public void setPosition(int[] position) {
         this.position = position;
     }
 
@@ -101,47 +106,24 @@ public class Player extends Entity {
      *
      * @param dir the direction to move (UP, RIGHT, DOWN, or LEFT)
      */
-
-    public void move(final Direction dir, final Map map) {
-        int x = position.getX();
-        int y = position.getY();
+    @Override
+    public void move(final Direction dir) {
+        int x = position[0];
+        int y = position[1];
 
         if (dir == Direction.UP) {
-            if (collisionCheck(dir, map)) { // Needs map
-                System.out.println("Going Up");
-                int[] delta = new int[]{x, y - 1}; // Flipped Y value. It hurts me too I know
-                position = new GridPosition(delta[0], delta[1]);
-                System.out.println("New position: " + position);
-            }
-            else {
-                System.out.println("Cannot go up - wall blocking user");
-            }
+            System.out.println("Going Up");
+            setPosition(new int[] {x, y + 1});
         } else if (dir == Direction.RIGHT) {
             System.out.println("Going Right");
-            int[] delta = new int[] {x + 1, y};
-            position = new GridPosition(delta[0], delta[1]);
-            System.out.println("New position: " + position);
+            setPosition(new int[] {x + 1, y});
         } else if (dir == Direction.DOWN) {
             System.out.println("Going Down");
-            int[] delta = new int[] {x, y+1}; // Flipped Y value. It hurts me too I know.
-            position = new GridPosition(delta[0], delta[1]);
-            System.out.println("New position: " + position);
+            setPosition(new int[] {x, y - 1});
         } else if (dir == Direction.LEFT) {
             System.out.println("Going Left");
-            int[] delta = new int[] {x - 1, y};
-            position = new GridPosition(delta[0], delta[1]);
-            System.out.println("New position: " + position);
+            setPosition(new int[] {x - 1, y});
         }
-    }
-
-    @Override
-    public void move(Direction dir) {
-
-    }
-
-    @Override
-    public boolean collisionCheck(Direction dir) {
-        return false;
     }
 
     /**
@@ -158,36 +140,14 @@ public class Player extends Entity {
         collisionCheck();
     }
 
-    @Override
-    public boolean collisionCheck() {
-        return false;
-    }
-
     /**
      * Checks if the player is colliding with something.
-     * @param dir The direction
+     *
      * @return true if colliding, false otherwise
      */
     @Override
-    public boolean collisionCheck(Direction dir, Map map) { // DOUBLE CHECK THIS WORKS
-        switch (dir) {
-            case UP: // If square up can be walked through or not
-                GridPosition upDelta = new GridPosition(0,1);
-                GridPosition upwardsPosition = position.add(upDelta);
-
-                if (map.getObjectAt((upwardsPosition)) instanceof Tile) {
-                    Tile upwardsTile = (Tile) map.getObjectAt(upwardsPosition);
-                    if (upwardsTile.isWalkable()){
-                        System.out.println("Can walk up yippee");
-                        return false;
-                    }
-                }
-                else{
-                    System.out.println("Not instance of tile apparently");
-                }
-
-        }
-        return true;
+    public boolean collisionCheck() {
+        return false;
     }
 
     /**
@@ -246,12 +206,5 @@ public class Player extends Entity {
      */
     public void setDiamonds(int diamondsCollected) {
         this.diamonds = diamondsCollected;
-    }
-
-    /**
-     * @return the current state of player
-     */
-    public Boolean getLivingState() {
-        return livingState;
     }
 }

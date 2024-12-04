@@ -1,4 +1,6 @@
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -7,8 +9,6 @@ import java.util.Scanner;
  * @author Yuliia & Spas
  */
 public class SaveLoadController {
-    private static final String PATH_TO_DATA_CLASS_SAVE =
-            "src/resources/data/data.bin";
 
     /**
      * Loads map data from file.
@@ -90,43 +90,8 @@ public class SaveLoadController {
         }
     }
 
-    /**
-     * Saves provided data into binary file, preserving it's state.
-     * @param dataToSave data object to save
-     */
-    public static void saveData(Data dataToSave) throws IOException {
-        FileOutputStream fileOutputStream =
-                new FileOutputStream(PATH_TO_DATA_CLASS_SAVE);
-        ObjectOutputStream objectOutputStream =
-                new ObjectOutputStream(fileOutputStream);
-
-        objectOutputStream.writeObject(dataToSave);
-
-        fileOutputStream.close();
-        objectOutputStream.close();
-    }
-
-    /**
-     * Loads the Data class from file.
-     * @return data with preserved state from last save
-     */
-    public static Data loadData() throws IOException, ClassNotFoundException {
-        Data data = null;
-
-        FileInputStream fileInputStream =
-                new FileInputStream(PATH_TO_DATA_CLASS_SAVE);
-        ObjectInputStream outputStream =
-                new ObjectInputStream(fileInputStream);
-
-        data = (Data) outputStream.readObject();
-
-        fileInputStream.close();
-        outputStream.close();
-
-        return data;
-    }
-
     //Loading helpers
+
     private Player getPlayerFromList(ArrayList<GameObject> objects) {
         for (GameObject object: objects) {
             if (object instanceof Player) {
@@ -140,7 +105,7 @@ public class SaveLoadController {
             case "D":
             player.setDiamonds(amount);
             break;
-            //TODO
+            //TODO define (our)Key class, fix keyChain in player
 //            case 'K':
 //            player.setKeysCollected(amount);
 //            break;
@@ -164,14 +129,6 @@ public class SaveLoadController {
                 return new Dirt();
             case 'R':
                 return new Player();
-            case 'A':
-                return new Water();
-            case 'G':
-                return new MagicWall();
-            case 'T':
-                return new TitaniumWall();
-            case 'E':
-                return new Exit();
             default:
                 return new Path();
         }
@@ -197,22 +154,14 @@ public class SaveLoadController {
     //TODO Extend for each concrete GameObject
     private char getCharFromObject(GameObject object) {
         switch (object.getClass().getSimpleName()) {
-            case "Path":
+            case  "Path":
                 return 'P';
             case "Wall":
                 return 'W';
-            case "MagicWall":
-                return 'G';
-            case "TitaniumWall":
-                return 'T';
             case "Dirt":
                 return 'D';
             case "Player":
                 return 'R';
-            case "Water":
-                return 'A';
-            case "Exit":
-                return 'E';
             default:
                 return '*';
         }
