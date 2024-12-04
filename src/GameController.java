@@ -66,19 +66,19 @@ public class GameController {
             switch (event.getCode()) {
                 case RIGHT:
                 case D:
-                    player.move(Direction.RIGHT);
+                    player.move(Direction.RIGHT, getMap());
                     break;
                 case LEFT:
                 case A:
-                    player.move(Direction.LEFT);
+                    player.move(Direction.LEFT, getMap());
                     break;
                 case UP:
                 case W:
-                    player.move(Direction.UP);
+                    player.move(Direction.UP, getMap());
                     break;
                 case DOWN:
                 case S:
-                    player.move(Direction.DOWN);
+                    player.move(Direction.DOWN, getMap());
                     break;
                 case SPACE:
                     map.getPlayerObjectReference().die();

@@ -101,17 +101,21 @@ public class Player extends Entity {
      *
      * @param dir the direction to move (UP, RIGHT, DOWN, or LEFT)
      */
-    @Override
-    public void move(final Direction dir) {
+
+    public void move(final Direction dir, final Map map) {
         int x = position.getX();
         int y = position.getY();
 
         if (dir == Direction.UP) {
-            System.out.println("Going Up");
-            collisionCheck(dir);
-            int[] delta = new int[] {x, y - 1}; // Flipped Y value. It hurts me too I know
-            position = new GridPosition(delta[0], delta[1]);
-            System.out.println("New position: " + position);
+            if (collisionCheck(dir, map)) { // Needs map
+                System.out.println("Going Up");
+                int[] delta = new int[]{x, y - 1}; // Flipped Y value. It hurts me too I know
+                position = new GridPosition(delta[0], delta[1]);
+                System.out.println("New position: " + position);
+            }
+            else {
+                System.out.println("Cannot go up - wall blocking user");
+            }
         } else if (dir == Direction.RIGHT) {
             System.out.println("Going Right");
             int[] delta = new int[] {x + 1, y};
@@ -128,6 +132,11 @@ public class Player extends Entity {
             position = new GridPosition(delta[0], delta[1]);
             System.out.println("New position: " + position);
         }
+    }
+
+    @Override
+    public void move(Direction dir) {
+
     }
 
     @Override
@@ -160,7 +169,7 @@ public class Player extends Entity {
      * @return true if colliding, false otherwise
      */
     @Override
-    public boolean collisionCheck(Direction dir, Map map) {
+    public boolean collisionCheck(Direction dir, Map map) { // DOUBLE CHECK THIS WORKS
         switch (dir) {
             case UP: // If square up can be walked through or not
                 GridPosition upDelta = new GridPosition(0,1);
@@ -170,12 +179,15 @@ public class Player extends Entity {
                     Tile upwardsTile = (Tile) map.getObjectAt(upwardsPosition);
                     if (upwardsTile.isWalkable()){
                         System.out.println("Can walk up yippee");
-                        return true;
+                        return false;
                     }
-            }
+                }
+                else{
+                    System.out.println("Not instance of tile apparently");
+                }
 
         }
-        return false;
+        return true;
     }
 
     /**
