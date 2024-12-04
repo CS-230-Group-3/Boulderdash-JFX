@@ -9,8 +9,8 @@
 
 public abstract class Tile extends GameObject {
 
-    private boolean walkable;
-    private boolean destroyable;
+    protected boolean walkable;
+    protected boolean destroyable;
 
     /**
      * Creates a new tile.
@@ -26,7 +26,7 @@ public abstract class Tile extends GameObject {
      * @return true if the tile is walkable, false if not.
      */
     protected boolean isWalkable() {
-        return this.walkable;
+        return walkable;
     }
 
     /**

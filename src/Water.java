@@ -8,8 +8,18 @@ public class Water extends Tile {
 
     @Override
     public void update(Map map) {
-        //get east, south, west neighbours
-        //if there's a path tile, game controller spawns a new water tile there
+        if (map.getNeighbourOf(this, Direction.DOWN) instanceof Path) {
+            this.flow(map.getNeighbourOf(this, Direction.DOWN));
+        }
+
+        if (map.getNeighbourOf(this, Direction.LEFT) instanceof Path) {
+            this.flow(map.getNeighbourOf(this, Direction.LEFT));
+        }
+
+        if (map.getNeighbourOf(this, Direction.RIGHT) instanceof Path) {
+            this.flow(map.getNeighbourOf(this, Direction.RIGHT));
+        }
+
         //play sound
     }
 
@@ -23,4 +33,9 @@ public class Water extends Tile {
 
     @Override
     public void delete() {}
+
+    public void flow(GameObject tile) {
+        //spawn water at specified tile
+    }
+
 }

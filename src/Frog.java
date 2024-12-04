@@ -3,98 +3,74 @@
  * Delete and 3 Collision functions.</p>
  *
  * @author Joseph Parish.
- * @version 1.0.1
- * Last Changed: 26/11/24
+ * @version 1.0.2
+ * Last Changed: 30/11/24
  */
-public class Frog extends PathfindingEnemy
-{
-    private int[] pos;
-    private String pathToSprite;
+public class Frog extends PathfindingEnemy {
 
-    public Frog(int[] pos)
-    {
-        this.pos = pos;
-        this.pathToSprite = "frog_sprite.png";
+    /**
+     * Constructor to create a new Frog instance with a given starting position.
+     * @param position the initial grid position of the frog.
+     */
+    public Frog(GridPosition position) {
+        // Call the superclass constructor with sprite path and initial position
+        super("frog_sprite.png", position);
     }
 
     /**
-     * Retrieves the current position of the frog.
-     *
-     * @return an array of integers representing the frog's position (e.g., [x, y])
+     * Updates the frog's state. This method is called every tick to perform actions such as moving the frog.
      */
-    public int[] getPosition()
-    {
-        return this.pos;
-    }
-
-    /**
-     * Retrieves the sprite path of the frog.
-     *
-     * @return an array of char representing the frog's position (e.g., [x, y])
-     */
-    public String getPathToSprite()
-    {
-        return this.pathToSprite;
-    }
-
     @Override
-    public void update(Map map)
-    {
+    public void update() {
         move();
     }
 
+    /**
+     * Checks for potential collisions at a given position.
+     * This method checks if the frog collides with the player or an impassable tile.
+     *
+     * @param position the position to check for a collision.
+     * @return boolean indicating whether there is a collision.
+     */
     @Override
-    public boolean collisionCheck(int[] pos)
-    {
-
+    public boolean collisionCheck(int[] position) {
+        //  if (position == Player.getPosition()) {
+        //      // Player.setLivingState(False);
+        //      return true;
+        //  } else if (!GameController.getMap().getGameObjectAt(position).isWalkable()) {
+        //      return true;
+        //  } else {
+        //      return false;
+        //  }
     }
 
+    /**
+     * Moves the frog based on pathfinding logic. This method uses an algorithm called A* to find
+     * a path towards the player and update the frog's position accordingly.
+     */
     @Override
-    public void onCollision(GameObject collidingObject)
-    {
-        // Handle frog collision (to be implemented)
-    }
-
-    @Override
-    public void playerCollisionCheck(boolean isColliding)
-    {
-        // Check if the frog collides with player (to be implemented)
-        if (isColliding)
-        {
-            if (pos[0] == Player.getPosition()[0] && pos[1] == Player.getPosition()[1])
-            {
-                onPlayerCollision();
-            }
-            else
-            {
-                onCollision();
-            }
-        }
-    }
-
-    @Override
-    public void onPlayerCollision()
-    {
-        // Player.setLivingState(False);
-    }
-
-    @Override
-    public void delete()
-    {
-        // Delete the frog object (to be implemented)
-    }
-
-    @Override
-    public void move()
-    {
+    public void move() {
         //List<int[]> path = AStarAlgorithm(GameController.getMap, pos[0], pos[1], Player.getPosition[0], Player.getPosition[1]);
 
         //if (path != null && !path.isEmpty())
         //{
         //    if(!collisionCheck(path.get(0)))
         //    {
-        //          position = path.get(0);
+        //          if(!collisionCheck(path.get(0))) {
+        //              position = path.get(0);
+        //          } else {
+        //              System.out.println("Frog Collision");
+        //          }
         //    }
         //}
+    }
+
+    /**
+     * Deletes the frog object from the game.
+     */
+    @Override
+    public void delete() {
+        // Logic to remove the frog object (e.g., freeing resources) would go here
+        System.out.println("Frog deleted");
     }
 }

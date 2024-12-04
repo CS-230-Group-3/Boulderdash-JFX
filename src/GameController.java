@@ -1,12 +1,22 @@
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyEvent;
 
+/**
+ * GameController class is responsible for managing the core logic of the game. It
+ * renders the game on the canvas, handles player input, calls for saving, loading,
+ * graphics and rendering
+ * @author Spas and Bailey (and likely others remember to edit)
+ * @version 1.0.1
+ * Last changed: 03/12/2024N
+ */
+
 public class GameController {
     private final Canvas canvas;
     private final SaveLoadController saveLoadController;
     private final GraphicsController graphicsController;
+    private TimeController timeController;
 
-    private Map map;
+    private Map map; //Check w spas
 
     private int currentScene; //Maybe of type Scene instead?
 
@@ -43,7 +53,7 @@ public class GameController {
     public void displayMapFromFilePth(String filePath) {
         if (getMap() == null) {
             //Only create a TimeController if there is a map.
-            new TimeController(this);
+            this.timeController = new TimeController(this);
             this.map = saveLoadController.loadFromFile(filePath);
             graphicsController.drawGame(canvas, getMap());
         }
@@ -51,34 +61,38 @@ public class GameController {
 
     //Todo tmp here, will abstract to InputController
     public void handleEvent(KeyEvent event) {
-        Player player = getMap().getPlayerObjectReference();
-        switch (event.getCode()) {
-            case RIGHT:
-            case D:
-                player.move(Direction.RIGHT);
-                break;
-            case LEFT:
-            case A:
-                player.move(Direction.LEFT);
-                break;
-            case UP:
-            case W:
-                player.move(Direction.UP);
-                break;
-            case DOWN:
-            case S:
-                player.move(Direction.DOWN);
-                break;
-            case SPACE:
-                graphicsController.updateGameObjectsOnMap(map);
-                graphicsController.drawGame(canvas, map);
-            default:
-                // Do nothing for all other keys.
-                break;
-        }
-        graphicsController.drawGame(canvas, getMap());
+        if (!timeController.isPaused()) {
+            Player player = getMap().getPlayerObjectReference();
+            switch (event.getCode()) {
+                case RIGHT:
+                case D:
+                    player.move(Direction.RIGHT, getMap());
+                    break;
+                case LEFT:
+                case A:
+                    player.move(Direction.LEFT, getMap());
+                    break;
+                case UP:
+                case W:
+                    player.move(Direction.UP, getMap());
+                    break;
+                case DOWN:
+                case S:
+                    player.move(Direction.DOWN, getMap());
+                    break;
+                case SPACE:
+                    map.getPlayerObjectReference().die();
+                    break;
+                case ESCAPE:
+                    timeController.handlePause();
+                default:
+                    // Do nothing for all other keys.
+                    break;
+            }
+            graphicsController.drawGame(canvas, getMap());
 
-        event.consume();
+            event.consume();
+        }
     }
 
     /**
