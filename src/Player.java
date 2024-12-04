@@ -108,6 +108,7 @@ public class Player extends Entity {
 
         if (dir == Direction.UP) {
             System.out.println("Going Up");
+            collisionCheck(dir);
             int[] delta = new int[] {x, y - 1}; // Flipped Y value. It hurts me too I know
             position = new GridPosition(delta[0], delta[1]);
             System.out.println("New position: " + position);
@@ -127,6 +128,11 @@ public class Player extends Entity {
             position = new GridPosition(delta[0], delta[1]);
             System.out.println("New position: " + position);
         }
+    }
+
+    @Override
+    public boolean collisionCheck(Direction dir) {
+        return false;
     }
 
     /**
@@ -150,12 +156,26 @@ public class Player extends Entity {
 
     /**
      * Checks if the player is colliding with something.
-     *
+     * @param dir The direction
      * @return true if colliding, false otherwise
      */
     @Override
-    public boolean collisionCheck(Direction dir) {
-        return true;
+    public boolean collisionCheck(Direction dir, Map map) {
+        switch (dir) {
+            case UP: // If square up can be walked through or not
+                GridPosition upDelta = new GridPosition(0,1);
+                GridPosition upwardsPosition = position.add(upDelta);
+
+                if (map.getObjectAt((upwardsPosition)) instanceof Tile) {
+                    Tile upwardsTile = (Tile) map.getObjectAt(upwardsPosition);
+                    if (upwardsTile.isWalkable()){
+                        System.out.println("Can walk up yippee");
+                        return true;
+                    }
+            }
+
+        }
+        return false;
     }
 
     /**

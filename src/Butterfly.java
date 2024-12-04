@@ -17,6 +17,11 @@ public class Butterfly extends Entity {
     }
 
     @Override
+    public boolean collisionCheck(Direction dir, Map map) {
+        return false;
+    }
+
+    @Override
     public void update(Map map) {
 
     }

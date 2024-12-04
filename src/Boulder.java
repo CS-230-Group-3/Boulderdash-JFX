@@ -87,4 +87,9 @@ public class Boulder extends Entity {
     public boolean collisionCheck(Direction dir) {
         return false;
     }
+
+    @Override
+    public boolean collisionCheck(Direction dir, Map map) {
+        return false;
+    }
 }

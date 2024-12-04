@@ -23,4 +23,6 @@ public abstract class Entity extends GameObject {
     public abstract void move(Direction dir);
 
     public abstract boolean collisionCheck(Direction dir);
+
+    public abstract boolean collisionCheck(Direction dir, Map map);
 }
