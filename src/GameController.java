@@ -1,6 +1,15 @@
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyEvent;
 
+/**
+ * GameController class is responsible for managing the core logic of the game. It
+ * renders the game on the canvas, handles player input, calls for saving, loading,
+ * graphics and rendering
+ * @author Spas and Bailey (and likely others remember to edit)
+ * @version 1.0.1
+ * Last changed: 03/12/2024N
+ */
+
 public class GameController {
     private final Canvas canvas;
     private final SaveLoadController saveLoadController;
