@@ -17,25 +17,23 @@ public class GraphicsController {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
         //Render background
-        drawBackground(canvas, mapToDraw);
-
-        for (GameObject object: mapToDraw.getObjects()) {
-            if (!(object instanceof Player)) {
-                gc.drawImage(object.getSprite(),
-                        object.getPosition().getX()
-                                * object.getSprite().getHeight(),
-                        object.getPosition().getY()
-                                * object.getSprite().getWidth());
-            }
+        for (GameObject object: mapToDraw.getTileLayer()) {
+            gc.drawImage(object.getSprite(),
+                    object.getPosition().getX()
+                            * object.getSprite().getHeight(),
+                    object.getPosition().getY()
+                            * object.getSprite().getWidth());
         }
-        //Render player last to prevent Z-ordering issues
-        Player player = mapToDraw.getPlayerObjectReference();
-        Image playerSprite = player.getSprite();
-        gc.drawImage(playerSprite,
-                player.getPosition().getX()
-                        * playerSprite.getHeight(),
-                player.getPosition().getY()
-                        * playerSprite.getWidth());
+
+        for (GameObject object: mapToDraw.getEntityLayer()) {
+            gc.drawImage(object.getSprite(),
+                    object.getPosition().getX()
+                            * object.getSprite().getHeight(),
+                    object.getPosition().getY()
+                            * object.getSprite().getWidth());
+        }
+
+
     }
 
     /**
@@ -43,7 +41,10 @@ public class GraphicsController {
      * @param map map to update
      */
     public void updateGameObjectsOnMap(Map map) {
-        for (GameObject object: map.getObjects()) {
+        for (GameObject object: map.getTileLayer()) {
+            object.update(map);
+        }
+        for (GameObject object: map.getEntityLayer()) {
             object.update(map);
         }
     }

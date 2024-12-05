@@ -11,7 +11,8 @@ public class Map {
     private final int mapWidth;
     private final int mapHeight;
 
-    private ArrayList<GameObject> objects;
+    private ArrayList<GameObject> tileLayer;
+    private ArrayList<GameObject> entityLayer;
 
     /**
      * Create a new map with empty game objects.
@@ -19,29 +20,17 @@ public class Map {
      * @param newMapHeight height of the map
      */
     public Map(int newMapWidth, int newMapHeight) {
-        objects = new ArrayList<>();
+        tileLayer = new ArrayList<>();
+        entityLayer = new ArrayList<>();
         this.mapWidth = newMapWidth;
         this.mapHeight = newMapHeight;
-
-        populateWithEmptyObjects();
     }
 
-    /**
-     * Sets the map's objects to the passed list,
-     * assigning appropriate grid position for each game object.
-     * @param objectsToSet the object to set
-     */
-    public void setAllObjectsTo(ArrayList<GameObject> objectsToSet) {
-        //Simple error check
-        if (getObjects().size() == objectsToSet.size()) {
-            //Change positions of objects based on their index in list
-            for (int i = 0; i < objectsToSet.size(); i++) {
-                objectsToSet.get(i).setPosition(
-                        indexToGrid(i)
-                );
-            }
-            setObjects(objectsToSet);
-        }
+    public void setLayersTo(
+            ArrayList<GameObject> tileLayer,
+            ArrayList<GameObject> entityLayer) {
+        this.tileLayer = tileLayer;
+        this.entityLayer = entityLayer;
     }
 
     /**
@@ -50,20 +39,16 @@ public class Map {
      * @return Object at the coordinate
      */
     public GameObject getObjectAt(GridPosition coordinate) {
+        for (GameObject object: entityLayer) {
+            if (object.getPosition().equals(coordinate)) {
+                return object;
+            }
+        }
         int index = gridToIndex(coordinate);
         if (index == -1) {
             return null;
         }
-        return getObjects().get(index);
-    }
-
-    /**
-     * Place game object on the map, based on its position.
-     * @param gameObject object to place
-     */
-    public void placeObjectOnMap(GameObject gameObject) {
-        int index = gridToIndex(gameObject.getPosition());
-        getObjects().set(index, gameObject);
+        return tileLayer.get(index);
     }
 
     /**
@@ -78,14 +63,6 @@ public class Map {
                 index % getMapWidth(),
                 index / getMapWidth()
         );
-    }
-
-    /**
-     * Returns list of game objects on the map.
-     * @return list of game objects
-     */
-    public ArrayList<GameObject> getObjects() {
-        return objects;
     }
 
     /**
@@ -108,7 +85,7 @@ public class Map {
      * @return first instance of player object if one exists, null otherwise
      */
     public Player getPlayerObjectReference() {
-        for (GameObject object: getObjects()) {
+        for (GameObject object: entityLayer) {
             if (object instanceof Player) {
                 return (Player) object;
             }
@@ -120,7 +97,7 @@ public class Map {
      * @return first instance of exit object if one exists, null otherwise
      */
     public Exit getExitObjectReference() {
-        for (GameObject object: getObjects()) {
+        for (GameObject object: getTileLayer()) {
             if (object instanceof Exit) {
                 return (Exit) object;
             }
@@ -149,6 +126,27 @@ public class Map {
 
     }
 
+    /**
+     * Maps the index at the passed grid position
+     * to linear array index.
+     * @param mapCoordinate coordinate to return the index of
+     * @return an int representing array index based on the size of the map.
+     */
+    public int gridToIndex(GridPosition mapCoordinate) {
+        if (!isInBounds(mapCoordinate)) {
+            return -1;
+        }
+        return mapCoordinate.getY() * getMapWidth() + mapCoordinate.getX();
+    }
+
+    public ArrayList<GameObject> getTileLayer() {
+        return tileLayer;
+    }
+
+    public ArrayList<GameObject> getEntityLayer() {
+        return entityLayer;
+    }
+
     private GridPosition directionToOffset(Direction dir) {
         return switch (dir) {
             case RIGHT -> new GridPosition(1, 0);
@@ -158,27 +156,6 @@ public class Map {
             default -> new GridPosition(0, 1);
         };
 
-    }
-
-    private void populateWithEmptyObjects() {
-        for (int maxMapPositions = 0;
-             maxMapPositions < getMapHeight() * getMapWidth();
-             maxMapPositions++) {
-            getObjects().add(null);
-        }
-
-    }
-
-    private void setObjects(ArrayList<GameObject> objects) {
-        this.objects = objects;
-    }
-
-    //Uses Row major order index
-    private int gridToIndex(GridPosition mapCoordinate) {
-        if (!isInBounds(mapCoordinate)) {
-            return -1;
-        }
-        return mapCoordinate.getY() * getMapWidth() + mapCoordinate.getX();
     }
 
     private boolean isInBounds(GridPosition coordinate) {
