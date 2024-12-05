@@ -106,32 +106,36 @@ public class Player extends Entity {
         int x = position.getX();
         int y = position.getY();
 
-        if (dir == Direction.UP) {
-            if (collisionCheck(dir, map)) { // Needs map
+        if (collissionCheck(dir, map)){
+            System.out.println("Cannot move there, blocked.");
+        } else {
+            if (dir == Direction.UP) {
                 System.out.println("Going Up");
                 int[] delta = new int[]{x, y - 1}; // Flipped Y value. It hurts me too I know
                 position = new GridPosition(delta[0], delta[1]);
                 System.out.println("New position: " + position);
+            } else if (dir == Direction.RIGHT) {
+                System.out.println("Going Right");
+                int[] delta = new int[] {x + 1, y};
+                position = new GridPosition(delta[0], delta[1]);
+                System.out.println("New position: " + position);
+
+
+            } else if (dir == Direction.DOWN) {
+                System.out.println("Going Down");
+                int[] delta = new int[] {x, y+1}; // Flipped Y value. It hurts me too I know.
+                position = new GridPosition(delta[0], delta[1]);
+                System.out.println("New position: " + position);
+
+            } else if (dir == Direction.LEFT) {
+                System.out.println("Going Left");
+                int[] delta = new int[] {x - 1, y};
+                position = new GridPosition(delta[0], delta[1]);
+                System.out.println("New position: " + position);
             }
-            else {
-                System.out.println("Cannot go up - wall blocking user");
-            }
-        } else if (dir == Direction.RIGHT) {
-            System.out.println("Going Right");
-            int[] delta = new int[] {x + 1, y};
-            position = new GridPosition(delta[0], delta[1]);
-            System.out.println("New position: " + position);
-        } else if (dir == Direction.DOWN) {
-            System.out.println("Going Down");
-            int[] delta = new int[] {x, y+1}; // Flipped Y value. It hurts me too I know.
-            position = new GridPosition(delta[0], delta[1]);
-            System.out.println("New position: " + position);
-        } else if (dir == Direction.LEFT) {
-            System.out.println("Going Left");
-            int[] delta = new int[] {x - 1, y};
-            position = new GridPosition(delta[0], delta[1]);
-            System.out.println("New position: " + position);
         }
+
+
     }
 
     @Override
@@ -142,6 +146,22 @@ public class Player extends Entity {
     @Override
     public boolean collisionCheck(Direction dir) {
         return false;
+    }
+
+    private boolean collissionCheck(Direction dir, Map map) {
+        GridPosition playerPosition = position;
+        GridPosition desiredPosition = switch (dir) {
+            case UP -> new GridPosition(playerPosition.getX(), playerPosition.getY() - 1);
+            case RIGHT -> new GridPosition(playerPosition.getX() + 1, playerPosition.getY());
+            case DOWN -> new GridPosition(playerPosition.getX(), playerPosition.getY() + 1);
+            case LEFT -> new GridPosition(playerPosition.getX() - 1, playerPosition.getY());
+        };
+        if (map.getObjectAt(desiredPosition) instanceof Path){
+            return false;
+        }
+        else {
+            return true;
+        }
     }
 
     /**
