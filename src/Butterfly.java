@@ -19,6 +19,16 @@ public class Butterfly extends Enemy {
     }
 
     @Override
+    public boolean collisionCheck(Direction dir) {
+        return false;
+    }
+
+    @Override
+    public boolean collisionCheck(Direction dir, Map map) {
+        return false;
+    }
+
+    @Override
     public boolean collisionCheck() {
         return false;
     }

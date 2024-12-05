@@ -59,6 +59,16 @@ public class Item extends Entity {
     @Override
     public void move(Direction dir) {}
 
+    @Override
+    public boolean collisionCheck(Direction dir) {
+        return false;
+    }
+
+    @Override
+    public boolean collisionCheck(Direction dir, Map map) {
+        return false;
+    }
+
     public boolean isFalling() {
         return this.falling;
     }
