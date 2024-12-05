@@ -1,95 +1,39 @@
-public class Boulder extends Entity {
+public class Boulder extends Item {
 
     private static final String FILE_PATH = "resources/assets/boulder.png";
-    private boolean falling = false;
 
     public Boulder() {
         super(FILE_PATH, new GridPosition(0, 0));
     }
 
-
-    @Override
-    public void update(Map map) {}
-
-    public void update(Map map, Player player) {
-
+    public void update(Map map) {
         GameObject downNeighbour = map.getNeighbourOf(this, Direction.DOWN);
+
+        this.fall(map);
+        this.roll(map);
+
+        if (downNeighbour instanceof MagicWall) {
+            this.delete();
+            //spawn gem under magic wall
+        }
+    }
+
+    public void push(Map map, Direction direction) {
         GameObject rightNeighbour = map.getNeighbourOf(this, Direction.RIGHT);
         GameObject leftNeighbour = map.getNeighbourOf(this, Direction.LEFT);
 
-        if (this.isFalling()) {
-            //If path, just move down
-            if (downNeighbour instanceof Path) {
-                this.move(Direction.DOWN);
-
-                //If player, kill player and move down
-            } else if (downNeighbour instanceof Player) {
-                player.die();
-                this.move(Direction.DOWN);
-
-                //If enemy, kill enemy and move down
-            } else if (downNeighbour instanceof Enemy) {
-                downNeighbour.delete();
-                this.move(Direction.DOWN);
-
-                //If magic wall, delete boulder and spawn gem
-            } else if (downNeighbour instanceof MagicWall) {
-                this.delete();
-                //spawn gem below magic wall
-
-                //If it's anything else, boulder lands and stops falling
-            } else {
-                this.setFalling(false);
+        if (direction == Direction.RIGHT) {
+            if (rightNeighbour instanceof Path) {
+                this.move(Direction.RIGHT);
+            }
+        } else if (direction == Direction.LEFT) {
+            if (leftNeighbour instanceof Path) {
+                this.move(Direction.LEFT);
             }
         }
-
-        //pushing logic:
-        //if player is pushing and there is an empty path to be pushed into, get pushed
-        //
-        //rolling logic:
-        //if south neighour is round tile (wall, gem, boulder)
-        //if east or west neighbours are paths and the tiles below them are paths
-        //roll to the east or west
     }
 
     public void delete() {
-
-    }
-
-    @Override
-    public boolean collisionCheck() {
-        return false;
-    }
-
-    @Override
-    public void onCollision(GameObject collidingObject) {
-
-    }
-
-    public void onCollision() {
-
-    }
-
-    public boolean isFalling() {
-        return this.falling;
-    }
-
-    public void setFalling(boolean fallingStatus) {
-        this.falling = fallingStatus;
-    }
-
-    @Override
-    public void move(Direction dir) {
-
-    }
-
-    @Override
-    public boolean collisionCheck(Direction dir) {
-        return false;
-    }
-
-    @Override
-    public boolean collisionCheck(Direction dir, Map map) {
-        return false;
+        //play transformation sound
     }
 }

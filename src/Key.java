@@ -5,14 +5,20 @@
  * @version 1.0.2
  * Last changed: 25/11/2024
  */
-
 import java.util.Objects;
 
-public class Key {
+public class Key extends Item {
+
+    private static final String FILE_PATH = "resources/assets/key.png";
     private final int id;
 
     public Key() {
+        super(FILE_PATH, new GridPosition(0, 0));
         this.id = Objects.hash(this); // Generate a unique hash for this key
+    }
+
+    public void update(Map map) {
+        this.fall(map);
     }
 
     /**
@@ -24,13 +30,7 @@ public class Key {
         return id;
     }
 
-    /**
-     * Formats information about the key into a string and returns it
-     *
-     * @return a string representation of e
-     */
-    @Override
-    public String toString() {
-        return "Key{id=" + id + "}";
+    public void delete() {
+        //play key collection sound
     }
 }
