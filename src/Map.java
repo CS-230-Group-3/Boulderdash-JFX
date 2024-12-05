@@ -11,7 +11,10 @@ public class Map {
     private final int mapWidth;
     private final int mapHeight;
 
+    //TODO remove and fix all problems that come up;
     private ArrayList<GameObject> objects;
+    private ArrayList<GameObject> tileLayer;
+    private ArrayList<GameObject> entityLayer;
 
     /**
      * Create a new map with empty game objects.
@@ -31,6 +34,7 @@ public class Map {
      * assigning appropriate grid position for each game object.
      * @param objectsToSet the object to set
      */
+    //TODO fix when you reach in SLC
     public void setAllObjectsTo(ArrayList<GameObject> objectsToSet) {
         //Simple error check
         if (getObjects().size() == objectsToSet.size()) {
@@ -50,11 +54,17 @@ public class Map {
      * @return Object at the coordinate
      */
     public GameObject getObjectAt(GridPosition coordinate) {
+        //TODO
+        for (GameObject object: entityLayer) {
+            if (object.getPosition().equals(coordinate)) {
+                return object;
+            }
+        }
         int index = gridToIndex(coordinate);
         if (index == -1) {
             return null;
         }
-        return getObjects().get(index);
+        return tileLayer.get(index);
     }
 
     /**
@@ -136,6 +146,7 @@ public class Map {
      * @return the neighbouring game object, if one exists, null otherwise
      */
     public GameObject getNeighbourOf(GameObject object, Direction direction) {
+        //TODO FIX
         GridPosition offset = directionToOffset(direction);
         GridPosition positionOfNeighbour = new GridPosition(
                 object.getPosition().getX() + offset.getX(),
