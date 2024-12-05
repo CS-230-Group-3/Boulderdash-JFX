@@ -1,5 +1,4 @@
 import java.io.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -185,12 +184,6 @@ public class SaveLoadController {
 //            break;
         }
 
-    }
-    private Map populateMapWithObjects(Map map, ArrayList<GameObject> objects) {
-        if (map != null) {
-            map.setAllObjectsTo(objects);
-        }
-        return map;
     }
     private Map populateMapWithLayers(Map map, ArrayList<GameObject> tileLayer, ArrayList<GameObject> entityLayer) {
         if (map != null) {
