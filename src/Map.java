@@ -26,6 +26,11 @@ public class Map {
         this.mapHeight = newMapHeight;
     }
 
+    /**
+     * Assigns the entity and tile layers of the Map.
+     * @param tileLayer tileLayer to assign
+     * @param entityLayer entityLayer to assign
+     */
     public void setLayersTo(
             ArrayList<GameObject> tileLayer,
             ArrayList<GameObject> entityLayer) {
@@ -78,6 +83,32 @@ public class Map {
      */
     public int getMapHeight() {
         return mapHeight;
+    }
+
+    /**
+     * Destroys the passed tile.
+     * Places a path on it's position
+     * @param tileToDestroy tile to be dostroied
+     */
+    public void destroyTile(Tile tileToDestroy) {
+        int tileIndex = gridToIndex(tileToDestroy.getPosition());
+        tileLayer.add(tileIndex,
+                new Path(tileToDestroy.getPosition())
+                );
+        tileLayer.remove(tileIndex + 1);
+    }
+
+    /**
+     * Removes the passed item from the Map.
+     * @param itemToRemove item to be removed
+     */
+    public void removeItem(Item itemToRemove) {
+        for (GameObject object: entityLayer) {
+            if (object.getPosition().equals(
+                    itemToRemove.getPosition())) {
+                entityLayer.remove(itemToRemove);
+            }
+        }
     }
 
     /**
@@ -139,10 +170,16 @@ public class Map {
         return mapCoordinate.getY() * getMapWidth() + mapCoordinate.getX();
     }
 
+    /**
+     * @return the Map's Tile Layer
+     */
     public ArrayList<GameObject> getTileLayer() {
         return tileLayer;
     }
 
+    /**
+     * @return the Map's Entity Layer
+     */
     public ArrayList<GameObject> getEntityLayer() {
         return entityLayer;
     }
