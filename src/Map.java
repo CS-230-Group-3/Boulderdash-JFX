@@ -48,13 +48,19 @@ public class Map {
         }
     }
 
+    public void setLayersTo(
+            ArrayList<GameObject> tileLayer,
+            ArrayList<GameObject> entityLayer) {
+        this.tileLayer = tileLayer;
+        this.entityLayer = entityLayer;
+    }
+
     /**
      * Returns the object at the provided coordinate.
      * @param coordinate coordinate to get object at
      * @return Object at the coordinate
      */
     public GameObject getObjectAt(GridPosition coordinate) {
-        //TODO
         for (GameObject object: entityLayer) {
             if (object.getPosition().equals(coordinate)) {
                 return object;
@@ -118,7 +124,7 @@ public class Map {
      * @return first instance of player object if one exists, null otherwise
      */
     public Player getPlayerObjectReference() {
-        for (GameObject object: getObjects()) {
+        for (GameObject object: entityLayer) {
             if (object instanceof Player) {
                 return (Player) object;
             }
@@ -158,6 +164,14 @@ public class Map {
             return getObjectAt(positionOfNeighbour);
         }
 
+    }
+
+    public ArrayList<GameObject> getTileLayer() {
+        return tileLayer;
+    }
+
+    public ArrayList<GameObject> getEntityLayer() {
+        return entityLayer;
     }
 
     private GridPosition directionToOffset(Direction dir) {

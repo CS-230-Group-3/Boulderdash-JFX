@@ -20,7 +20,12 @@ public class SaveLoadController {
         File fileToRead = new File(filePath);
         Map map = null;
         boolean isMapSizeRead = false;
-        ArrayList<GameObject> objects = new ArrayList<>();
+        ArrayList<GameObject> tileLayer = new ArrayList<>();
+        ArrayList<GameObject> entityLayer = new ArrayList<>();
+        //Reader pares an empty String after reading map size
+        //Initializing height to -1 fixes it
+        int height = -1;
+        int width = 0;
 
         try {
             Scanner reader = new Scanner(fileToRead);
@@ -28,25 +33,42 @@ public class SaveLoadController {
                 if (isMapSizeRead) {
                     String line = reader.nextLine();
                     if (!line.equals("-")) {
-                        for (char c: line.toCharArray()) {
-                            objects.add(getObjectFromChar(c));
+                        for (char c : line.toCharArray()) {
+                            GameObject objectToAdd = getObjectFromChar(c);
+                            GridPosition objectPosition =
+                                    new GridPosition(width, height);
+                            if (objectToAdd instanceof Tile) {
+                                objectToAdd.setPosition(objectPosition);
+                                tileLayer.add(objectToAdd);
+                                width++;
+                            } else if (objectToAdd instanceof Entity) {
+                                objectToAdd.setPosition(objectPosition);
+
+                                tileLayer.add(new Path(objectPosition));
+                                entityLayer.add(objectToAdd);
+                                width++;
+                            }
                         }
+                        width = 0;
+                        height++;
                     } else {
-                        Player playerRef = getPlayerFromList(objects);
+                        Player playerRef = getPlayerFromList(entityLayer);
                         parsePlayerData(reader, playerRef);
                     }
                 } else {
-                    int width =  Integer.parseInt(reader.next());
-                    int height = Integer.parseInt(reader.next());
+                    int mapWidth =  Integer.parseInt(reader.next());
+                    int mapHeight = Integer.parseInt(reader.next());
 
-                    map = new Map(width, height);
+                    map = new Map(mapWidth, mapHeight);
                     isMapSizeRead = true;
                 }
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+
         }
-        return populateMapWithObjects(map, objects);
+        return populateMapWithLayers(map, tileLayer, entityLayer);
+
     }
 
     /**
@@ -150,6 +172,12 @@ public class SaveLoadController {
     private Map populateMapWithObjects(Map map, ArrayList<GameObject> objects) {
         if (map != null) {
             map.setAllObjectsTo(objects);
+        }
+        return map;
+    }
+    private Map populateMapWithLayers(Map map, ArrayList<GameObject> tileLayer, ArrayList<GameObject> entityLayer) {
+        if (map != null) {
+            map.setLayersTo(tileLayer, entityLayer);
         }
         return map;
     }
