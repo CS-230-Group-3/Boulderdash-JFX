@@ -1,4 +1,5 @@
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -87,30 +88,31 @@ public class SaveLoadController {
             writer.println(mapWidth + " " + mapHeight);
 
             int charsWritten = 0;
-            for (GameObject gameObject: mapToSave.getObjects()) {
-                writer.print(
-                        getCharFromObject(gameObject));
+            ArrayList<Character> charToWrite = writeObjectsFromMap(mapToSave);
+            for (Character character: charToWrite) {
+                writer.print(character);
                 charsWritten++;
                 if (charsWritten % mapWidth == 0) {
                     writer.println();
                 }
             }
+            //TODO finalise whenever player collectables are complete
             //Player data parsing
-            Player playerRef = mapToSave.getPlayerObjectReference();
-            //TODO finalise whenever player is complete
-            if (!playerRef.getKeyChain().isEmpty()
-                    || playerRef.getDiamonds() > 0) {
-                //Map & Player Run stats divider
-                writer.println("-");
-                String playerData = playerToDataString(playerRef);
-                writer.println(playerData);
-            }
-
+//            Player playerRef = mapToSave.getPlayerObjectReference();
+//            if (!playerRef.getKeyChain().isEmpty()
+//                    || playerRef.getDiamonds() > 0) {
+//                //Map & Player Run stats divider
+//                writer.println("-");
+//                String playerData = playerToDataString(playerRef);
+//                writer.println(playerData);
+//            }
             writer.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
+
+
 
     /**
      * Saves provided data into binary file, preserving it's state.
@@ -146,6 +148,21 @@ public class SaveLoadController {
         outputStream.close();
 
         return data;
+    }
+
+    private ArrayList<Character> writeObjectsFromMap(Map map) {
+        ArrayList<Character> output = new ArrayList<>();
+        for (GameObject object: map.getTileLayer()) {
+            output.add(
+                    getCharFromObject(object)
+            );
+        }
+        for (GameObject object: map.getEntityLayer()) {
+            int index = map.gridToIndex(object.getPosition());
+            output.add(index, getCharFromObject(object));
+            output.remove(index + 1);
+        }
+        return output;
     }
 
     //Loading helpers

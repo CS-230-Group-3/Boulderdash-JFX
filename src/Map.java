@@ -166,6 +166,19 @@ public class Map {
 
     }
 
+    /**
+     * Maps the index at the passed grid position
+     * to linear array index.
+     * @param mapCoordinate coordinate to return the index of
+     * @return an int representing array index based on the size of the map.
+     */
+    public int gridToIndex(GridPosition mapCoordinate) {
+        if (!isInBounds(mapCoordinate)) {
+            return -1;
+        }
+        return mapCoordinate.getY() * getMapWidth() + mapCoordinate.getX();
+    }
+
     public ArrayList<GameObject> getTileLayer() {
         return tileLayer;
     }
@@ -196,14 +209,6 @@ public class Map {
 
     private void setObjects(ArrayList<GameObject> objects) {
         this.objects = objects;
-    }
-
-    //Uses Row major order index
-    private int gridToIndex(GridPosition mapCoordinate) {
-        if (!isInBounds(mapCoordinate)) {
-            return -1;
-        }
-        return mapCoordinate.getY() * getMapWidth() + mapCoordinate.getX();
     }
 
     private boolean isInBounds(GridPosition coordinate) {
