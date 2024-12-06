@@ -18,8 +18,9 @@ public abstract class PathfindingEnemy extends Enemy {
     private void initializeWalkableTiles(Map map) {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                if (map.getObjectAt(new GridPosition(i, j)).isWalkable()) {
-                    walkableTiles.add(new Node(i, j, null));  
+                GameObject objectAt = map.getObjectAt(new GridPosition(i, j));
+                if (objectAt.isWalkable()) {
+                    walkableTiles.add(new Node(i, j, null));
                 }
             }
         }
@@ -76,7 +77,6 @@ public abstract class PathfindingEnemy extends Enemy {
                 }
             }
         }
-
         return null;  
     }
 

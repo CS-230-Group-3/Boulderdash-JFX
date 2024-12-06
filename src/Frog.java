@@ -61,6 +61,7 @@ public class Frog extends PathfindingEnemy {
         ArrayList<int[]> path = findPath(map, this.getPosition(), map.getPlayerObjectReference().getPosition());
         if (path != null)
         {
+            System.out.println("Frog path not null");
             if(!collisionCheck(map, new GridPosition(path.getFirst()[0], path.getFirst()[1])))
             {
                 this.setPosition(new GridPosition(path.getFirst()[0], path.getFirst()[1]));
@@ -71,7 +72,7 @@ public class Frog extends PathfindingEnemy {
     }
 
     public ArrayList<int[]> findPath(Map map, GridPosition enemyPosition, GridPosition playerPosition) {
-        ArrayList<int[]> path = AStarAlgorithm(map, this.getPosition(), map.getPlayerObjectReference().getPosition());
+        ArrayList<int[]> path = AStarAlgorithm(map, enemyPosition, playerPosition);
         return path;
     }
 
