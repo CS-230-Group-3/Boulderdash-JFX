@@ -4,6 +4,8 @@ public class MagicWall extends Tile {
 
     public MagicWall() {
         super(FILE_PATH, new GridPosition(0, 0));
+        this.walkable = false;
+        this.destroyable = true;
     }
 
     @Override

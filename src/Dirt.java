@@ -4,6 +4,8 @@ public class Dirt extends Tile {
 
     public Dirt() {
         super(FILE_PATH, new GridPosition(0, 0));
+        this.walkable = true;
+        this.destroyable = true;
     }
 
     @Override

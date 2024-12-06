@@ -4,6 +4,8 @@ public class Exit extends Tile {
 
     public Exit() {
         super(FILE_PATH, new GridPosition(0, 0));
+        this.walkable = true;
+        this.destroyable = false;
     }
 
     @Override
