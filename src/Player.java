@@ -26,6 +26,7 @@ public class Player extends Entity {
         this.livingState = true;
         this.keyChain = null;
         this.diamonds = 0;
+        this.type = "player";
     }
 
     /**
@@ -37,6 +38,7 @@ public class Player extends Entity {
         this.livingState = true;
         this.isUnderwater = false;
         this.diamonds = 0;
+        this.type = "player";
     }
 
     /**
@@ -141,10 +143,10 @@ public class Player extends Entity {
     public void move(Map map, final Direction dir) {
         GridPosition newPosition = new GridPosition(0,0).add(position);
         GridPosition desiredPosition = switch (dir) {
-            case UP -> newPosition.add(new GridPosition(0, 1));
+            case UP -> newPosition.add(new GridPosition(0, -1));
             case RIGHT -> newPosition.add(new GridPosition(1, 0));
-            case DOWN -> newPosition.add(new GridPosition(0, -1));
-            case LEFT -> newPosition.add(new GridPosition(1, 0));
+            case DOWN -> newPosition.add(new GridPosition(0, 1));
+            case LEFT -> newPosition.add(new GridPosition(-1, 0));
         };
 
         if (!collisionCheck(map, desiredPosition)) {
@@ -157,6 +159,9 @@ public class Player extends Entity {
     @Override
     public boolean collisionCheck(Map map, GridPosition position) {
         GameObject gameObjectAt = map.getObjectAt(position);
+        if (gameObjectAt.getType() == null) {
+            return true;
+        }
         switch (gameObjectAt.getType()) {
             case "enemy" -> die();
             case "tile" -> {if (!gameObjectAt.isWalkable()) {return true;}}

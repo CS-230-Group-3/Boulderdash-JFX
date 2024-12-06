@@ -4,6 +4,7 @@ public class Item extends Entity {
 
     public Item(String pathToSprite, GridPosition position) {
         super(pathToSprite, position);
+        this.type = "item";
     }
 
     public void fall(Map map) {

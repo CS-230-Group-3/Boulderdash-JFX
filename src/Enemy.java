@@ -15,6 +15,7 @@ public abstract class Enemy extends Entity
 
     public Enemy(String pathToSprite, GridPosition position) {
         super(pathToSprite, position);
+        this.type = "enemy";
     }
 
     public abstract ArrayList<int[]> findPath(Map map, GridPosition enemyPosition, GridPosition playerPosition);

@@ -18,7 +18,7 @@ public abstract class GameObject {
     private boolean isWalkable;
     private int collisionRate;
 
-    private String type;
+    protected String type;
 
     /**
      * Creates a new game object.
