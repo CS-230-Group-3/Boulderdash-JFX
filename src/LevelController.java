@@ -37,11 +37,6 @@ public class LevelController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFileName));
             Parent root = loader.load();
 
-            Scene scene = new Scene(root);
-
-           // String css = getClass().getResource("style.css").toExternalForm();
-            //Scene.getStylesheets().add(css);
-
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.setTitle("Level Window");
