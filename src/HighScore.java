@@ -3,15 +3,15 @@ import java.io.Serializable;
 public class HighScore implements Serializable {
 
     private final int score;
-    private final User user;
+    private final String userName;
 
     /**
      * Creates a high score.
-     * @param user user that archived the score
+     * @param userName name of user that archived the score
      * @param score score of the user
      */
-    public HighScore(User user, int score) {
-        this.user = user;
+    public HighScore(String userName, int score) {
+        this.userName = userName;
         this.score = score;
     }
 
@@ -23,9 +23,14 @@ public class HighScore implements Serializable {
     }
 
     /**
-     * @return user object
+     * @return name of the user
      */
-    public User getUser() {
-        return user;
+    public String getUserName() {
+        return userName;
+    }
+
+    @Override
+    public String toString() {
+        return "User: " + userName + " scored: " + score;
     }
 }

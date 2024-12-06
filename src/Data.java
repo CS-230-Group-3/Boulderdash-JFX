@@ -1,12 +1,12 @@
+import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Data implements Serializable {
 
     private User currentUser;
     private final ArrayList<User> users;
-    private final HashMap<String, ArrayList<HighScore>> highScorePerLevel;
+    private ArrayList<Level> availableLevels;
 
     /**
      * Creates a new Data object.
@@ -14,7 +14,7 @@ public class Data implements Serializable {
      */
     public Data() {
         users = new ArrayList<>();
-        highScorePerLevel = new HashMap<>();
+        this.availableLevels = new ArrayList<>();
     }
 
     /**
@@ -23,15 +23,37 @@ public class Data implements Serializable {
      */
     public Data(ArrayList<User> users) {
         this.users = users;
-        highScorePerLevel = new HashMap<>();
+        this.availableLevels = new ArrayList<>();
     }
 
+    //TODO make it return bool to confirm if user was added?
+    public void addNewUser(String name) {
+        User newUser = new User(name);
+        users.indexOf(newUser);
+        if (!users.contains(newUser)) {
+            newUser.getUnlockedLevels().
+                    add(availableLevels.getFirst());
+        }
+    }
 
     /**
      * @return the currently assigned user
      */
     public User getCurrentUser() {
         return currentUser;
+    }
+
+    public void getLevelsFromDirectory() {
+        File dir = new File("src/resources/levels");
+        if (dir.isDirectory()) {
+            File[] files = dir.listFiles();
+            for (File file: files) {
+//                System.out.println(file.getName());
+                availableLevels.add(
+                        new Level(file.getName())
+                );
+            }
+        }
     }
 
     /**
@@ -49,7 +71,8 @@ public class Data implements Serializable {
         return users;
     }
 
-    public HashMap<String, ArrayList<HighScore>> getHighScorePerLevel() {
-        return highScorePerLevel;
+    public ArrayList<Level> getAvailableLevels() {
+        return availableLevels;
     }
+
 }

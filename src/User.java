@@ -3,7 +3,8 @@ import java.util.ArrayList;
 
 public class User implements Serializable {
     private final String name;
-    private final ArrayList<String> unlockedLevels;
+    private final ArrayList<Level> unlockedLevels;
+    private Level currentLevel;
 
     /**
      * Creates a new user with the provided name.
@@ -13,7 +14,6 @@ public class User implements Serializable {
     public User(String name) {
         this.name = name;
         unlockedLevels = new ArrayList<>();
-        unlockedLevels.add("level 1.txt");
     }
 
     /**
@@ -26,7 +26,19 @@ public class User implements Serializable {
     /**
      * @return a list of all unlocked levels by user.
      */
-    public ArrayList<String> getUnlockedLevels() {
+    public ArrayList<Level> getUnlockedLevels() {
         return unlockedLevels;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof User userToCompare)) {
+            return false;
+        }
+
+        return this.getName().equals(userToCompare.getName());
     }
 }
