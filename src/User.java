@@ -6,6 +6,7 @@ public class User implements Serializable {
     private final ArrayList<Level> unlockedLevels;
     private Level currentLevel;
 
+
     /**
      * Creates a new user with the provided name.
      * New users start with level 1 available to play.
@@ -40,5 +41,9 @@ public class User implements Serializable {
         }
 
         return this.getName().equals(userToCompare.getName());
+    }
+
+    public Level getCurrentLevel() {
+        return currentLevel;
     }
 }

@@ -4,9 +4,10 @@ import java.util.ArrayList;
 
 public class Data implements Serializable {
 
-    private User currentUser;
+    private static final String PATH_TO_LEVELS = "src/resources/levels";
+    private static User currentUser;
     private final ArrayList<User> users;
-    private ArrayList<Level> availableLevels;
+    private final ArrayList<Level> availableLevels;
 
     /**
      * Creates a new Data object.
@@ -36,24 +37,33 @@ public class Data implements Serializable {
         }
     }
 
-    /**
-     * @return the currently assigned user
-     */
-    public User getCurrentUser() {
-        return currentUser;
-    }
-
-    public void getLevelsFromDirectory() {
-        File dir = new File("src/resources/levels");
+    public void setLevelsFromDirectory() {
+        File dir = new File(PATH_TO_LEVELS);
         if (dir.isDirectory()) {
             File[] files = dir.listFiles();
             for (File file: files) {
-//                System.out.println(file.getName());
                 availableLevels.add(
                         new Level(file.getName())
                 );
             }
         }
+    }
+
+    public static void addScoreForCurrentUser(int score) {
+        if (currentUser != null
+                && currentUser.getCurrentLevel() != null) {
+            //🍝, but it would do for now
+            currentUser.
+                    getCurrentLevel().
+                    addUserScore(currentUser, score);
+        }
+    }
+
+    /**
+     * @return the currently assigned user
+     */
+    public User getCurrentUser() {
+        return currentUser;
     }
 
     /**
