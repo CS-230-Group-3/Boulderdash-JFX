@@ -1,0 +1,26 @@
+
+.list-view {
+    -fx-background-color: transparent;
+    -fx-border-color: green;
+    -fx-border-width: 2px;
+    -fx-padding: 30px;
+}
+
+
+.list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: black;
+    -fx-font-size: 30px;
+    -fx-padding: 5px;
+}
+
+
+.list-cell:hover {
+    -fx-background-color: lightgreen;
+}
+
+
+.list-cell:filled:selected {
+    -fx-background-color: darkblue;
+    -fx-text-fill: white;
+}
