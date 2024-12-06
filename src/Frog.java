@@ -1,9 +1,11 @@
+import java.util.ArrayList;
+
 /**
  * <p>This Frog class is intended to hold information related to the Sprite, the position as well as an Update,
  * Delete and 3 Collision functions.</p>
  *
  * @author Joseph Parish.
- * @version 1.0.2
+ * @version 1.0.4
  * Last Changed: 30/11/24
  */
 public class Frog extends PathfindingEnemy {
@@ -13,7 +15,6 @@ public class Frog extends PathfindingEnemy {
      * @param position the initial grid position of the frog.
      */
     public Frog(GridPosition position) {
-        // Call the superclass constructor with sprite path and initial position
         super("frog_sprite.png", position);
     }
 
@@ -21,8 +22,8 @@ public class Frog extends PathfindingEnemy {
      * Updates the frog's state. This method is called every tick to perform actions such as moving the frog.
      */
     @Override
-    public void update() {
-        move();
+    public void update(Map map) {
+        move(map, Direction.UP);
     }
 
     /**
@@ -32,45 +33,48 @@ public class Frog extends PathfindingEnemy {
      * @param position the position to check for a collision.
      * @return boolean indicating whether there is a collision.
      */
-    @Override
-    public boolean collisionCheck(int[] position) {
-        //  if (position == Player.getPosition()) {
-        //      // Player.setLivingState(False);
-        //      return true;
-        //  } else if (!GameController.getMap().getGameObjectAt(position).isWalkable()) {
-        //      return true;
-        //  } else {
-        //      return false;
-        //  }
+    @Overide
+    public boolean collisionCheck(Map map, GridPosition position) {
+        if (position == map.getPlayerObjectReference().getPosition()) {
+            map.getPlayerObjectReference().die();
+            return true;
+        } else if (!map.getObjectAt(position).isWalkable()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
      * Moves the frog based on pathfinding logic. This method uses an algorithm called A* to find
      * a path towards the player and update the frog's position accordingly.
      */
-    @Override
-    public void move() {
-        //List<int[]> path = AStarAlgorithm(GameController.getMap, pos[0], pos[1], Player.getPosition[0], Player.getPosition[1]);
+    @Overide
+    public void move(Map map, final Direction dir) {
+        ArrayList<int[]> path = findPath(map, this.getPosition(), map.getPlayerObjectReference().getPosition());
+        if (!path.isEmpty())
+        {
+            if(!collisionCheck(map, new GridPosition(path.getFirst()[0], path.getFirst()[1])))
+            {
+                this.setPosition(new GridPosition(path.getFirst()[0], path.getFirst()[1]));
+            } else {
+                System.out.println("Frog Collision");
+            }
+        }
+    }
 
-        //if (path != null && !path.isEmpty())
-        //{
-        //    if(!collisionCheck(path.get(0)))
-        //    {
-        //          if(!collisionCheck(path.get(0))) {
-        //              position = path.get(0);
-        //          } else {
-        //              System.out.println("Frog Collision");
-        //          }
-        //    }
-        //}
+    public ArrayList<int[]> findPath(Map map, GridPosition enemyPosition, GridPosition playerPosition) {
+        ArrayList<int[]> path = AStarAlgorithm(map, this.getPosition(), map.getPlayerObjectReference().getPosition());
+        return path;
     }
 
     /**
-     * Deletes the frog object from the game.
+     * Deletes the Frog object from the game.
      */
     @Override
     public void delete() {
-        // Logic to remove the frog object (e.g., freeing resources) would go here
-        System.out.println("Frog deleted");
+        System.out.println("Player object removed from the game.");
+        // Add logic to remove the Frog object from the game world
     }
 }
+
