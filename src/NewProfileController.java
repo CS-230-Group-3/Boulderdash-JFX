@@ -5,6 +5,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -14,24 +15,36 @@ public class NewProfileController {
     @FXML Button createButton;
     @FXML Pane rootPane;
 
-    private ArrayList<String> users = new ArrayList<>();
+    private ArrayList<User> users = new ArrayList<>();
 
     public void initialize() {
 
-        createButton.setOnAction(event -> handleCreateButton());
+        createButton.setOnAction(event -> {
+            try {
+                handleCreateButton();
+            } catch (IOException | ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        });
 
         cancelButton.setOnAction(event -> handleCancelButton());
     }
 
-    public void setListToUpdate(ArrayList<String> users) {
+    public void setListToUpdate(ArrayList<User> users) {
         this.users = users;
     }
 
-    private void handleCreateButton() {
+    private void handleCreateButton() throws IOException, ClassNotFoundException {
         String name = nameField.getText();
+        User newUser = new User(name);
 
-        if (!users.contains(name)) {
-            users.add(name);
+        if (!users.contains(newUser)) {
+            users.add(newUser);
+
+            Data data = SaveLoadController.loadData();
+            data.addNewUser(newUser.getName());
+            SaveLoadController.saveData(data);
+
             close();
         } else {
             displayUserExistsAlert();

@@ -34,6 +34,7 @@ public class Data implements Serializable {
         if (!users.contains(newUser)) {
             newUser.getUnlockedLevels().
                     add(availableLevels.getFirst());
+            users.add(newUser);
         }
     }
 

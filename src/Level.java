@@ -6,6 +6,11 @@ public class Level implements Serializable {
     private final String levelName;
     private final ArrayList<HighScore> highScores;
 
+
+    public Level() {
+        this.levelName = "";
+        this.highScores = new ArrayList<>();
+    }
     public Level(String levelName) {
         this.levelName = formatLevelName(levelName);
         this.highScores = new ArrayList<>();
@@ -53,5 +58,9 @@ public class Level implements Serializable {
             );
         }
         return name;
+    }
+
+    public ArrayList<HighScore> getHighScores() {
+        return highScores;
     }
 }

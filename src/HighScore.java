@@ -5,6 +5,12 @@ public class HighScore implements Serializable {
     private final int score;
     private final String userName;
 
+    public HighScore() {
+        this.userName = "";
+        this.score = 0;
+    }
+
+
     /**
      * Creates a high score.
      * @param userName name of user that archived the score

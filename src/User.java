@@ -6,6 +6,11 @@ public class User implements Serializable {
     private final ArrayList<Level> unlockedLevels;
     private Level currentLevel;
 
+    public User() {
+        name = "";
+        unlockedLevels = new ArrayList<>();
+    }
+
 
     /**
      * Creates a new user with the provided name.

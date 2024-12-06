@@ -33,13 +33,12 @@ public class UserSelectController {
     @FXML
     private ListView<String> userList;
 
-    private ArrayList<String> users = new ArrayList<>();
+    private ArrayList<User> users = new ArrayList<>();
 
     @FXML
-    void initialize() {
-        users.add("User1");
-        users.add("User2");
-        users.add("User3");
+    void initialize() throws IOException, ClassNotFoundException {
+        users = SaveLoadController.loadData().getUsers();
+
 
         newProfileButton.setOnAction(event -> handleNewProfileButton());
         selectButton.setOnAction(event -> handleSelectButton());
@@ -54,8 +53,8 @@ public class UserSelectController {
     private void updateUsers() {
         userList.getItems().clear();
 
-        for (String user: users) {
-            userList.getItems().add(user);
+        for (User user: users) {
+            userList.getItems().add(user.getName());
         }
     }
 
