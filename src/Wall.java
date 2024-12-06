@@ -18,10 +18,6 @@ public class Wall extends Tile {
         return false;
     }
 
-    @Override
-    public void onCollision(GameObject collidingObject) {
-
-    }
 
     @Override
     public void delete() {

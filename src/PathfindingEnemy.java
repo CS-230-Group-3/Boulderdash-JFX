@@ -15,23 +15,23 @@ public abstract class PathfindingEnemy extends Enemy {
         super(pathToSprite, position);
     }
     
-    private void initializeWalkableTiles(int[][] map) {
+    private void initializeWalkableTiles(Map map) {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                if (map[i][j] == 0) { 
+                if (map.getObjectAt(new GridPosition(i, j)).isWalkable()) {
                     walkableTiles.add(new Node(i, j, null));  
                 }
             }
         }
     }
     
-    public List<int[]> AStarAlgorithm(int[][] map, int startX, int startY, int endX, int endY) {
-        rows = map.length;
-        cols = map[0].length;
+    public ArrayList<int[]> AStarAlgorithm(Map map, GridPosition enemyPos, GridPosition playerPos) {
+        rows = map.getMapWidth();
+        cols = map.getMapHeight();
         initializeWalkableTiles(map);
 
-        start = new Node(startX, startY, null);
-        end = new Node(endX, endY, null);
+        start = new Node(enemyPos.getX(), enemyPos.getY(), null);
+        end = new Node(playerPos.getX(), playerPos.getY(), null);
 
         
         start.g = 0;
@@ -46,7 +46,7 @@ public abstract class PathfindingEnemy extends Enemy {
 
             // If we reached the goal, reconstruct the path
             if (current.x == end.x && current.y == end.y) {
-                List<int[]> path = new ArrayList<>();
+                ArrayList<int[]> path = new ArrayList<>();
                 while (current != null) {
                     path.add(new int[]{current.x, current.y});  
                     current = current.parent;  
@@ -57,7 +57,7 @@ public abstract class PathfindingEnemy extends Enemy {
 
             walkedTiles.add(current);  
 
-            // Explore neighbors
+            // Explore neighbors     //TODO I think this is the part that doesnt work due to line 61-63
             for (int i = 0; i < 4; i++) {
                 int newX = current.x + dx[i];
                 int newY = current.y + dy[i];
@@ -90,8 +90,8 @@ public abstract class PathfindingEnemy extends Enemy {
         return minFIndex;
     }
 
-    private boolean isValid(int x, int y, int[][] map) {
-        return x >= 0 && y >= 0 && x < rows && y < cols && map[x][y] == 0;
+    private boolean isValid(int x, int y, Map map) {
+        return x >= 0 && y >= 0 && x < rows && y < cols && map.getObjectAt(new GridPosition(x, y)).isWalkable();
     }
 
     private int calculateHeuristic(int x, int y, int goalX, int goalY) {
@@ -106,9 +106,6 @@ public abstract class PathfindingEnemy extends Enemy {
         }
         return false;
     }
-
-    // Abstract methods to be implemented by subclasses
-    public abstract boolean collisionCheck(int[] position);
 
     public abstract void delete();
 }

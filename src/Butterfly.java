@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Butterfly extends Enemy {
 
     private static final String FILE_PATH = "resources/assets/butterfly.png";
@@ -14,17 +16,17 @@ public class Butterfly extends Enemy {
     }
 
     @Override
-    public void move(Direction dir) {
+    public void move(Map map, Direction dir) {
 
     }
 
     @Override
-    public boolean collisionCheck(Direction dir) {
+    public boolean collisionCheck(Map map, GridPosition position) {
         return false;
     }
 
     @Override
-    public boolean collisionCheck(Direction dir, Map map) {
+    public boolean collisionCheck(Map map, Direction dir) {
         return false;
     }
 
@@ -34,20 +36,13 @@ public class Butterfly extends Enemy {
     }
 
     @Override
-    public void onCollision(GameObject collidingObject) {
-
-    }
-
-    @Override
     public void delete() {
         //explode
     }
 
-    @Override
-    public int[][] findPath(int[][] map, int[] enemyPos, int[] playerPos) {
-        return new int[0][];
+    public ArrayList<int[]> findPath(Map map, GridPosition enemyPosition, GridPosition playerPosition) {
+        return null;
     }
-
     public boolean isLeftMoving() {
         return this.leftMoving;
     }

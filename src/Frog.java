@@ -26,6 +26,16 @@ public class Frog extends PathfindingEnemy {
         move(map, Direction.UP);
     }
 
+    @Override
+    public boolean collisionCheck() {
+        return false;
+    }
+
+    @Override
+    public boolean collisionCheck(Map map, Direction dir) {
+        return false;
+    }
+
     /**
      * Checks for potential collisions at a given position.
      * This method checks if the frog collides with the player or an impassable tile.
@@ -33,7 +43,6 @@ public class Frog extends PathfindingEnemy {
      * @param position the position to check for a collision.
      * @return boolean indicating whether there is a collision.
      */
-    @Overide
     public boolean collisionCheck(Map map, GridPosition position) {
         if (position == map.getPlayerObjectReference().getPosition()) {
             map.getPlayerObjectReference().die();
@@ -49,7 +58,6 @@ public class Frog extends PathfindingEnemy {
      * Moves the frog based on pathfinding logic. This method uses an algorithm called A* to find
      * a path towards the player and update the frog's position accordingly.
      */
-    @Overide
     public void move(Map map, final Direction dir) {
         ArrayList<int[]> path = findPath(map, this.getPosition(), map.getPlayerObjectReference().getPosition());
         if (!path.isEmpty())
