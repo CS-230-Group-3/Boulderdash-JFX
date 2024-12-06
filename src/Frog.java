@@ -5,17 +5,16 @@ import java.util.ArrayList;
  * Delete and 3 Collision functions.</p>
  *
  * @author Joseph Parish.
- * @version 1.0.4
+ * @version 1.0.5
  * Last Changed: 30/11/24
  */
 public class Frog extends PathfindingEnemy {
 
     /**
      * Constructor to create a new Frog instance with a given starting position.
-     * @param position the initial grid position of the frog.
      */
-    public Frog(GridPosition position) {
-        super("frog_sprite.png", position);
+    public Frog() {
+        super("resources/assets/frog.png", new GridPosition(0,0));
     }
 
     /**
@@ -60,7 +59,7 @@ public class Frog extends PathfindingEnemy {
      */
     public void move(Map map, final Direction dir) {
         ArrayList<int[]> path = findPath(map, this.getPosition(), map.getPlayerObjectReference().getPosition());
-        if (!path.isEmpty())
+        if (path != null)
         {
             if(!collisionCheck(map, new GridPosition(path.getFirst()[0], path.getFirst()[1])))
             {

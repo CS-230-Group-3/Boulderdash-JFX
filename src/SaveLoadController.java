@@ -214,6 +214,8 @@ public class SaveLoadController {
                 return new Boulder();
             case 'U':
                 return new Butterfly();
+            case 'F':
+                return new Frog();
             default:
                 return new Path();
         }
