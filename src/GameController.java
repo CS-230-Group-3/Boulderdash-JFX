@@ -1,4 +1,5 @@
 import javafx.scene.canvas.Canvas;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 /**
@@ -91,6 +92,11 @@ public class GameController {
             }
             graphicsController.drawGame(canvas, getMap());
 
+            event.consume();
+        } else {
+            if (event.getCode() == KeyCode.ESCAPE) {
+                timeController.handlePause();
+            }
             event.consume();
         }
     }

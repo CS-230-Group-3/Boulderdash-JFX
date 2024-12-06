@@ -210,6 +210,10 @@ public class SaveLoadController {
                 return new TitaniumWall();
             case 'E':
                 return new Exit();
+            case 'B':
+                return new Boulder();
+            case 'U':
+                return new Butterfly();
             default:
                 return new Path();
         }
@@ -251,6 +255,10 @@ public class SaveLoadController {
                 return 'A';
             case "Exit":
                 return 'E';
+            case "Boulder":
+                return 'B';
+            case "Butterfly":
+                return 'U';
             default:
                 return '*';
         }
