@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -37,7 +38,7 @@ public class LevelController {
 
     @FXML
     void initialize() throws IOException, ClassNotFoundException {
-        selectLevel1.setOnMouseClicked(event -> openNewWindow("level1.fxml"));
+        selectLevel1.setOnMouseClicked(this::testLvlOne);
         selectLevel2.setOnMouseClicked(event -> openNewWindow("level1.fxml"));
         selectLevel3.setOnMouseClicked(event -> openNewWindow("level1.fxml"));
         levelOneHighScores.setOnMouseClicked(event -> openNewWindow("level1.fxml"));
@@ -67,6 +68,27 @@ public class LevelController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void testLvlOne(MouseEvent event) {
+        FXMLLoader loader =
+                new FXMLLoader(getClass().getResource("GameWindow.fxml"));
+        try {
+            GameWindowController.setLevel(new Level("level1"));
+
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Level One");
+            stage.show();
+
+            event.consume();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
     }
 
 }
