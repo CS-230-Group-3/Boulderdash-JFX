@@ -43,7 +43,6 @@ public class NewProfileController {
 
             Data data = Data.getInstance();
             data.addNewUser(newUser.getName());
-            data.save();
 
             close();
         } else {
