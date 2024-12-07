@@ -41,7 +41,7 @@ public class LevelController {
         selectLevel1.setOnMouseClicked(this::testLvlOne);
         selectLevel2.setOnMouseClicked(event -> openNewWindow("level1.fxml"));
         selectLevel3.setOnMouseClicked(event -> openNewWindow("level1.fxml"));
-        levelOneHighScores.setOnMouseClicked(event -> openNewWindow("level1.fxml"));
+        levelOneHighScores.setOnMouseClicked(this::testLvlOne);
         //levelTwoHighScores.setOnMouseClicked(event -> openNewWindow("level1.fxml"));
         //levelThreeHighScores.setOnMouseClicked(event -> openNewWindow("level1.fxml"));
 

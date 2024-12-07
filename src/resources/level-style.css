@@ -18,3 +18,18 @@
     -fx-background-color: transparent;
     -fx-text-fill: black;
 }
+
+.pane {
+    -fx-background-color: rgba(105, 192, 102, 0.8);
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-effect: none;
+    -fx-transition: all 0.3s ease;
+}
+
+.pane:hover {
+    -fx-background-color: rgba(104, 185, 84, 0.9);
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.5, 0, 0);
+}

@@ -13,7 +13,7 @@ public class NewProfileController {
     @FXML TextField nameField;
     @FXML Button cancelButton;
     @FXML Button createButton;
-    @FXML Pane rootPane;
+    @FXML Pane anchorPane;
 
     private ArrayList<User> users = new ArrayList<>();
 
@@ -55,7 +55,7 @@ public class NewProfileController {
     }
 
     private void close() {
-        Stage stage = (Stage) rootPane.getScene().getWindow();
+        Stage stage = (Stage) anchorPane.getScene().getWindow();
         stage.close();
     }
 
