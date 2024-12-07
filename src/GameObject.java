@@ -14,7 +14,7 @@ public abstract class GameObject {
 
     private final Image sprite;
     private GridPosition gridPosition;
-    private int updateRate; // The rate at which the game object updates in ticks.
+    protected int updateRate; // The rate at which the game object updates in ticks.
     private boolean isWalkable;
     private int collisionRate;
 

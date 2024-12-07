@@ -41,11 +41,26 @@ public class GraphicsController {
      * @param map map to update
      */
     public void updateGameObjectsOnMap(Map map) {
-        for (GameObject object: map.getTileLayer()) {
-            object.update(map);
-        }
         for (GameObject object: map.getEntityLayer()) {
-            object.update(map);
+            /* Update only of UpdateRate is defined
+               & UpdateRate Matches TickCount */
+            if (object.getUpdateRate() != 0
+                    && (TimeController.getTickCount()
+                        % object.getUpdateRate()) == 0) {
+                object.update(map);
+            }
+
+        }
+
+        for (GameObject object: map.getTileLayer()) {
+            /* Update only of UpdateRate is defined
+               & UpdateRate Matches TickCount */
+            if (object.getUpdateRate() != 0
+                    && (TimeController.getTickCount()
+                    % object.getUpdateRate()) == 0) {
+                object.update(map);
+            }
+
         }
     }
 
