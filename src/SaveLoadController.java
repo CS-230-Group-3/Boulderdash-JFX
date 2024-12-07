@@ -178,6 +178,8 @@ public class SaveLoadController {
                 return new Butterfly();
             case 'F':
                 return new Frog();
+            case 'O':
+                return new Gem();
             default:
                 return new Path();
         }
@@ -223,6 +225,8 @@ public class SaveLoadController {
                 return 'B';
             case "Butterfly":
                 return 'U';
+            case "Gem":
+                return 'O';
             default:
                 return '*';
         }

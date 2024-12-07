@@ -6,23 +6,32 @@ public class Water extends Tile {
         super(FILE_PATH, new GridPosition(0, 0));
         this.walkable = true;
         this.destroyable = false;
+        this.updateRate = 5;
     }
 
     @Override
     public void update(Map map) {
-        if (map.getNeighbourOf(this, Direction.DOWN) instanceof Path) {
-            this.flow(map.getNeighbourOf(this, Direction.DOWN));
-        }
+        GameObject downNeighbour = map.getNeighbourOf(this, Direction.DOWN);
+        GameObject leftNeighbour = map.getNeighbourOf(this, Direction.LEFT);
+        GameObject rightNeighbour = map.getNeighbourOf(this, Direction.RIGHT);
 
-        if (map.getNeighbourOf(this, Direction.LEFT) instanceof Path) {
-            this.flow(map.getNeighbourOf(this, Direction.LEFT));
+        if (downNeighbour instanceof Path || downNeighbour instanceof Entity) {
+            this.flow(map, downNeighbour);
         }
-
-        if (map.getNeighbourOf(this, Direction.RIGHT) instanceof Path) {
-            this.flow(map.getNeighbourOf(this, Direction.RIGHT));
+        if (leftNeighbour instanceof Path || leftNeighbour instanceof Entity) {
+            this.flow(map, leftNeighbour);
         }
+        if (rightNeighbour instanceof Path || rightNeighbour instanceof Entity) {
+            this.flow(map, rightNeighbour);
+        }
+    }
 
-        //play sound
+    public void flow(Map map, GameObject tile) {
+        GridPosition newWaterPos = tile.getPosition();
+        Water water = new Water();
+        water.setPosition(newWaterPos);
+        map.spawnGameObject(water);
+        //play flowing sound
     }
 
     @Override
@@ -32,9 +41,4 @@ public class Water extends Tile {
 
     @Override
     public void delete() {}
-
-    public void flow(GameObject tile) {
-        //spawn water at specified tile
-    }
-
 }

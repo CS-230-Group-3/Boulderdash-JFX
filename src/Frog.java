@@ -15,6 +15,7 @@ public class Frog extends PathfindingEnemy {
      */
     public Frog() {
         super("resources/assets/frog.png", new GridPosition(0,0));
+        this.updateRate = 5;
     }
 
     /**

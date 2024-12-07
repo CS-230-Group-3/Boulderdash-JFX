@@ -51,7 +51,7 @@ public class Map {
         }
         int index = gridToIndex(coordinate);
         if (index == -1) {
-            return null;
+            return new TitaniumWall();
         }
         return tileLayer.get(index);
     }
@@ -71,24 +71,23 @@ public class Map {
     }
 
     /**
-     * Returns the map's width.
-     * @return an integer representing map width
+     * Spawns the provided GameObject according to its position and type.
+     * New tiles can only be spawned on Path tiles.
+     * New entities can only be spawned on Paths or in Water.
+     * @param gameObject object to spawn
      */
-    public int getMapWidth() {
-        return mapWidth;
-    }
-    /**
-     * Returns the map's height.
-     * @return an integer representing map height
-     */
-    public int getMapHeight() {
-        return mapHeight;
+    public void spawnGameObject(GameObject gameObject) {
+        if (gameObject instanceof Entity) {
+            handleEntitySpawn(gameObject);
+        } else if (gameObject instanceof Tile) {
+            handleTileSpawn(gameObject);
+        }
     }
 
     /**
      * Destroys the passed tile.
      * Places a path on it's position
-     * @param tileToDestroy tile to be dostroied
+     * @param tileToDestroy tile to be destroyed
      */
     public void destroyTile(Tile tileToDestroy) {
         int tileIndex = gridToIndex(tileToDestroy.getPosition());
@@ -154,7 +153,6 @@ public class Map {
         } else {
             return getObjectAt(positionOfNeighbour);
         }
-
     }
 
     /**
@@ -168,6 +166,21 @@ public class Map {
             return -1;
         }
         return mapCoordinate.getY() * getMapWidth() + mapCoordinate.getX();
+    }
+
+    /**
+     * Returns the map's width.
+     * @return an integer representing map width
+     */
+    public int getMapWidth() {
+        return mapWidth;
+    }
+    /**
+     * Returns the map's height.
+     * @return an integer representing map height
+     */
+    public int getMapHeight() {
+        return mapHeight;
     }
 
     /**
@@ -189,10 +202,9 @@ public class Map {
             case RIGHT -> new GridPosition(1, 0);
             case LEFT -> new GridPosition(-1, 0);
             case UP -> new GridPosition(0, -1);
-            //For DOWN
+            //DOWN
             default -> new GridPosition(0, 1);
         };
-
     }
 
     private boolean isInBounds(GridPosition coordinate) {
@@ -200,5 +212,48 @@ public class Map {
                 && coordinate.getX() < getMapWidth()
                 && 0 <= coordinate.getY()
                 && coordinate.getY() < getMapHeight();
+    }
+
+    private void handleTileSpawn(GameObject gameObject) {
+        GridPosition objectPosition = gameObject.getPosition();
+        boolean isValidPosition = true;
+
+        int locationIndex = gridToIndex(objectPosition);
+        GameObject location = tileLayer.get(
+                locationIndex
+        );
+
+        if (!(location instanceof Path)) {
+            isValidPosition = false;
+        }
+
+        if (isValidPosition) {
+            tileLayer.add(locationIndex, gameObject);
+            tileLayer.remove(locationIndex + 1);
+        }
+    }
+
+    private void handleEntitySpawn(GameObject gameObject) {
+        GridPosition objectPosition = gameObject.getPosition();
+        boolean isValidPosition = true;
+
+        for (GameObject object: entityLayer) {
+            if (object.getPosition().equals(objectPosition)) {
+                isValidPosition = false;
+            }
+        }
+
+        GameObject tileAtPosition = tileLayer.get(
+                gridToIndex(objectPosition)
+        );
+
+        if (!(tileAtPosition instanceof Path)
+                && !(tileAtPosition instanceof Water)) {
+            isValidPosition = false;
+        }
+
+        if (isValidPosition && isInBounds(objectPosition)) {
+            entityLayer.add(gameObject);
+        }
     }
 }

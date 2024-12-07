@@ -6,11 +6,9 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 
-import java.io.IOException;
-
 public class ControllersTestStage extends Application {
-    public void start(Stage primaryStage) throws IOException, ClassNotFoundException {
-        // Create a new pane to hold our GUI
+    public void start(Stage primaryStage) {
+        // Create a new pane to hold our GUI.
         Group root = new Group();
 
         // Create a scene based on the pane.
@@ -22,6 +20,7 @@ public class ControllersTestStage extends Application {
         Canvas canvas = new Canvas(640, 400);
 
         GameController gameController = new GameController(canvas, levelOne);
+
 
 
         scene.addEventFilter(KeyEvent.KEY_PRESSED,
