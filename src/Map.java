@@ -51,7 +51,7 @@ public class Map {
         }
         int index = gridToIndex(coordinate);
         if (index == -1) {
-            return null;
+            return new TitaniumWall();
         }
         return tileLayer.get(index);
     }
