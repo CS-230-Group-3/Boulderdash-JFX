@@ -40,7 +40,7 @@ public class GraphicsController {
      * Updates each GameObject on the passed map.
      * @param map map to update
      */
-    public void updateGameObjectsOnMap(Map map) {
+    public void updateGameObjectsOnMap(Map map) throws InterruptedException {
         for (GameObject object: map.getEntityLayer()) {
             /* Update only of UpdateRate is defined
                & UpdateRate Matches TickCount */

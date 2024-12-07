@@ -23,13 +23,19 @@ public class TimeController {
 
         tickTimeline = new Timeline(
                 new KeyFrame(Duration.millis(MILLIS_BETWEEN_TICKS),
-                        event -> handleTick())
+                        event -> {
+                            try {
+                                handleTick();
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
+                        })
         );
         tickTimeline.setCycleCount(Animation.INDEFINITE);
         tickTimeline.play();
     }
 
-    private void handleTick() {
+    private void handleTick() throws InterruptedException {
         //keep track of performed ticks
         tickCount++;
 

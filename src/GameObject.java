@@ -34,7 +34,7 @@ public abstract class GameObject {
     /**
      * Updates the state of the game object.
      */
-    public abstract void update(Map map);
+    public abstract void update(Map map) throws InterruptedException;
 
     /**
      * Checks for collisions with other game objects.
