@@ -56,7 +56,7 @@ public class Player extends Entity {
             if (!isUnderwater) {
                 System.out.println("Player surfaced in time!");
                 return;
-            } // May cause shit to explode idk what im doing with threads lmao
+            }
         }
         System.out.println("Player has drowned.");
         die();
@@ -153,7 +153,7 @@ public class Player extends Entity {
     private void pushBoulder(Map map, Direction dir, Boulder boulder) {
         boulder.push(map, dir);
         System.out.println("Pushing boulder " + movingDirection.toString());
-        move(map,dir);
+        move(map, dir);
     }
 
     @Override
@@ -172,9 +172,17 @@ public class Player extends Entity {
                 pushBoulder(map, movingDirection, boulderToPush); //Must pass in map, boulder, direction
                 System.out.println("Boulder detected");
                 return true;
+            case "gem":
+                Item gem = (Item) gameObjectAt;
+                collectDiamond(map, gem);
             default:
                 return false;
         }
+    }
+
+    public void collectDiamond(Map map, Item diamond) {
+        map.removeItem(diamond);
+        this.diamonds++;
     }
 
     @Override
