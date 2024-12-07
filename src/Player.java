@@ -82,7 +82,7 @@ public class Player extends Entity {
                 return;
             }
         }
-        System.out.println("You don't have the required key to unlock this door.");
+        System.out.println("You don't have the required key to unlock this door."); //maybe try catch
     }
 
     public GridPosition getPosition() {
@@ -161,7 +161,14 @@ public class Player extends Entity {
         if (map.getObjectAt(desiredPosition) instanceof Dirt) {
             Tile dirtToSquish = (Tile) (map.getObjectAt(desiredPosition));
             map.destroyTile(dirtToSquish);
-            System.out.println("Dirt compressed to tile");
+            System.out.println("Dirt compressed to path.");
+        }
+    }
+
+    private void keyCheck(Map map, GridPosition desiredPosition) {
+        if (map.getObjectAt(desiredPosition) instanceof Key key) {
+            pickUpKey(key);
+            map.removeItem(key);
         }
     }
 
