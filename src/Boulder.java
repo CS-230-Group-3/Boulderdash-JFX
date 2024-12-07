@@ -33,6 +33,10 @@ public class Boulder extends Item {
         }
     }
 
+    private void move(Direction direction)
+    {
+    }
+
     public void delete() {
         //play transformation sound
     }

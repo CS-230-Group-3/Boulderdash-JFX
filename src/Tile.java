@@ -19,6 +19,7 @@ public abstract class Tile extends GameObject {
      */
     public Tile(String pathToSprite, GridPosition position) {
         super(pathToSprite, position);
+        this.type = "tile";
     }
 
     /**

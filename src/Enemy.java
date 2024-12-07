@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * <p>This Abstract Enemy class extends Entity
  * and is intended to hold an abstract functions to find its future moves.</p>
@@ -13,7 +15,8 @@ public abstract class Enemy extends Entity
 
     public Enemy(String pathToSprite, GridPosition position) {
         super(pathToSprite, position);
+        this.type = "enemy";
     }
 
-    public abstract int[][] findPath(int[][] map, int[] enemyPos, int[] playerPos);
+    public abstract ArrayList<int[]> findPath(Map map, GridPosition enemyPosition, GridPosition playerPosition);
 }

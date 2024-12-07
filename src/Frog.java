@@ -5,17 +5,16 @@ import java.util.ArrayList;
  * Delete and 3 Collision functions.</p>
  *
  * @author Joseph Parish.
- * @version 1.0.4
+ * @version 1.0.5
  * Last Changed: 30/11/24
  */
 public class Frog extends PathfindingEnemy {
 
     /**
      * Constructor to create a new Frog instance with a given starting position.
-     * @param position the initial grid position of the frog.
      */
-    public Frog(GridPosition position) {
-        super("frog_sprite.png", position);
+    public Frog() {
+        super("resources/assets/frog.png", new GridPosition(0,0));
     }
 
     /**
@@ -26,6 +25,16 @@ public class Frog extends PathfindingEnemy {
         move(map, Direction.UP);
     }
 
+    @Override
+    public boolean collisionCheck() {
+        return false;
+    }
+
+    @Override
+    public boolean collisionCheck(Map map, Direction dir) {
+        return false;
+    }
+
     /**
      * Checks for potential collisions at a given position.
      * This method checks if the frog collides with the player or an impassable tile.
@@ -33,12 +42,14 @@ public class Frog extends PathfindingEnemy {
      * @param position the position to check for a collision.
      * @return boolean indicating whether there is a collision.
      */
-    @Overide
     public boolean collisionCheck(Map map, GridPosition position) {
-        if (position == map.getPlayerObjectReference().getPosition()) {
+        GameObject objectAt = map.getObjectAt(position);
+        if (objectAt == null) {
+            return true;
+        } else if (position == map.getPlayerObjectReference().getPosition()) {
             map.getPlayerObjectReference().die();
             return true;
-        } else if (!map.getObjectAt(position).isWalkable()) {
+        } else if (objectAt.isWalkable()) {
             return true;
         } else {
             return false;
@@ -49,14 +60,14 @@ public class Frog extends PathfindingEnemy {
      * Moves the frog based on pathfinding logic. This method uses an algorithm called A* to find
      * a path towards the player and update the frog's position accordingly.
      */
-    @Overide
     public void move(Map map, final Direction dir) {
         ArrayList<int[]> path = findPath(map, this.getPosition(), map.getPlayerObjectReference().getPosition());
-        if (!path.isEmpty())
+        if (path != null)
         {
-            if(!collisionCheck(map, new GridPosition(path.getFirst()[0], path.getFirst()[1])))
+            if(collisionCheck(map, new GridPosition(path.get(1)[0], path.get(1)[1])))
             {
-                this.setPosition(new GridPosition(path.getFirst()[0], path.getFirst()[1]));
+                System.out.println("Frog moving");
+                this.setPosition(new GridPosition(path.get(1)[0], path.get(1)[1]));
             } else {
                 System.out.println("Frog Collision");
             }
@@ -64,7 +75,7 @@ public class Frog extends PathfindingEnemy {
     }
 
     public ArrayList<int[]> findPath(Map map, GridPosition enemyPosition, GridPosition playerPosition) {
-        ArrayList<int[]> path = AStarAlgorithm(map, this.getPosition(), map.getPlayerObjectReference().getPosition());
+        ArrayList<int[]> path = AStarAlgorithm(map, enemyPosition, playerPosition);
         return path;
     }
 

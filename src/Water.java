@@ -31,9 +31,6 @@ public class Water extends Tile {
     }
 
     @Override
-    public void onCollision(GameObject collidingObject) {}
-
-    @Override
     public void delete() {}
 
     public void flow(GameObject tile) {
