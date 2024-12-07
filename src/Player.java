@@ -16,6 +16,8 @@ public class Player extends Entity {
     private GridPosition position = new GridPosition(0, 0);
     // Note, change above to be gridPosition later once it comes up.
     private int diamonds;
+    protected int updateRate = 1;
+    private Direction movingDirection;
 
     /**
      * Creates a new player object.
@@ -103,50 +105,26 @@ public class Player extends Entity {
      *
      * @param dir the direction to move (UP, RIGHT, DOWN, or LEFT)
      */
-
-   //public void move(final Direction dir, final Map map) {
-   //    int x = position.getX();
-   //    int y = position.getY();
-
-   //    if (collissionCheck(map, dir)){
-   //        System.out.println("Cannot move there, blocked.");
-   //    } else {
-   //        if (dir == Direction.UP) {
-   //            System.out.println("Going Up");
-   //            int[] delta = new int[]{x, y - 1}; // Flipped Y value. It hurts me too I know
-   //            position = new GridPosition(delta[0], delta[1]);
-   //            System.out.println("New position: " + position);
-   //        } else if (dir == Direction.RIGHT) {
-   //            System.out.println("Going Right");
-   //            int[] delta = new int[] {x + 1, y};
-   //            position = new GridPosition(delta[0], delta[1]);
-   //            System.out.println("New position: " + position);
-
-
-   //        } else if (dir == Direction.DOWN) {
-   //            System.out.println("Going Down");
-   //            int[] delta = new int[] {x, y+1}; // Flipped Y value. It hurts me too I know.
-   //            position = new GridPosition(delta[0], delta[1]);
-   //            System.out.println("New position: " + position);
-
-   //        } else if (dir == Direction.LEFT) {
-   //            System.out.println("Going Left");
-   //            int[] delta = new int[] {x - 1, y};
-   //            position = new GridPosition(delta[0], delta[1]);
-   //            System.out.println("New position: " + position);
-   //        }
-   //    }
-
-
-   //}
     @Override
     public void move(Map map, final Direction dir) {
-        GridPosition newPosition = new GridPosition(0,0).add(position);
+        GridPosition newPosition = new GridPosition(0, 0).add(position);
         GridPosition desiredPosition = switch (dir) {
-            case UP -> newPosition.add(new GridPosition(0, -1));
-            case RIGHT -> newPosition.add(new GridPosition(1, 0));
-            case DOWN -> newPosition.add(new GridPosition(0, 1));
-            case LEFT -> newPosition.add(new GridPosition(-1, 0));
+            case UP -> {
+                movingDirection = Direction.UP;
+                yield newPosition.add(new GridPosition(0, -1));
+            }
+            case RIGHT -> {
+                movingDirection = Direction.RIGHT;
+                yield newPosition.add(new GridPosition(1, 0));
+            }
+            case DOWN -> {
+                movingDirection = Direction.DOWN;
+                yield newPosition.add(new GridPosition(0, 1));
+            }
+            case LEFT -> {
+                movingDirection = Direction.LEFT;
+                yield newPosition.add(new GridPosition(-1, 0));
+            }
         };
 
         if (!collisionCheck(map, desiredPosition)) {
@@ -172,8 +150,9 @@ public class Player extends Entity {
         }
     }
 
-    private void pushBoulder(){
-
+    private void pushBoulder(Map map, Direction dir, Boulder boulder) {
+        boulder.push(map, dir);
+        System.out.println("Pushing boulder " + movingDirection.toString());
     }
 
     @Override
@@ -188,7 +167,8 @@ public class Player extends Entity {
             case "tile":
                 return !gameObjectAt.isWalkable();
             case "boulder":
-                pushBoulder();
+                Boulder boulderToPush = (Boulder) gameObjectAt;
+                pushBoulder(map, movingDirection, boulderToPush); //Must pass in map, boulder, direction
                 System.out.println("Boulder detected");
                 return true;
             default:
