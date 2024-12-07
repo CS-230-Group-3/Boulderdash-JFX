@@ -6,12 +6,6 @@ public class User implements Serializable {
     private final ArrayList<Level> unlockedLevels;
     private Level currentLevel;
 
-    public User() {
-        name = "";
-        unlockedLevels = new ArrayList<>();
-    }
-
-
     /**
      * Creates a new user with the provided name.
      * New users start with level 1 available to play.
@@ -36,6 +30,11 @@ public class User implements Serializable {
         return unlockedLevels;
     }
 
+    public void unlockLevel(Level levelToUnlock) {
+        unlockedLevels.add(levelToUnlock);
+        Data.getInstance().save();
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == this) {
@@ -50,5 +49,10 @@ public class User implements Serializable {
 
     public Level getCurrentLevel() {
         return currentLevel;
+    }
+
+    public void setCurrentLevel(Level selectedLevel) {
+        this.currentLevel = selectedLevel;
+        Data.getInstance().save();
     }
 }

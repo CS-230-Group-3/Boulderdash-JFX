@@ -7,10 +7,6 @@ public class Level implements Serializable {
     private final ArrayList<HighScore> highScores;
 
 
-    public Level() {
-        this.levelName = "";
-        this.highScores = new ArrayList<>();
-    }
     public Level(String levelName) {
         this.levelName = formatLevelName(levelName);
         this.highScores = new ArrayList<>();
@@ -44,6 +40,8 @@ public class Level implements Serializable {
         } else if (index < MAX_HIGH_SCORE_ENTRIES - 1) {
             highScores.add(index, newHighScore);
         }
+
+        Data.getInstance().save();
     }
 
     @Override

@@ -1,5 +1,3 @@
-import com.sun.javafx.scene.control.GlobalMenuAdapter;
-
 import java.io.*;
 import java.util.ArrayList;
 
@@ -72,15 +70,6 @@ public class Data implements Serializable {
         return dataToLoad;
     }
 
-//    /**
-//     * Creates a new Data object, assign the user to the passed array.
-//     * @param users users to assign.
-//     */
-//    public Data(ArrayList<User> users) {
-//        this.users = users;
-//        this.availableLevels = new ArrayList<>();
-//    }
-
     //TODO make it return bool to confirm if user was added?
     public void addNewUser(String name) {
         User newUser = new User(name);
@@ -90,6 +79,7 @@ public class Data implements Serializable {
                     add(availableLevels.getFirst());
             users.add(newUser);
         }
+        save();
     }
 
     private ArrayList<Level> setLevelsFromDirectory() {
@@ -104,7 +94,7 @@ public class Data implements Serializable {
                 );
             }
         }
-
+        save();
         return levels;
     }
 
@@ -130,6 +120,7 @@ public class Data implements Serializable {
      */
     public void setCurrentUser(User newUser) {
         currentUser = newUser;
+        this.save();
     }
 
 
