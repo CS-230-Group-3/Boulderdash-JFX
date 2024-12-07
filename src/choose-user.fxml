@@ -11,7 +11,7 @@
 
 <BorderPane fx:id="selectProfile" style="-fx-background-image: resources\entryWay2;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UserSelectController">
     <top>
-        <Label text="Select Profile" textFill="#ae0017" BorderPane.alignment="CENTER">
+        <Label prefHeight="28.0" prefWidth="273.0" stylesheets="@resources/style.css" text="SELECT PROFILE" textFill="#ae0017" BorderPane.alignment="CENTER">
             <font>
                 <Font name="SimSun" size="36.0" />
             </font>
@@ -21,7 +21,7 @@
         </Label>
     </top>
     <center>
-        <ListView fx:id="userList" editable="true" prefWidth="225.0" stylesheets="@resources/style.css" BorderPane.alignment="CENTER">
+        <ListView fx:id="userList" editable="true" prefWidth="274.0" stylesheets="@resources/style.css" BorderPane.alignment="CENTER">
             <style>-fx-font-family: "SimSun";
                 -fx-text-fill: #ae0017;-fx-font-size: 30; -fx-background-color: transparent; -fx-background-image: url('/resources/entryWay2.jpg'); -fx-background-position: center; -fx-background-size: cover; -fx-background-color: transparent;</style>
          <effect>

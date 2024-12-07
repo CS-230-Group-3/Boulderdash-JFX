@@ -29,18 +29,29 @@ public class LevelController {
     @FXML
     private ListView levelOneHighScores;
 
+    //@FXML
+    //private ListView levelTwoHighScores;
+
+    //@FXML
+    //private ListView levelThreeHighScores;
+
     @FXML
     void initialize() throws IOException, ClassNotFoundException {
         selectLevel1.setOnMouseClicked(event -> openNewWindow("level1.fxml"));
         selectLevel2.setOnMouseClicked(event -> openNewWindow("level1.fxml"));
         selectLevel3.setOnMouseClicked(event -> openNewWindow("level1.fxml"));
+        levelOneHighScores.setOnMouseClicked(event -> openNewWindow("level1.fxml"));
+        //levelTwoHighScores.setOnMouseClicked(event -> openNewWindow("level1.fxml"));
+        //levelThreeHighScores.setOnMouseClicked(event -> openNewWindow("level1.fxml"));
 
         Data data = SaveLoadController.loadData();
         Level levelOne = data.getAvailableLevels().getFirst();
         System.out.println(levelOne);
-        for (HighScore hs: levelOne.getHighScores()) {
+        for (HighScore hs: levelOne.getHighScores()) {           //TODO: Style the spaces
             levelOneHighScores.getItems().add(hs.getUserName() + "              " + hs.getScore());
         }
+
+        //TODO: Get scores for other levels
 
     }
     private void openNewWindow(String fxmlFileName) {

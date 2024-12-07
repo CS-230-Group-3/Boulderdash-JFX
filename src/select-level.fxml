@@ -5,25 +5,26 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="700.0" style="-fx-background-image: url('/resources/WallEnter.png');; -fx-background-position: center;; -fx-background-size: cover;;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="LevelController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="700.0" style="-fx-background-image: url('/resources/WallEnter.png');; -fx-background-position: center;; -fx-background-size: cover;;" stylesheets="@resources/level-style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="LevelController">
    <children>
       <Pane fx:id="selectLevel1" layoutX="42.0" layoutY="108.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="190.0" style="-fx-background-color: green;">
          <children>
             <Text layoutX="75.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LEVEL 1" />
-            <ListView fx:id="levelOneHighScores" layoutX="-5.0" layoutY="59.0" prefHeight="200.0" prefWidth="200.0" />
+            <ListView fx:id="levelOneHighScores" layoutY="57.0" prefHeight="157.0" prefWidth="190.0" stylesheets="@resources/level-style.css" />
          </children>
       </Pane>
       <Pane fx:id="selectLevel2" layoutX="255.0" layoutY="108.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="190.0" style="-fx-background-color: green;">
          <children>
             <Text layoutX="75.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LEVEL 2" />
-            <ListView layoutY="50.0" prefHeight="200.0" prefWidth="200.0" />
+            <ListView fx:id="levelOneHighScores1" layoutY="56.0" prefHeight="157.0" prefWidth="190.0" />
          </children>
       </Pane>
       <Pane fx:id="selectLevel3" layoutX="466.0" layoutY="108.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="190.0" style="-fx-background-color: green;">
          <children>
             <Text layoutX="75.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LEVEL 3" />
+            <ListView fx:id="levelOneHighScores11" layoutY="58.0" prefHeight="157.0" prefWidth="190.0" />
          </children>
       </Pane>
-      <Text layoutX="294.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SELECT LEVEL TO START" wrappingWidth="133.43392944335938" />
+      <Text layoutX="294.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SELECT LEVEL TO START" wrappingWidth="165.43392944335938" />
    </children>
 </AnchorPane>

@@ -1,0 +1,20 @@
+/*TODO: Try to style labels with wood picture*/
+.list-view {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: black;
+    -fx-padding: 5;
+}
+
+.list-cell:hover {
+    -fx-background-color: transparent;
+}
+
+.list-cell:focused, .list-cell:selected {
+    -fx-background-color: transparent;
+    -fx-text-fill: black;
+}

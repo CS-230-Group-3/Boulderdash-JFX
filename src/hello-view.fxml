@@ -7,14 +7,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="HelloController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="700.0" stylesheets="@resources/start-style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="HelloController">
     <children>
         <ImageView fitHeight="411.0" fitWidth="729.0" layoutX="-14.0" layoutY="-3.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-1.562164306640625">
             <image>
                 <Image url="@resources/entryWay2.jpg" />
             </image>
         </ImageView>
-        <Label layoutX="216.0" layoutY="24.0" styleClass="label" text="JUNGLE" textFill="#ae0017">
+        <Label layoutX="216.0" layoutY="24.0" text="JUNGLE" textFill="#ae0017">
             <font>
                 <Font name="SimSun" size="86.0" />
             </font></Label>

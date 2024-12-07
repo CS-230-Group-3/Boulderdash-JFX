@@ -1,26 +1,39 @@
 
 .list-view {
     -fx-background-color: transparent;
-    -fx-border-color: green;
-    -fx-border-width: 2px;
+    -fx-border-color: transparent;
     -fx-padding: 30px;
+    -fx-font-weight: bold;
 }
 
 
 .list-cell {
+    -fx-alignment: center;
+    -fx-text-alignment: center;
     -fx-background-color: transparent;
     -fx-text-fill: black;
-    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+    -fx-font-size: 35px;
     -fx-padding: 5px;
 }
 
 
 .list-cell:hover {
-    -fx-background-color: lightgreen;
+    -fx-background-color: #afee90;
 }
 
 
 .list-cell:filled:selected {
-    -fx-background-color: darkblue;
+    -fx-background-color: #238b00;
     -fx-text-fill: white;
+}
+
+.button:hover {
+    -fx-background-color: #9a0117;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.49), 10, 0, 0, 0);
+}
+
+.button:pressed {
+    -fx-background-color: #860217;
+    -fx-effect: none;
 }
