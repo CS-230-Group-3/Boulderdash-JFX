@@ -87,7 +87,7 @@ public class Map {
     /**
      * Destroys the passed tile.
      * Places a path on it's position
-     * @param tileToDestroy tile to be dostroied
+     * @param tileToDestroy tile to be destroyed
      */
     public void destroyTile(Tile tileToDestroy) {
         int tileIndex = gridToIndex(tileToDestroy.getPosition());
