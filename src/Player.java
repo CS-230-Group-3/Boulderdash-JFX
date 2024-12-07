@@ -56,7 +56,7 @@ public class Player extends Entity {
             if (!isUnderwater) {
                 System.out.println("Player surfaced in time!");
                 return;
-            }
+            } // May cause shit to explode idk what im doing with threads lmao
         }
         System.out.println("Player has drowned.");
         die();
