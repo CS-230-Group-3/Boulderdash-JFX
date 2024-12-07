@@ -26,6 +26,7 @@ public class Player extends Entity {
         this.livingState = true;
         this.keyChain = null;
         this.diamonds = 0;
+        this.type = "player";
     }
 
     /**
@@ -37,6 +38,7 @@ public class Player extends Entity {
         this.livingState = true;
         this.isUnderwater = false;
         this.diamonds = 0;
+        this.type = "player";
     }
 
     /**
@@ -96,88 +98,82 @@ public class Player extends Entity {
         this.position = position;
     }
 
-
-    private void keyCheck(Map map){
-        if (map.getObjectAt(position) instanceof Key key) {
-            pickUpKey(key);
-        }
-    }
-
     /**
      * Moves the player in the direction specified by keyboard input by updating its position.
      *
      * @param dir the direction to move (UP, RIGHT, DOWN, or LEFT)
      */
 
-    public void move(final Direction dir, final Map map) {
-        int x = position.getX();
-        int y = position.getY();
+   //public void move(final Direction dir, final Map map) {
+   //    int x = position.getX();
+   //    int y = position.getY();
 
-        if (collissionCheck(dir, map)){
-            System.out.println("Cannot move there, blocked.");
+   //    if (collissionCheck(map, dir)){
+   //        System.out.println("Cannot move there, blocked.");
+   //    } else {
+   //        if (dir == Direction.UP) {
+   //            System.out.println("Going Up");
+   //            int[] delta = new int[]{x, y - 1}; // Flipped Y value. It hurts me too I know
+   //            position = new GridPosition(delta[0], delta[1]);
+   //            System.out.println("New position: " + position);
+   //        } else if (dir == Direction.RIGHT) {
+   //            System.out.println("Going Right");
+   //            int[] delta = new int[] {x + 1, y};
+   //            position = new GridPosition(delta[0], delta[1]);
+   //            System.out.println("New position: " + position);
+
+
+   //        } else if (dir == Direction.DOWN) {
+   //            System.out.println("Going Down");
+   //            int[] delta = new int[] {x, y+1}; // Flipped Y value. It hurts me too I know.
+   //            position = new GridPosition(delta[0], delta[1]);
+   //            System.out.println("New position: " + position);
+
+   //        } else if (dir == Direction.LEFT) {
+   //            System.out.println("Going Left");
+   //            int[] delta = new int[] {x - 1, y};
+   //            position = new GridPosition(delta[0], delta[1]);
+   //            System.out.println("New position: " + position);
+   //        }
+   //    }
+
+
+   //}
+    @Override
+    public void move(Map map, final Direction dir) {
+        GridPosition newPosition = new GridPosition(0,0).add(position);
+        GridPosition desiredPosition = switch (dir) {
+            case UP -> newPosition.add(new GridPosition(0, -1));
+            case RIGHT -> newPosition.add(new GridPosition(1, 0));
+            case DOWN -> newPosition.add(new GridPosition(0, 1));
+            case LEFT -> newPosition.add(new GridPosition(-1, 0));
+        };
+
+        if (!collisionCheck(map, desiredPosition)) {
+            setPosition(desiredPosition);
         } else {
-            if (dir == Direction.UP) {
-                System.out.println("Going Up");
-                int[] delta = new int[]{x, y - 1}; // Flipped Y value. It hurts me too I know
-                position = new GridPosition(delta[0], delta[1]);
-                System.out.println("New position: " + position);
-            } else if (dir == Direction.RIGHT) {
-                System.out.println("Going Right");
-                int[] delta = new int[] {x + 1, y};
-                position = new GridPosition(delta[0], delta[1]);
-                System.out.println("New position: " + position);
-
-
-            } else if (dir == Direction.DOWN) {
-                System.out.println("Going Down");
-                int[] delta = new int[] {x, y+1}; // Flipped Y value. It hurts me too I know.
-                position = new GridPosition(delta[0], delta[1]);
-                System.out.println("New position: " + position);
-
-            } else if (dir == Direction.LEFT) {
-                System.out.println("Going Left");
-                int[] delta = new int[] {x - 1, y};
-                position = new GridPosition(delta[0], delta[1]);
-                System.out.println("New position: " + position);
-            }
+            System.out.println("Collision");
         }
-
-
     }
 
     @Override
-    public void move(Direction dir) {
-
-    }
-
-    @Override
-    public boolean collisionCheck(Direction dir) {
+    public boolean collisionCheck(Map map, GridPosition position) {
+        GameObject gameObjectAt = map.getObjectAt(position);
+        if (gameObjectAt.getType() == null) {
+            return true;
+        }
+        switch (gameObjectAt.getType()) {
+            case "enemy" -> die();
+            case "tile" -> {if (!gameObjectAt.isWalkable()) {return true;}}
+        }
         return false;
     }
 
-    private boolean collissionCheck(Direction dir, Map map) {
-        GridPosition playerPosition = position;
-        GridPosition desiredPosition = switch (dir) {
-            case UP -> new GridPosition(playerPosition.getX(), playerPosition.getY() - 1);
-            case RIGHT -> new GridPosition(playerPosition.getX() + 1, playerPosition.getY());
-            case DOWN -> new GridPosition(playerPosition.getX(), playerPosition.getY() + 1);
-            case LEFT -> new GridPosition(playerPosition.getX() - 1, playerPosition.getY());
-        };
-        if (map.getObjectAt(desiredPosition) instanceof Path){
-            return false;
-        }
-        else {
-            return true;
-        }
+    @Override
+    public boolean collisionCheck(Map map, Direction dir) {
+        return false;
     }
 
-    /**
-     * Updates the player's state based on input or game events.
-     */
-    @Override
-    public void update(Map map) {
-        keyCheck(map);
-    }
 
     @Override
     public boolean collisionCheck() {
@@ -185,40 +181,19 @@ public class Player extends Entity {
     }
 
     /**
-     * Checks if the player is colliding with something.
-     * @param dir The direction
-     * @return true if colliding, false otherwise
+     * Updates the player's state based on input or game events.
      */
     @Override
-    public boolean collisionCheck(Direction dir, Map map) { // DOUBLE CHECK THIS WORKS
-        switch (dir) {
-            case UP: // If square up can be walked through or not
-                GridPosition upDelta = new GridPosition(0,1);
-                GridPosition upwardsPosition = position.add(upDelta);
-
-                if (map.getObjectAt((upwardsPosition)) instanceof Tile) {
-                    Tile upwardsTile = (Tile) map.getObjectAt(upwardsPosition);
-                    if (upwardsTile.isWalkable()){
-                        System.out.println("Can walk up yippee");
-                        return false;
-                    }
-                }
-                else{
-                    System.out.println("Not instance of tile apparently");
-                }
-
+    public void update(Map map) {
+        // Check if dead first, if dead then do endgame method in gameController
+        // Example: Replace with actual keyboard input handling
+        String buttonPressed = "X"; // Temporary placeholder
+        if (buttonPressed.equals("W")) {
+            move(map, Direction.UP);
         }
-        return true;
+        collisionCheck();
     }
 
-    /**
-     * Handles collision logic for the player.
-     */
-    @Override
-    public void onCollision(GameObject objectColliding) {
-        System.out.println("Player collided with an obstacle.");
-        die();
-    }
 
     /**
      * Handles logic for a player picking up a key
@@ -228,8 +203,6 @@ public class Player extends Entity {
         keyChain.add(keyToPickUp);
         // BEFORE FINALISING - delete the key afterwards
     }
-
-
 
     /**
      * Deletes the player object from the game.
