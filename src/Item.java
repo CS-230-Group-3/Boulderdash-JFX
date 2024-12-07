@@ -1,5 +1,6 @@
 public class Item extends Entity {
 
+    public int updateRate = 1;
     private boolean falling = false;
 
     public Item(String pathToSprite, GridPosition position) {
@@ -46,9 +47,16 @@ public class Item extends Entity {
     @Override
     public void update(Map map) {}
     @Override
-    public void move(Map map, Direction dir)
-    {
-
+    public void move(Map map, Direction dir) {
+        if (dir == Direction.UP) {
+            this.setPosition(this.getPosition().add(new GridPosition(0, -1)));
+        } else if (dir == Direction.DOWN) {
+            this.setPosition(this.getPosition().add(new GridPosition(0, 1)));
+        } else if (dir == Direction.LEFT) {
+            this.setPosition(this.getPosition().add(new GridPosition(-1, 0)));
+        } else if (dir == Direction.RIGHT) {
+            this.setPosition(this.getPosition().add(new GridPosition(1, 0)));
+        }
     }
 
     @Override

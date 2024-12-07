@@ -191,14 +191,10 @@ public class Player extends Entity {
      * Updates the player's state based on input or game events.
      */
     @Override
-    public void update(Map map) {
-        // Check if dead first, if dead then do endgame method in gameController
-        // Example: Replace with actual keyboard input handling
-        String buttonPressed = "X"; // Temporary placeholder
-        if (buttonPressed.equals("W")) {
-            move(map, Direction.UP);
+    public void update(Map map) throws InterruptedException {
+        if (isUnderwater){
+            underwaterCountDown(10);
         }
-        collisionCheck();
     }
 
 
