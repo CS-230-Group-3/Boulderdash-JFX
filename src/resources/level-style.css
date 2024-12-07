@@ -7,7 +7,7 @@
 .list-cell {
     -fx-background-color: transparent;
     -fx-text-fill: black;
-    -fx-padding: 5;
+    -fx-padding: 5px 10px;
 }
 
 .list-cell:hover {

@@ -46,10 +46,12 @@ public class LevelController {
         //levelThreeHighScores.setOnMouseClicked(event -> openNewWindow("level1.fxml"));
 
         Data data = Data.getInstance();
+        Data.getInstance().getAvailableLevels().getFirst().addUserScore(new User("Test Score 1"), 1919);
+        Data.getInstance().save();
         Level levelOne = data.getAvailableLevels().getFirst();
         System.out.println(levelOne);
-        for (HighScore hs: levelOne.getHighScores()) {           //TODO: Style the spaces
-            levelOneHighScores.getItems().add(hs.getUserName() + "              " + hs.getScore());
+        for (HighScore hs: levelOne.getHighScores()) {
+            levelOneHighScores.getItems().add(hs.getUserName() + "\t\t" + hs.getScore());
         }
 
         //TODO: Get scores for other levels
