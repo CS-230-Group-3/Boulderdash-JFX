@@ -1,5 +1,5 @@
 public class RedKey extends Key {
 
-    private
-
+    private GridPosition position;
+ // OLLIE I BEG DONT BREAK THE REPO
 }
