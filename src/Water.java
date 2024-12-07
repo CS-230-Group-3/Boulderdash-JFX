@@ -4,6 +4,8 @@ public class Water extends Tile {
 
     public Water() {
         super(FILE_PATH, new GridPosition(0, 0));
+        this.walkable = true;
+        this.destroyable = false;
     }
 
     @Override
@@ -27,9 +29,6 @@ public class Water extends Tile {
     public boolean collisionCheck() {
         return false;
     }
-
-    @Override
-    public void onCollision(GameObject collidingObject) {}
 
     @Override
     public void delete() {}

@@ -14,9 +14,11 @@ public abstract class GameObject {
 
     private final Image sprite;
     private GridPosition gridPosition;
-    private int updateRate; // The rate at which the game object updates in ticks.
-    private boolean isColliding;
+    protected int updateRate; // The rate at which the game object updates in ticks.
+    private boolean isWalkable;
     private int collisionRate;
+
+    protected String type;
 
     /**
      * Creates a new game object.
@@ -26,7 +28,6 @@ public abstract class GameObject {
     public GameObject(String pathToSprite, GridPosition position) {
         this.sprite = new Image(pathToSprite);
         this.gridPosition = position;
-        this.isColliding = false;
     }
 
 
@@ -39,11 +40,6 @@ public abstract class GameObject {
      * Checks for collisions with other game objects.
      */
     public abstract boolean collisionCheck();
-
-    /**
-     * Determines what the game object does when it collides with another game object.
-     */
-    public abstract void onCollision(GameObject collidingObject);
 
     /**
      * Removes the game object from the level.
@@ -87,15 +83,12 @@ public abstract class GameObject {
      * Checks whether the game object is currently colliding.
      * @return true if the game object is colliding, false if not.
      */
-    protected boolean isObjectColliding() {
-        return this.isColliding;
+    protected boolean isWalkable() {
+        return this.isWalkable;
     }
 
-    /**
-     * Updates the collision status of the game object.
-     * @param collisionStatus true if the game object is colliding, false if not.
-     */
-    protected void setIsColliding(boolean collisionStatus) {
-        this.isColliding = collisionStatus;
+    protected String getType()
+    {
+        return type;
     }
 }

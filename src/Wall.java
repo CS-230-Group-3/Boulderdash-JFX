@@ -4,6 +4,8 @@ public class Wall extends Tile {
 
     public Wall() {
         super(FILE_PATH, new GridPosition(0, 0));
+        this.walkable = false;
+        this.destroyable = true;
     }
 
     @Override
@@ -16,10 +18,6 @@ public class Wall extends Tile {
         return false;
     }
 
-    @Override
-    public void onCollision(GameObject collidingObject) {
-
-    }
 
     @Override
     public void delete() {

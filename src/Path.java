@@ -25,11 +25,6 @@ public class Path extends Tile {
     }
 
     @Override
-    public void onCollision(GameObject collidingObject) {
-
-    }
-
-    @Override
     public void delete() {
 
     }

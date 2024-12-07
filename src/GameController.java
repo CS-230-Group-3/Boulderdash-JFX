@@ -1,4 +1,5 @@
 import javafx.scene.canvas.Canvas;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 /**
@@ -66,19 +67,19 @@ public class GameController {
             switch (event.getCode()) {
                 case RIGHT:
                 case D:
-                    player.move(Direction.RIGHT, getMap());
+                    player.move(map, Direction.RIGHT);
                     break;
                 case LEFT:
                 case A:
-                    player.move(Direction.LEFT, getMap());
+                    player.move(map, Direction.LEFT);
                     break;
                 case UP:
                 case W:
-                    player.move(Direction.UP, getMap());
+                    player.move(map, Direction.UP);
                     break;
                 case DOWN:
                 case S:
-                    player.move(Direction.DOWN, getMap());
+                    player.move(map, Direction.DOWN);
                     break;
                 case SPACE:
                     map.getPlayerObjectReference().die();
@@ -91,6 +92,11 @@ public class GameController {
             }
             graphicsController.drawGame(canvas, getMap());
 
+            event.consume();
+        } else {
+            if (event.getCode() == KeyCode.ESCAPE) {
+                timeController.handlePause();
+            }
             event.consume();
         }
     }

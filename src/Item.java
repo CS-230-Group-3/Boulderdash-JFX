@@ -4,6 +4,7 @@ public class Item extends Entity {
 
     public Item(String pathToSprite, GridPosition position) {
         super(pathToSprite, position);
+        this.type = "item";
     }
 
     public void fall(Map map) {
@@ -11,17 +12,17 @@ public class Item extends Entity {
 
         if (this.isFalling()) {
             if (downNeighbour instanceof Path) {
-                this.move(Direction.DOWN);
+                this.move(map, Direction.DOWN);
 
                 //kill player if gem or boulder
             } else if (downNeighbour instanceof Player && this instanceof Gem ||
                     this instanceof Boulder) {
                 map.getPlayerObjectReference().die();
-                this.move(Direction.DOWN);
+                this.move(map, Direction.DOWN);
 
             } else if (downNeighbour instanceof Enemy) {
                 downNeighbour.delete();
-                this.move(Direction.DOWN);
+                this.move(map, Direction.DOWN);
 
             } else {
                 this.setFalling(false);
@@ -35,15 +36,20 @@ public class Item extends Entity {
         if (downNeighbour instanceof Wall || downNeighbour instanceof Boulder ||
                 downNeighbour instanceof Gem) {
             if (map.getNeighbourOf(downNeighbour, Direction.LEFT) instanceof Path) {
-                this.move(Direction.LEFT);
+                this.move(map, Direction.LEFT);
             } else if (map.getNeighbourOf(downNeighbour, Direction.RIGHT) instanceof Path) {
-                this.move(Direction.RIGHT);
+                this.move(map, Direction.RIGHT);
             }
         }
     }
 
     @Override
     public void update(Map map) {}
+    @Override
+    public void move(Map map, Direction dir)
+    {
+
+    }
 
     @Override
     public boolean collisionCheck() {
@@ -51,21 +57,16 @@ public class Item extends Entity {
     }
 
     @Override
-    public void onCollision(GameObject collidingObject) {}
-
-    @Override
     public void delete() {}
 
-    @Override
-    public void move(Direction dir) {}
 
     @Override
-    public boolean collisionCheck(Direction dir) {
+    public boolean collisionCheck(Map map, GridPosition position) {
         return false;
     }
 
     @Override
-    public boolean collisionCheck(Direction dir, Map map) {
+    public boolean collisionCheck(Map map, Direction dir) {
         return false;
     }
 
