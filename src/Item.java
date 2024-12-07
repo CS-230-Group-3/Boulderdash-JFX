@@ -63,13 +63,16 @@ public class Item extends Entity {
     @Override
     public void move(Map map, Direction dir) {
         if (dir == Direction.UP) {
-            this.setPosition(this.getPosition().add(new GridPosition(0, -1)));
+            this.getPosition().add(new GridPosition(0, -1));
+
         } else if (dir == Direction.DOWN) {
-            this.setPosition(this.getPosition().add(new GridPosition(0, 1)));
+            this.getPosition().add(new GridPosition(0, 1));
+
         } else if (dir == Direction.LEFT) {
-            this.setPosition(this.getPosition().add(new GridPosition(-1, 0)));
+            this.getPosition().add(new GridPosition(-1, 0));
+
         } else if (dir == Direction.RIGHT) {
-            this.setPosition(this.getPosition().add(new GridPosition(1, 0)));
+            this.getPosition().add(new GridPosition(1, 0));
         }
     }
 
