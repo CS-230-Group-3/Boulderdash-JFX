@@ -172,6 +172,10 @@ public class Player extends Entity {
         }
     }
 
+    private void pushBoulder(){
+
+    }
+
     @Override
     public boolean collisionCheck(Map map, GridPosition position) {
         GameObject gameObjectAt = map.getObjectAt(position);
@@ -179,10 +183,17 @@ public class Player extends Entity {
             return true;
         }
         switch (gameObjectAt.getType()) {
-            case "enemy" -> die();
-            case "tile" -> {if (!gameObjectAt.isWalkable()) {return true;}}
+            case "enemy":
+                die();
+            case "tile":
+                return !gameObjectAt.isWalkable();
+            case "boulder":
+                pushBoulder();
+                System.out.println("Boulder detected");
+                return true;
+            default:
+                return false;
         }
-        return false;
     }
 
     @Override
