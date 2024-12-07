@@ -150,9 +150,18 @@ public class Player extends Entity {
         };
 
         if (!collisionCheck(map, desiredPosition)) {
+            compressDirt(map, desiredPosition);
             setPosition(desiredPosition);
         } else {
             System.out.println("Collision");
+        }
+    }
+
+    private void compressDirt(Map map, GridPosition desiredPosition) {
+        if (map.getObjectAt(desiredPosition) instanceof Dirt) {
+            Tile dirtToSquish = (Tile) (map.getObjectAt(desiredPosition));
+            map.destroyTile(dirtToSquish);
+            System.out.println("Dirt compressed to tile");
         }
     }
 
