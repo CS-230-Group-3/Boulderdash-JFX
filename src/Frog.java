@@ -43,10 +43,13 @@ public class Frog extends PathfindingEnemy {
      * @return boolean indicating whether there is a collision.
      */
     public boolean collisionCheck(Map map, GridPosition position) {
-        if (position == map.getPlayerObjectReference().getPosition()) {
+        GameObject objectAt = map.getObjectAt(position);
+        if (objectAt == null) {
+            return true;
+        } else if (objectAt == map.getPlayerObjectReference()) {
             map.getPlayerObjectReference().die();
             return true;
-        } else if (!map.getObjectAt(position).isWalkable()) {
+        } else if (objectAt.isWalkable()) {
             return true;
         } else {
             return false;
@@ -61,9 +64,9 @@ public class Frog extends PathfindingEnemy {
         ArrayList<int[]> path = findPath(map, this.getPosition(), map.getPlayerObjectReference().getPosition());
         if (path != null)
         {
-            System.out.println("Frog path not null");
             if(!collisionCheck(map, new GridPosition(path.getFirst()[0], path.getFirst()[1])))
             {
+                System.out.println("Frog moving");
                 this.setPosition(new GridPosition(path.getFirst()[0], path.getFirst()[1]));
             } else {
                 System.out.println("Frog Collision");

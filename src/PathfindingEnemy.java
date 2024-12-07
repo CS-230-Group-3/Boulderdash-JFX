@@ -14,60 +14,70 @@ public abstract class PathfindingEnemy extends Enemy {
     public PathfindingEnemy(String pathToSprite, GridPosition position) {
         super(pathToSprite, position);
     }
-    
+
     private void initializeWalkableTiles(Map map) {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 GameObject objectAt = map.getObjectAt(new GridPosition(i, j));
-                if (objectAt.isWalkable()) {
+                if (objectAt == null) {
+                    walkableTiles.add(new Node(i, j, null));
+                } else if (objectAt.isWalkable()) {
                     walkableTiles.add(new Node(i, j, null));
                 }
             }
         }
     }
-    
+
     public ArrayList<int[]> AStarAlgorithm(Map map, GridPosition enemyPos, GridPosition playerPos) {
-        rows = map.getMapWidth();
-        cols = map.getMapHeight();
-        initializeWalkableTiles(map);
+        rows = map.getMapHeight();
+        cols = map.getMapWidth();
 
         start = new Node(enemyPos.getX(), enemyPos.getY(), null);
         end = new Node(playerPos.getX(), playerPos.getY(), null);
 
-        
+
         start.g = 0;
         start.h = calculateHeuristic(start.x, start.y, end.x, end.y);
         start.f = start.g + start.h;
 
         walkableTiles.add(start);
+        System.out.println(enemyPos.getX() + " " + enemyPos.getY());
+        System.out.println(playerPos.getX() + " " + playerPos.getY());
 
         while (!walkableTiles.isEmpty()) {
-            Node current = walkableTiles.get(lowestF());  
+            Node current = walkableTiles.get(lowestF());
+            System.out.println("CURRENT: " + current.x + " " + current.y);
             walkableTiles.remove(current);
 
             // If we reached the goal, reconstruct the path
-            if (current.x == end.x && current.y == end.y) {
+            if (current.x == playerPos.getX() && current.y == playerPos.getY()) {
+                System.out.println("found");
                 ArrayList<int[]> path = new ArrayList<>();
                 while (current != null) {
-                    path.add(new int[]{current.x, current.y});  
-                    current = current.parent;  
+                    path.add(new int[]{current.x, current.y});
+                    current = current.parent;
                 }
-                Collections.reverse(path);  
+                Collections.reverse(path);
+                for (int[] i : path) {
+                    System.out.println(i[0] + " " + i[1]);
+                }
                 return path;
             }
 
-            walkedTiles.add(current);  
+            walkedTiles.add(current);
 
-            // Explore neighbors     //TODO I think this is the part that doesnt work due to line 61-63
+            // Explore neighbors
             for (int i = 0; i < 4; i++) {
                 int newX = current.x + dx[i];
                 int newY = current.y + dy[i];
 
+                System.out.println("try: " + newX + " " + newY + " " + current);
                 // If the new position is valid and walkable
                 if (isValid(newX, newY, map) && !containsNode(walkedTiles, newX, newY)) {
-                    int newG = current.g + 1;  
-                    int newH = calculateHeuristic(newX, newY, end.x, end.y);  
-                    Node neighbor = new Node(newX, newY, newG, newH, current);  
+                    int newG = current.g + 1;
+                    int newH = calculateHeuristic(newX, newY, end.x, end.y);
+                    Node neighbor = new Node(newX, newY, newG, newH, current);
+                    System.out.println("    VALID: " + newX + " " + newY + " " + current);
                     neighbor.f = neighbor.g + neighbor.h;
 
                     // If neighbor is not in the open list, add it
@@ -77,7 +87,8 @@ public abstract class PathfindingEnemy extends Enemy {
                 }
             }
         }
-        return null;  
+        System.out.println("null");
+        return null;
     }
 
     private int lowestF() {
@@ -91,7 +102,16 @@ public abstract class PathfindingEnemy extends Enemy {
     }
 
     private boolean isValid(int x, int y, Map map) {
-        return x >= 0 && y >= 0 && x < rows && y < cols && map.getObjectAt(new GridPosition(x, y)).isWalkable();
+        if (x >= 0 && y >= 0 && x < rows && y < cols) {
+            if (map.getObjectAt(new GridPosition(x, y)) == null) {
+                return true;
+            } else if (map.getObjectAt(new GridPosition(x, y)) == map.getPlayerObjectReference()) {
+                return true;
+            } else {
+                return map.getObjectAt(new GridPosition(x, y)).isWalkable();
+            }
+        }
+        return false;
     }
 
     private int calculateHeuristic(int x, int y, int goalX, int goalY) {
