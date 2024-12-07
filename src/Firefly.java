@@ -1,18 +1,19 @@
 /**
  * leftMoving has 50/50 chance of being true when butterfly instantiated
  * lastMovement tracks where the butterfly is "facing"
+ * exact same as butterfly except it doesn't drop diamonds when it explodes
  */
 
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Butterfly extends Enemy {
+public class Firefly extends Enemy {
 
-    private static final String FILE_PATH = "resources/assets/butterfly.png";
+    private static final String FILE_PATH = "resources/assets/firefly.png";
     private boolean leftMoving;
     private Direction lastMovement = Direction.UP;
 
-    public Butterfly() {
+    public Firefly() {
         super(FILE_PATH, new GridPosition(0, 0));
         Random random = new Random();
         leftMoving = random.nextInt(2) == 0;
@@ -96,7 +97,7 @@ public class Butterfly extends Enemy {
 
     @Override
     public void delete() {
-        //explode - destroy a 9x9 grid of tiles and spawn diamonds in their places
+        //explode - destroy a 9x9 grid of tiles
     }
 
     @Override
