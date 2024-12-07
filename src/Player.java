@@ -96,6 +96,13 @@ public class Player extends Entity {
         this.position = position;
     }
 
+
+    private void keyCheck(Map map){
+        if (map.getObjectAt(position) instanceof Key key) {
+            pickUpKey(key);
+        }
+    }
+
     /**
      * Moves the player in the direction specified by keyboard input by updating its position.
      *
@@ -169,13 +176,7 @@ public class Player extends Entity {
      */
     @Override
     public void update(Map map) {
-        // Check if dead first, if dead then do endgame method in gameController
-        // Example: Replace with actual keyboard input handling
-        String buttonPressed = "X"; // Temporary placeholder
-        if (buttonPressed.equals("W")) {
-            move(Direction.UP);
-        }
-        collisionCheck();
+        keyCheck(map);
     }
 
     @Override
@@ -227,6 +228,8 @@ public class Player extends Entity {
         keyChain.add(keyToPickUp);
         // BEFORE FINALISING - delete the key afterwards
     }
+
+
 
     /**
      * Deletes the player object from the game.
