@@ -2,6 +2,8 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
+import java.util.ArrayList;
+import java.util.List;
 
 public class GraphicsController {
 
@@ -41,6 +43,8 @@ public class GraphicsController {
      * @param map map to update
      */
     public void updateGameObjectsOnMap(Map map) throws InterruptedException {
+        map.getPendingObjects().clear();
+
         for (GameObject object: map.getEntityLayer()) {
             /* Update only of UpdateRate is defined
                & UpdateRate Matches TickCount */
@@ -62,6 +66,9 @@ public class GraphicsController {
             }
 
         }
+        for (GameObject object : map.getPendingObjects()) {
+            map.spawnGameObject(object);
+        }
     }
 
     private void drawBackground(Canvas canvas, Map mapToCover) {
@@ -82,5 +89,4 @@ public class GraphicsController {
             }
         }
     }
-
 }

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Representation of the game's map.
@@ -13,6 +14,8 @@ public class Map {
 
     private ArrayList<GameObject> tileLayer;
     private ArrayList<GameObject> entityLayer;
+
+    private List<GameObject> pendingObjects = new ArrayList<>();
 
     /**
      * Create a new map with empty game objects.
@@ -51,7 +54,20 @@ public class Map {
         }
         int index = gridToIndex(coordinate);
         if (index == -1) {
-            return new TitaniumWall();
+            return null;
+        }
+        return tileLayer.get(index);
+    }
+
+    /**
+     * Returns the tile at the provided coordinate.
+     * @param coordinate coordinate to get tile at
+     * @return Tile at the coordinate
+     */
+    public GameObject getTileAt(GridPosition coordinate) {
+        int index = gridToIndex(coordinate);
+        if (index == -1) {
+            return null;
         }
         return tileLayer.get(index);
     }
@@ -87,7 +103,7 @@ public class Map {
     /**
      * Destroys the passed tile.
      * Places a path on it's position
-     * @param tileToDestroy tile to be destroyed
+     * @param tileToDestroy tile to be dostroied
      */
     public void destroyTile(Tile tileToDestroy) {
         int tileIndex = gridToIndex(tileToDestroy.getPosition());
@@ -152,6 +168,19 @@ public class Map {
             return null;
         } else {
             return getObjectAt(positionOfNeighbour);
+        }
+    }
+
+    public GameObject getTileNeighbourOf(GameObject object, Direction direction) {
+        GridPosition offset = directionToOffset(direction);
+        GridPosition positionOfNeighbour = new GridPosition(
+                object.getPosition().getX() + offset.getX(),
+                object.getPosition().getY() + offset.getY()
+        );
+        if (!isInBounds(positionOfNeighbour)) {
+            return null;
+        } else {
+            return getTileAt(positionOfNeighbour);
         }
     }
 
@@ -255,5 +284,9 @@ public class Map {
         if (isValidPosition && isInBounds(objectPosition)) {
             entityLayer.add(gameObject);
         }
+    }
+
+    public List<GameObject> getPendingObjects() {
+        return pendingObjects;
     }
 }

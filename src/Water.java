@@ -11,17 +11,17 @@ public class Water extends Tile {
 
     @Override
     public void update(Map map) {
-        GameObject downNeighbour = map.getNeighbourOf(this, Direction.DOWN);
-        GameObject leftNeighbour = map.getNeighbourOf(this, Direction.LEFT);
-        GameObject rightNeighbour = map.getNeighbourOf(this, Direction.RIGHT);
+        GameObject downNeighbour = map.getTileNeighbourOf(this, Direction.DOWN);
+        GameObject leftNeighbour = map.getTileNeighbourOf(this, Direction.LEFT);
+        GameObject rightNeighbour = map.getTileNeighbourOf(this, Direction.RIGHT);
 
-        if (downNeighbour instanceof Path || downNeighbour instanceof Entity) {
+        if (downNeighbour instanceof Path) {
             this.flow(map, downNeighbour);
         }
-        if (leftNeighbour instanceof Path || leftNeighbour instanceof Entity) {
+        if (leftNeighbour instanceof Path) {
             this.flow(map, leftNeighbour);
         }
-        if (rightNeighbour instanceof Path || rightNeighbour instanceof Entity) {
+        if (rightNeighbour instanceof Path) {
             this.flow(map, rightNeighbour);
         }
     }
@@ -30,7 +30,8 @@ public class Water extends Tile {
         GridPosition newWaterPos = tile.getPosition();
         Water water = new Water();
         water.setPosition(newWaterPos);
-        map.spawnGameObject(water);
+        map.getPendingObjects().add(water);
+        System.out.println("Flowing");
         //play flowing sound
     }
 
