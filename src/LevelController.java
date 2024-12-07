@@ -44,7 +44,7 @@ public class LevelController {
         //levelTwoHighScores.setOnMouseClicked(event -> openNewWindow("level1.fxml"));
         //levelThreeHighScores.setOnMouseClicked(event -> openNewWindow("level1.fxml"));
 
-        Data data = SaveLoadController.loadData();
+        Data data = Data.getInstance();
         Level levelOne = data.getAvailableLevels().getFirst();
         System.out.println(levelOne);
         for (HighScore hs: levelOne.getHighScores()) {           //TODO: Style the spaces

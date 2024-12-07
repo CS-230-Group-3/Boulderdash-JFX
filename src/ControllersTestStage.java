@@ -23,32 +23,6 @@ public class ControllersTestStage extends Application {
 
         GameController gameController = new GameController(canvas, levelOne);
 
-//        Data dataTest = new Data();
-//        dataTest.setLevelsFromDirectory();
-//        dataTest.addNewUser("Test User 1");
-//        dataTest.addNewUser("Test User 2");
-//        dataTest.addNewUser("Test User 3");
-//
-//        SaveLoadController.saveData(dataTest);
-
-//        Data newData = SaveLoadController.loadData();
-//        newData.getAvailableLevels().getFirst().getHighScores().add(new HighScore(
-//                "Test User 1", 14
-//        ));
-//
-//        SaveLoadController.saveData(newData);
-//        newData.setLevelsFromDirectory();
-
-//        SaveLoadController.saveData(newData);
-
-//
-//        for (User user: newData.getUsers()) {
-//            System.out.println(user.getName());
-//        }
-
-
-
-
 
         scene.addEventFilter(KeyEvent.KEY_PRESSED,
                 gameController::handleEvent);

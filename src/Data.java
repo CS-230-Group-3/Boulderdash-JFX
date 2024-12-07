@@ -1,10 +1,14 @@
-import java.io.File;
-import java.io.Serializable;
+import com.sun.javafx.scene.control.GlobalMenuAdapter;
+
+import java.io.*;
 import java.util.ArrayList;
 
 public class Data implements Serializable {
 
     private static final String PATH_TO_LEVELS = "src/resources/levels";
+    private static final String PATH_TO_DATA_CLASS_SAVE =
+            "src/resources/data/data.bin";
+    private static Data data;
     private static User currentUser;
     private final ArrayList<User> users;
     private final ArrayList<Level> availableLevels;
@@ -13,19 +17,69 @@ public class Data implements Serializable {
      * Creates a new Data object.
      * Assigns the stored used and highs scores to empty.
      */
-    public Data() {
+    private Data() {
         users = new ArrayList<>();
-        this.availableLevels = new ArrayList<>();
+        currentUser = null;
+        this.availableLevels = setLevelsFromDirectory();
     }
 
-    /**
-     * Creates a new Data object, assign the user to the passed array.
-     * @param users users to assign.
-     */
-    public Data(ArrayList<User> users) {
-        this.users = users;
-        this.availableLevels = new ArrayList<>();
+    public static Data getInstance() {
+        if (data == null) {
+            data = load();
+        }
+
+        return data;
     }
+
+    public void save() {
+        try {
+            FileOutputStream fileOutputStream =
+                    new FileOutputStream(PATH_TO_DATA_CLASS_SAVE);
+            ObjectOutputStream objectOutputStream =
+                    new ObjectOutputStream(fileOutputStream);
+
+            objectOutputStream.writeObject(this);
+
+            fileOutputStream.close();
+            objectOutputStream.close();
+        } catch (IOException e) {
+            System.out.println("Could not save data :C");
+            e.printStackTrace();
+        }
+    }
+
+    private static Data load() {
+        Data dataToLoad = null;
+
+        try {
+            FileInputStream fin = new FileInputStream(PATH_TO_DATA_CLASS_SAVE);
+            ObjectInputStream ois = new ObjectInputStream(fin);
+
+            dataToLoad = (Data) ois.readObject();
+
+            ois.close();
+            fin.close();
+        } catch (IOException | ClassNotFoundException e) {
+
+            System.out.println("Data class mismatch: Resetting stored Data "
+                    + "and rebuilding save file");
+            Data newData = new Data();
+            newData.save();
+
+            e.printStackTrace();
+            return newData;
+        }
+        return dataToLoad;
+    }
+
+//    /**
+//     * Creates a new Data object, assign the user to the passed array.
+//     * @param users users to assign.
+//     */
+//    public Data(ArrayList<User> users) {
+//        this.users = users;
+//        this.availableLevels = new ArrayList<>();
+//    }
 
     //TODO make it return bool to confirm if user was added?
     public void addNewUser(String name) {
@@ -38,16 +92,20 @@ public class Data implements Serializable {
         }
     }
 
-    public void setLevelsFromDirectory() {
+    private ArrayList<Level> setLevelsFromDirectory() {
         File dir = new File(PATH_TO_LEVELS);
+        ArrayList<Level> levels = new ArrayList<>();
+
         if (dir.isDirectory()) {
             File[] files = dir.listFiles();
             for (File file: files) {
-                availableLevels.add(
+                levels.add(
                         new Level(file.getName())
                 );
             }
         }
+
+        return levels;
     }
 
     public static void addScoreForCurrentUser(int score) {

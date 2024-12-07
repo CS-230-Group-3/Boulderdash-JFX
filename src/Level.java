@@ -48,7 +48,7 @@ public class Level implements Serializable {
 
     @Override
     public String toString() {
-        return this.levelName + "\n" + highScores;
+        return this.levelName + " High Scores: " + highScores;
     }
 
     private String formatLevelName(String name) {

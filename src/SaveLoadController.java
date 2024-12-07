@@ -111,44 +111,6 @@ public class SaveLoadController {
         }
     }
 
-
-
-    /**
-     * Saves provided data into binary file, preserving it's state.
-     * @param dataToSave data object to save
-     */
-    public static void saveData(Data dataToSave) throws IOException {
-        FileOutputStream fileOutputStream =
-                new FileOutputStream(PATH_TO_DATA_CLASS_SAVE);
-        ObjectOutputStream objectOutputStream =
-                new ObjectOutputStream(fileOutputStream);
-
-        objectOutputStream.writeObject(dataToSave);
-
-        fileOutputStream.close();
-        objectOutputStream.close();
-    }
-
-    /**
-     * Loads the Data class from file.
-     * @return data with preserved state from last save
-     */
-    public static Data loadData() throws IOException, ClassNotFoundException {
-        Data data = null;
-
-        FileInputStream fileInputStream =
-                new FileInputStream(PATH_TO_DATA_CLASS_SAVE);
-        ObjectInputStream outputStream =
-                new ObjectInputStream(fileInputStream);
-
-        data = (Data) outputStream.readObject();
-
-        fileInputStream.close();
-        outputStream.close();
-
-        return data;
-    }
-
     private ArrayList<Character> writeObjectsFromMap(Map map) {
         ArrayList<Character> output = new ArrayList<>();
         for (GameObject object: map.getTileLayer()) {

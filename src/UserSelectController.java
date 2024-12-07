@@ -37,7 +37,7 @@ public class UserSelectController {
 
     @FXML
     void initialize() throws IOException, ClassNotFoundException {
-        users = SaveLoadController.loadData().getUsers();
+        users = Data.getInstance().getUsers();
 
 
         newProfileButton.setOnAction(event -> handleNewProfileButton());

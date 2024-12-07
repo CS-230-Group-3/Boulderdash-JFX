@@ -41,9 +41,9 @@ public class NewProfileController {
         if (!users.contains(newUser)) {
             users.add(newUser);
 
-            Data data = SaveLoadController.loadData();
+            Data data = Data.getInstance();
             data.addNewUser(newUser.getName());
-            SaveLoadController.saveData(data);
+            data.save();
 
             close();
         } else {
