@@ -29,6 +29,8 @@ public abstract class PathfindingEnemy extends Enemy {
     }
 
     public ArrayList<int[]> AStarAlgorithm(Map map, GridPosition enemyPos, GridPosition playerPos) {
+        walkableTiles.clear();
+        walkedTiles.clear();
         rows = map.getMapHeight();
         cols = map.getMapWidth();
 
