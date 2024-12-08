@@ -134,23 +134,23 @@ public class LevelController {
                 new FXMLLoader(getClass().getResource("GameWindow.fxml"));
         try {
             Level levelToStart = getLevelFromPane(selectedPane);
+            Data.getInstance().getCurrentUser().setCurrentLevel(levelToStart);
             if (levelToStart != null) {
                 GameWindowController.setLevel(levelToStart);
             }
 
-            Parent root = loader.load();
-
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
+            selectLevelWindow = (AnchorPane) FXMLLoader.
+                    load(getClass().getResource("GameWindow.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).
+                    getScene().getWindow();
+            Scene scene = new Scene(selectLevelWindow);
+            stage.setScene(scene);
             stage.show();
 
-            event.consume();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
-
-
 
     private Level getLevelFromPane(Pane pane) {
         String levelNameAssignedToPane = (String) pane.getUserData();
