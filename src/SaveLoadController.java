@@ -226,8 +226,6 @@ public class SaveLoadController {
                 return new BlueKey();
             case '£':
                 return new YellowKey();
-            case '$':
-                return new GreenKey();
             default:
                 return new Path();
         }

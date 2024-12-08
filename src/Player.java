@@ -26,9 +26,10 @@ public class Player extends Entity {
     public Player() {
         super(SPRITE_PATH, new GridPosition(0, 0));
         this.livingState = true;
-        this.keyChain = null;
+      //  this.keyChain = null;
         this.diamonds = 0;
         this.type = "player";
+        this.keyChain = new ArrayList<>();
     }
 
     /**
@@ -79,7 +80,12 @@ public class Player extends Entity {
      */
     public void unlockDoor(final LockedDoor door) {
         for (Key key : keyChain) {
-            if (door.unlock(key)) {
+            if ((key instanceof RedKey && door.getColour() == KeyColour.RED) ||
+                    (key instanceof BlueKey && door.getColour() == KeyColour.BLUE) ||
+                    (key instanceof YellowKey && door.getColour() == KeyColour.YELLOW) ||
+                    (key instanceof PinkKey && door.getColour() == KeyColour.PINK)) {
+                System.out.println("Door " + door + " unlocked.");
+                keyChain.remove(key); // Remove the key from the player's inv{
                 System.out.println("Door " + door + " unlocked.");
                 return;
             }
@@ -262,4 +268,10 @@ public class Player extends Entity {
     public Boolean getLivingState() {
         return livingState;
     }
+
+
+
+
+
+
 }
