@@ -13,15 +13,20 @@ public class Key extends Item {
 
     private final int id;
 
-    private final KeyColour colour;
+    private boolean waterSkip = true;
 
-    public Key(KeyColour colour) {
+    public Key(String pathToSprite, GridPosition gridPosition) {
         super(FILE_PATH, new GridPosition(0, 0));
         this.id = Objects.hash(this); // Generate a unique hash for this key
-        this.colour = colour;
     }
 
     public void update(Map map) {
+        if (map.getTileAt(this.getPosition()) instanceof Water && !waterSkip) {
+            waterSkip = true;
+        } else if (map.getTileAt(this.getPosition()) instanceof Water && waterSkip) {
+            waterSkip = false;
+            return;
+        }
         this.fall(map);
     }
 
@@ -32,10 +37,6 @@ public class Key extends Item {
      */
     public int getId() {
         return id;
-    }
-
-    public KeyColour getColour() {
-        return colour;
     }
 
     public void delete() {

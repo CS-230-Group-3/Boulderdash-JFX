@@ -1,14 +1,9 @@
-public class YellowKey extends Key{
+public class YellowKey extends Key {
 
     private static final String FILE_PATH = "resources/assets/keyyellow.png";
 
-
-
-
-
     public YellowKey() {
-        super(KeyColour.YELLOW);
-
+        super(FILE_PATH, new GridPosition(0,0));
     }
 
     @Override

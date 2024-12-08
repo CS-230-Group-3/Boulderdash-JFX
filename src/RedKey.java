@@ -4,7 +4,7 @@ public class RedKey extends Key {
 
 
     public RedKey() {
-        super(KeyColour.RED);
+        super(FILE_PATH, new GridPosition(0, 0));
 
     }
 

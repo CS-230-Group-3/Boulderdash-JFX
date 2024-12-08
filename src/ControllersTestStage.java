@@ -16,7 +16,7 @@ public class ControllersTestStage extends Application {
         Scene scene = new Scene(root, 640, 400, Color.GRAY);
 
 
-        String levelOne = "src/resources/levels/level1.txt";
+        String levelOne = "src/resources/levels/level2.txt";
         Canvas canvas = new Canvas(640, 400);
 
         GameController gameController = new GameController(canvas, levelOne);

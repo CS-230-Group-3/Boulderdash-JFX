@@ -228,6 +228,8 @@ public class SaveLoadController {
                 return new BlueKey();
             case '£':
                 return new YellowKey();
+            case '$':
+                return new PinkKey();
             default:
                 return new Path();
         }
@@ -277,6 +279,14 @@ public class SaveLoadController {
                 return 'O';
             case "Firefly":
                 return 'S';
+            case "RedKey":
+                return '!';
+            case "BlueKey":
+                return '"';
+            case "YellowKey":
+                return '£';
+             case "PinkKey":
+                 return '$';
             default:
                 return '*';
         }
