@@ -3,10 +3,10 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * <p>This Frog class is intended to hold information related to the Sprite, the position as well as an Update,
+ * <p>This Goblin class is intended to hold information related to the Sprite, the position as well as an Update,
  * Delete and 3 Collision functions.</p>
  *
- * @author Joseph Parish.
+ * @author Diya Patel.
  * @version 1.0.5
  * Last Changed: 30/11/24
  */
@@ -14,7 +14,7 @@ public class Goblin extends PathfindingEnemy {
 
     private static final String FILE_PATH = "resources/assets/frog.png";
     /**
-     * Constructor to create a new Frog instance with a given starting position.
+     * Constructor to create a new Goblin instance with a given starting position.
      */
     public Goblin() {
         super(FILE_PATH, new GridPosition(0,0));
@@ -22,7 +22,7 @@ public class Goblin extends PathfindingEnemy {
     }
 
     /**
-     * Updates the frog's state. This method is called every tick to perform actions such as moving the frog.
+     * Updates the goblin's state. This method is called every tick to perform actions such as moving the goblin.
      */
     @Override
     public void update(Map map) {
@@ -41,7 +41,7 @@ public class Goblin extends PathfindingEnemy {
 
     /**
      * Checks for potential collisions at a given position.
-     * This method checks if the frog collides with the player or an impassable tile.
+     * This method checks if the goblin collides with the player or an impassable tile.
      *
      * @param position the position to check for a collision.
      * @return boolean indicating whether there is a collision.
@@ -61,8 +61,8 @@ public class Goblin extends PathfindingEnemy {
     }
 
     /**
-     * Moves the frog based on pathfinding logic. This method uses an algorithm called A* to find
-     * a path towards the player and update the frog's position accordingly.
+     * Moves the goblin based on pathfinding logic. This method uses an algorithm called A* to find
+     * a path towards the player and update the goblin's position accordingly.
      */
     public void move(Map map, final Direction dir) {
         ArrayList<int[]> path = AStarAlgorithm(map, this.getPosition(), map.getPlayerObjectReference().getPosition());
@@ -96,7 +96,7 @@ public class Goblin extends PathfindingEnemy {
     }
 
     /**
-     * Deletes the Frog object from the game.
+     * Deletes the Goblin object from the game.
      */
     @Override
     public void delete() {
