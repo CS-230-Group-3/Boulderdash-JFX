@@ -172,6 +172,9 @@ public class Player extends Entity {
             case "gem":
                 Item gem = (Item) gameObjectAt;
                 collectDiamond(map, gem);
+            case "door":
+                LockedDoor doorObject = (LockedDoor) gameObjectAt;
+                this.unlockDoor(doorObject);
             default:
                 return false;
         }

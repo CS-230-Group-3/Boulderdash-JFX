@@ -3,6 +3,7 @@ public class PinkKey extends Key {
 
     public PinkKey() {
         super(FILE_PATH, new GridPosition(0,0));
+        this.type = "key";
 
     }
 

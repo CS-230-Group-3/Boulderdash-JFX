@@ -4,6 +4,7 @@ public class YellowKey extends Key{
 
     public YellowKey() {
         super(FILE_PATH, new GridPosition(0,0));
+        this.type = "key";
     }
 
     @Override

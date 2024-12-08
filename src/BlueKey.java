@@ -4,7 +4,7 @@ public class BlueKey extends Key{
 
     public BlueKey() {
         super(FILE_PATH, new GridPosition(0, 0));
-
+        this.type = "key";
     }
 
     @Override

@@ -7,7 +7,7 @@
  */
 import java.util.Objects;
 
-public class Key extends Item {
+public abstract class Key extends Item {
 
     private static final String FILE_PATH = "resources/assets/key.png";
 
@@ -19,7 +19,7 @@ public class Key extends Item {
     public Key(String pathToSprite, GridPosition gridPosition) {
         super(FILE_PATH, new GridPosition(0, 0));
         this.id = Objects.hash(this); // Generate a unique hash for this key
-
+        this.type = "key";
     }
 
     public void update(Map map) {

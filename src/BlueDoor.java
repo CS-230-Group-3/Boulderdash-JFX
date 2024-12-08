@@ -8,6 +8,7 @@ public class BlueDoor extends LockedDoor{
 
     public BlueDoor() {
         super(FILE_PATH, new GridPosition(0,0));
+        this.type = "door";
     }
 
 

@@ -6,6 +6,7 @@ public class RedDoor extends LockedDoor {
     KeyColour colour = KeyColour.RED;
     public RedDoor() {
         super(FILE_PATH, new GridPosition(0,0));
+        this.type = "door";
     }
 
 

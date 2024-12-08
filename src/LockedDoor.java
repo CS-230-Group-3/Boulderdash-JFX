@@ -6,7 +6,7 @@ public class LockedDoor extends Tile {
 
     public LockedDoor(String pathToSprite, GridPosition position) {
         super(pathToSprite, position);
-        this.type = "tile";
+        this.type = "door";
     }
 
     @Override

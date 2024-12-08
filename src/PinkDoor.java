@@ -5,7 +5,7 @@ public class PinkDoor extends LockedDoor{
     KeyColour colour = KeyColour.PINK;
     public PinkDoor() {
         super(FILE_PATH, new GridPosition(0,0));
-
+        this.type = "door";
     }
 
 

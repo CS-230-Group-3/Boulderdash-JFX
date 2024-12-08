@@ -5,7 +5,7 @@ public class RedKey extends Key {
 
     public RedKey() {
         super(FILE_PATH, new GridPosition(0, 0));
-
+        this.type = "key";
     }
 
     @Override
