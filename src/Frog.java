@@ -10,11 +10,12 @@ import java.util.ArrayList;
  */
 public class Frog extends PathfindingEnemy {
 
+    private static final String FILE_PATH = "resources/assets/frog.png";
     /**
      * Constructor to create a new Frog instance with a given starting position.
      */
     public Frog() {
-        super("resources/assets/frog.png", new GridPosition(0,0));
+        super(FILE_PATH, new GridPosition(0,0));
         this.updateRate = 5;
     }
 

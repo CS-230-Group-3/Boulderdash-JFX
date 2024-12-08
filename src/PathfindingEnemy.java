@@ -22,7 +22,6 @@ public abstract class PathfindingEnemy extends Enemy {
         start = new Node(enemyPos.getX(), enemyPos.getY(), null);
         end = new Node(playerPos.getX(), playerPos.getY(), null);
 
-
         start.g = 0;
         start.h = calculateHeuristic(start.x, start.y, end.x, end.y);
         start.f = start.g + start.h;
@@ -93,7 +92,7 @@ public abstract class PathfindingEnemy extends Enemy {
             } else if (map.getObjectAt(new GridPosition(x, y)) == map.getPlayerObjectReference()) {
                 return true;
             } else {
-                return map.getObjectAt(new GridPosition(x, y)).isWalkable();
+                return map.getObjectAt(new GridPosition(x, y)) instanceof Path;
             }
         }
         return false;
