@@ -78,7 +78,7 @@ public class UserSelectController {
 
             npfController.setListToUpdate(users);
 
-            Scene newUserScene = new Scene(newUserRoot);
+            Scene newUserScene = new Scene(newUserRoot, MainUI.MAIN_WINDOW_WIDTH, MainUI.MAIN_WINDOW_HEIGHT);
             Stage newUserStage = new Stage();
 
             newUserStage.setScene(newUserScene);
@@ -113,7 +113,7 @@ public class UserSelectController {
                     load(getClass().getResource("select-level.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).
                     getScene().getWindow();
-            Scene scene = new Scene(selectWindow);
+            Scene scene = new Scene(selectWindow, MainUI.MAIN_WINDOW_WIDTH, MainUI.MAIN_WINDOW_HEIGHT);
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
@@ -126,7 +126,7 @@ public class UserSelectController {
                     load(getClass().getResource("hello-view.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).
                     getScene().getWindow();
-            Scene scene = new Scene(selectWindow);
+            Scene scene = new Scene(selectWindow, MainUI.MAIN_WINDOW_WIDTH, MainUI.MAIN_WINDOW_HEIGHT);
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {

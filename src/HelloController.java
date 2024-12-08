@@ -26,9 +26,6 @@ public class HelloController {
     @FXML
     private Button startApp;
 
-    private static int WIDTH = 700;
-    private static int HEIGHT = 400;
-
     @FXML
     void initialize() {
         startApp.setOnAction(event -> openUserWindow(event));
@@ -40,7 +37,7 @@ public class HelloController {
                     load(getClass().getResource("choose-user.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).
                     getScene().getWindow();
-            Scene scene = new Scene(helloWindow);
+            Scene scene = new Scene(helloWindow, MainUI.MAIN_WINDOW_WIDTH, MainUI.MAIN_WINDOW_HEIGHT);
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {

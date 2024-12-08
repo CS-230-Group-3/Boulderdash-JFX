@@ -7,33 +7,33 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="selectWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="700.0" style="-fx-background-image: url('/resources/WallEnter.png'); -fx-background-size: cover;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UserSelectController">
+<AnchorPane fx:id="selectWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-image: url('/resources/WallEnter.png'); -fx-background-size: cover;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UserSelectController">
    <children>
-      <Text fill="#ae0017" fontSmoothingType="LCD" layoutX="163.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SELECT THE USER" textAlignment="CENTER">
+      <Text fill="#ae0017" fontSmoothingType="LCD" layoutX="660.0" layoutY="207.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SELECT THE USER" textAlignment="CENTER">
          <font>
-            <Font name="SimSun" size="50.0" />
+            <Font name="SimSun" size="80.0" />
          </font>
       </Text>
-          <Button fx:id="newProfileButton" layoutX="213.0" layoutY="327.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="134.0" style="-fx-background-color: #ae0017; -fx-background-radius: 5;" text="NEW PROFILE" textFill="WHITE">
+          <Button fx:id="newProfileButton" layoutX="840.0" layoutY="911.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="58.0" prefWidth="239.0" style="-fx-background-color: #ae0017; -fx-background-radius: 5;" text="NEW PROFILE" textFill="WHITE">
          <font>
-            <Font name="SimSun" size="18.0" />
+            <Font name="SimSun" size="30.0" />
          </font>
       </Button>
-          <Button fx:id="selectButton" layoutX="375.0" layoutY="327.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="108.0" style="-fx-background-color: #ae0017; -fx-background-radius: 5;" text="SELECT" textFill="WHITE">
+          <Button fx:id="selectButton" layoutX="1286.0" layoutY="920.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="58.0" prefWidth="210.0" style="-fx-background-color: #ae0017; -fx-background-radius: 5;" text="SELECT" textFill="WHITE">
          <font>
-            <Font name="SimSun" size="18.0" />
+            <Font name="SimSun" size="30.0" />
          </font>
       </Button>
-        <ListView fx:id="userList" editable="true" layoutX="-1.0" layoutY="78.0" prefHeight="245.0" prefWidth="700.0" stylesheets="@resources/style.css">
+      <Button fx:id="backButton" layoutX="374.0" layoutY="920.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="58.0" prefWidth="190.0" style="-fx-background-color: #ae0017; -fx-background-radius: 5;" text="BACK" textFill="WHITE">
+         <font>
+            <Font name="SimSun" size="30.0" />
+         </font>
+      </Button>
+        <ListView fx:id="userList" editable="true" layoutX="224.0" layoutY="262.0" prefHeight="556.0" prefWidth="1444.0" stylesheets="@resources/style.css">
             <style>-fx-font-family: "SimSun"; -fx-text-fill: #ae0017; -fx-font-size: 30; -fx-background-color: transparent; -fx-background-position: center; -fx-background-size: cover; -fx-background-color: transparent;</style>
          <effect>
             <Glow level="0.48" />
          </effect>
         </ListView>
-      <Button fx:id="backButton" layoutX="90.0" layoutY="327.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="90.0" style="-fx-background-color: #ae0017; -fx-background-radius: 5;" text="BACK" textFill="WHITE">
-         <font>
-            <Font name="SimSun" size="18.0" />
-         </font>
-      </Button>
    </children>
 </AnchorPane>
