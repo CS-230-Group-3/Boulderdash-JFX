@@ -13,12 +13,12 @@ public class Key extends Item {
 
     private final int id;
 
-    private final KeyColour colour;
 
-    public Key(KeyColour colour) {
+
+    public Key(String pathToSprite, GridPosition gridPosition) {
         super(FILE_PATH, new GridPosition(0, 0));
         this.id = Objects.hash(this); // Generate a unique hash for this key
-        this.colour = colour;
+
     }
 
     public void update(Map map) {
@@ -34,9 +34,7 @@ public class Key extends Item {
         return id;
     }
 
-    public KeyColour getColour() {
-        return colour;
-    }
+
 
     public void delete() {
         //play key collection sound

@@ -176,8 +176,8 @@ public class SaveLoadController {
     private void populatePlayerItem(String item, int amount, Player player) {
         switch (item) {
             case "D":
-            player.setDiamonds(amount);
-            break;
+                player.setDiamonds(amount);
+                break;
             //TODO
 //            case 'K':
 //            player.setKeysCollected(amount);
@@ -228,6 +228,14 @@ public class SaveLoadController {
                 return new BlueKey();
             case '£':
                 return new YellowKey();
+            case '1':
+                return new RedDoor();
+            case '2':
+                return new BlueDoor();
+            case '3':
+                return new YellowDoor();
+            case '4':
+                return new PinkDoor();
             default:
                 return new Path();
         }

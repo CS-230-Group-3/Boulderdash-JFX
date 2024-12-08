@@ -1,10 +1,11 @@
 public class LockedDoor extends Tile {
 
-    private final KeyColour colour;
 
-    public LockedDoor(String pathToSprite, GridPosition position, KeyColour colour) {
+    protected KeyColour colour;
+
+
+    public LockedDoor(String pathToSprite, GridPosition position) {
         super(pathToSprite, position);
-        this.colour = colour;
         this.type = "tile";
     }
 
@@ -28,7 +29,11 @@ public class LockedDoor extends Tile {
     }
 
 
-  public KeyColour getColour() {
-       return colour;
+    public KeyColour getColour() {
+        return colour;
     }
+
+
+
+
 }

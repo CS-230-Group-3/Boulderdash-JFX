@@ -68,7 +68,7 @@ public class Player extends Entity {
      *
      * @param door the locked door to be unlocked
      */
-    public void unlockDoor(final LockedDoor door) {
+    public void unlockDoor(LockedDoor door) {
         for (Key key : keyChain) {
             if ((key instanceof RedKey && door.getColour() == KeyColour.RED) ||
                     (key instanceof BlueKey && door.getColour() == KeyColour.BLUE) ||

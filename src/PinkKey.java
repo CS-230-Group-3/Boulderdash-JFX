@@ -4,7 +4,7 @@ public class PinkKey extends Key {
 
 
     public PinkKey() {
-        super(KeyColour.PINK);
+        super(FILE_PATH, new GridPosition(0,0));
 
     }
 

@@ -6,13 +6,10 @@ public class BlueDoor extends LockedDoor{
 
 
 
-    public BlueDoor(String pathToSprite, GridPosition position,KeyColour colour) {
-        super(pathToSprite, position, colour);
-
+    public BlueDoor() {
+        super(FILE_PATH, new GridPosition(0,0));
     }
 
-    @Override
-    public KeyColour getColour() {
-        return colour;
-    }
+
+
 }

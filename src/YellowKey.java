@@ -7,7 +7,7 @@ public class YellowKey extends Key{
 
 
     public YellowKey() {
-        super(KeyColour.YELLOW);
+        super(FILE_PATH, new GridPosition(0,0));
 
     }
 

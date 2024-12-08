@@ -9,7 +9,7 @@ public class BlueKey extends Key{
 
 
     public BlueKey() {
-        super(KeyColour.BLUE);
+        super(FILE_PATH, new GridPosition(0,0));
 
     }
 
