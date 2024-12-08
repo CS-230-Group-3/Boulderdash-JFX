@@ -1,2 +1,2 @@
-public class GreenKey {
+public class GreenKey extends Key {
 }

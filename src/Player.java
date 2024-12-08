@@ -152,7 +152,6 @@ public class Player extends Entity {
 
     private void pushBoulder(Map map, Direction dir, Boulder boulder) {
         boulder.push(map, dir);
-        System.out.println("Pushing boulder " + movingDirection.toString());
         move(map, dir);
     }
 
@@ -183,6 +182,7 @@ public class Player extends Entity {
     public void collectDiamond(Map map, Item diamond) {
         map.removeItem(diamond);
         this.diamonds++;
+        System.out.println(diamonds);
     }
 
     @Override

@@ -11,7 +11,7 @@ public class Item extends Entity {
         GameObject downNeighbour = map.getNeighbourOf(this, Direction.DOWN);
 
         switch (downNeighbour) {
-            case Path _ -> {
+            case Path _, Water _ -> {
                 this.move(map, Direction.DOWN);
                 this.isFalling = true;
                 return true;
@@ -52,27 +52,39 @@ public class Item extends Entity {
                 this.move(map, Direction.LEFT);
             } else if (map.getNeighbourOf(downNeighbour, Direction.RIGHT) instanceof Path &&
                     rightNeighbour instanceof Path) {
+                System.out.println("Moving right");
                 this.move(map, Direction.RIGHT);
             }
         }
     }
 
     @Override
-    public void update(Map map) {}
+    public void update(Map map) { }
 
     @Override
     public void move(Map map, Direction dir) {
         if (dir == Direction.UP) {
-            this.getPosition().add(new GridPosition(0, -1));
+            this.setPosition(new GridPosition(
+                    this.getPosition().getX(),
+                    this.getPosition().getY() - 1
+            ));
 
         } else if (dir == Direction.DOWN) {
-            this.getPosition().add(new GridPosition(0, 1));
-
+            this.setPosition(new GridPosition(
+                    this.getPosition().getX(),
+                    this.getPosition().getY() + 1
+            ));
         } else if (dir == Direction.LEFT) {
-            this.getPosition().add(new GridPosition(-1, 0));
+            this.setPosition(new GridPosition(
+                    this.getPosition().getX() - 1,
+                    this.getPosition().getY()
+            ));
 
         } else if (dir == Direction.RIGHT) {
-            this.getPosition().add(new GridPosition(1, 0));
+            this.setPosition(new GridPosition(
+                    this.getPosition().getX() + 1,
+                    this.getPosition().getY()
+            ));
         }
     }
 

@@ -5,7 +5,7 @@ public class Boulder extends Item {
     public Boulder() {
         super(FILE_PATH, new GridPosition(0, 0));
         this.type = "boulder";
-        this.updateRate = 1;
+        this.updateRate = 5;
     }
 
     public void update(Map map) {
@@ -26,12 +26,12 @@ public class Boulder extends Item {
         GameObject leftNeighbour = map.getNeighbourOf(this, Direction.LEFT);
 
         if (direction == Direction.RIGHT) {
-            if (rightNeighbour instanceof Path) {
+            if (rightNeighbour instanceof Path || rightNeighbour instanceof Water) {
                 System.out.println("Moving right");
                 this.move(map, Direction.RIGHT);
             }
         } else if (direction == Direction.LEFT) {
-            if (leftNeighbour instanceof Path) {
+            if (leftNeighbour instanceof Path || leftNeighbour instanceof Water) {
                 System.out.println("Moving left");
                 this.move(map, Direction.LEFT);
             }
