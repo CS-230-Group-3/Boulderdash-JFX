@@ -35,7 +35,7 @@ public abstract class PathfindingEnemy extends Enemy {
             Node current = walkableTiles.get(lowestF());
             System.out.println("CURRENT: " + current.x + " " + current.y);
             walkableTiles.remove(current);
-            
+
             if (current.x == playerPos.getX() && current.y == playerPos.getY()) {
                 System.out.println("found");
                 ArrayList<int[]> path = new ArrayList<>();
