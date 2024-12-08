@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * <p>This Frog class is intended to hold information related to the Sprite, the position as well as an Update,
@@ -64,7 +65,7 @@ public class Frog extends PathfindingEnemy {
      * a path towards the player and update the frog's position accordingly.
      */
     public void move(Map map, final Direction dir) {
-        ArrayList<int[]> path = AStarAlgorithm(map, this.getPosition(), map.getPlayerObjectReference().getPosition());;
+        ArrayList<int[]> path = AStarAlgorithm(map, this.getPosition(), map.getPlayerObjectReference().getPosition());
         if (path != null)
         {
             if(collisionCheck(map, new GridPosition(path.get(1)[0], path.get(1)[1])))
@@ -74,6 +75,23 @@ public class Frog extends PathfindingEnemy {
                 map.getPlayerObjectReference().die();
                 this.setPosition(new GridPosition(path.get(1)[0], path.get(1)[1]));
             }
+        } else {
+            Random rand = new Random();
+            List<GameObject> neighbours = new ArrayList<>();
+
+            neighbours.add(map.getNeighbourOf(this, Direction.UP));
+            neighbours.add(map.getNeighbourOf(this, Direction.LEFT));
+            neighbours.add(map.getNeighbourOf(this, Direction.RIGHT));
+            neighbours.add(map.getNeighbourOf(this, Direction.DOWN));
+
+            List<GameObject> pathNeighbours = new ArrayList<>();
+            for (GameObject neighbour : neighbours) {
+                if (neighbour instanceof Path) {
+                    pathNeighbours.add(neighbour);
+                }
+            }
+            int randindex = rand.nextInt(pathNeighbours.size());
+            this.setPosition(pathNeighbours.get(randindex).getPosition());
         }
     }
 
