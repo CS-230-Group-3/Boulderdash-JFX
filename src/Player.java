@@ -158,6 +158,8 @@ public class Player extends Entity {
             return true;
         }
         switch (gameObjectAt.getType()) {
+            case "amoeba":
+                return false;
             case "enemy":
                 die();
             case "tile":

@@ -6,12 +6,13 @@
 
 import java.util.ArrayList;
 
-public class Amoeba extends Enemy {
+public class Amoeba extends Entity {
 
     private static final String FILE_PATH = "resources/assets/amoeba.png";
 
     public Amoeba() {
         super(FILE_PATH, new GridPosition(0, 0));
+        this.type = "amoeba";
     }
 
     @Override
