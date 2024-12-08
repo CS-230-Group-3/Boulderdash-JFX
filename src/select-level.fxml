@@ -17,13 +17,13 @@
       <Pane fx:id="selectLevel2" layoutX="255.0" layoutY="108.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="190.0" styleClass="pane" stylesheets="@resources/level-style.css">
          <children>
             <Text layoutX="75.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LEVEL 2" />
-            <ListView fx:id="levelOneHighScores1" layoutY="56.0" prefHeight="157.0" prefWidth="190.0" />
+            <ListView fx:id="levelTwoHighScores" layoutY="56.0" prefHeight="157.0" prefWidth="190.0" />
          </children>
       </Pane>
       <Pane fx:id="selectLevel3" layoutX="466.0" layoutY="108.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="190.0" styleClass="pane" stylesheets="@resources/level-style.css">
          <children>
             <Text layoutX="75.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LEVEL 3" />
-            <ListView fx:id="levelOneHighScores11" layoutY="58.0" prefHeight="157.0" prefWidth="190.0" />
+            <ListView fx:id="levelThreeHighScores" layoutY="58.0" prefHeight="157.0" prefWidth="190.0" />
          </children>
       </Pane>
       <Text fill="#ae0017" layoutX="169.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SELECT LEVEL TO START" wrappingWidth="391.8338623046875">

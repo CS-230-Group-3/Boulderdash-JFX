@@ -1,5 +1,7 @@
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -30,33 +32,80 @@ public class LevelController {
     @FXML
     private ListView levelOneHighScores;
 
-    //@FXML
-    //private ListView levelTwoHighScores;
-
-    //@FXML
-    //private ListView levelThreeHighScores;
+    @FXML
+    private ListView levelTwoHighScores;
 
     @FXML
-    void initialize() throws IOException, ClassNotFoundException {
-        selectLevel1.setOnMouseClicked(this::testLvlOne);
-        selectLevel2.setOnMouseClicked(event -> openNewWindow("level1.fxml"));
-        selectLevel3.setOnMouseClicked(event -> openNewWindow("level1.fxml"));
-        levelOneHighScores.setOnMouseClicked(this::testLvlOne);
-        //levelTwoHighScores.setOnMouseClicked(event -> openNewWindow("level1.fxml"));
-        //levelThreeHighScores.setOnMouseClicked(event -> openNewWindow("level1.fxml"));
+    private ListView levelThreeHighScores;
 
+    @FXML
+    void initialize() {
 
+//        selectLevel2.setOnMouseClicked(event ->
+//          playLevel(event, selectLevel2));
+//        selectLevel3.setOnMouseClicked(event ->
+//          playLevel(event, selectLevel3));
+
+        //Populate lvl 1 HS
         Level levelOne = Data.getInstance().getAvailableLevels().getFirst();
         for (HighScore hs: levelOne.getHighScores()) {
-            levelOneHighScores.getItems().add(hs.getUserName() + "\t\t" + hs.getScore());
+            levelOneHighScores.getItems().add(
+                    hs.getUserName() + "\t\t" + hs.getScore());
         }
 
-        //TODO Get scores for other levels
-        //TODO Get levels available and unavailable
+        //Populate lvl 2 HS
+        Level levelTwo = Data.getInstance().getAvailableLevels().get(1);
+        for (HighScore hs: levelTwo.getHighScores()) {
+            levelTwoHighScores.getItems().add(
+                    hs.getUserName() + "\t\t" + hs.getScore());
+        }
+
+        //Populate lvl 3 HS
+        Level levelThree = Data.getInstance().getAvailableLevels().get(1);
+        for (HighScore hs: levelThree.getHighScores()) {
+            levelThreeHighScores.getItems().add(
+                    hs.getUserName() + "\t\t" + hs.getScore());
+        }
+
+        //Hard coded level to each Pane, name needs to match level name,
+        // no file extension
+        selectLevel1.setUserData("level1");
+        selectLevel2.setUserData("level2");
+        selectLevel3.setUserData("level3");
+
+
+        User currentUser = Data.getInstance().getCurrentUser();
+
+        if (currentUser.getUnlockedLevels().size() < 2) {
+            // 1 levels unlocked
+            selectLevel2.setOpacity(0.5);
+            selectLevel3.setOpacity(0.5);
+            selectLevel1.setOnMouseClicked(event ->
+                    playLevel(event, selectLevel1));
+
+        } else if (currentUser.getUnlockedLevels().size() < 3) {
+            // 2 levels unlocked
+            selectLevel3.setOpacity(0.5);
+            selectLevel1.setOnMouseClicked(event ->
+                    playLevel(event, selectLevel1));
+            selectLevel2.setOnMouseClicked(event ->
+                    playLevel(event, selectLevel2));
+
+        } else {
+            //All levels unlocked
+            selectLevel1.setOnMouseClicked(event ->
+                    playLevel(event, selectLevel1));
+            selectLevel2.setOnMouseClicked(event ->
+                    playLevel(event, selectLevel2));
+            selectLevel3.setOnMouseClicked(event ->
+                    playLevel(event, selectLevel3));
+        }
+
     }
     private void openNewWindow(String fxmlFileName) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFileName));
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource(fxmlFileName));
             Parent root = loader.load();
 
             Stage stage = new Stage();
@@ -69,11 +118,14 @@ public class LevelController {
         }
     }
 
-    private void testLvlOne(MouseEvent event) {
+    private void playLevel(MouseEvent event, Pane selectedPane) {
         FXMLLoader loader =
                 new FXMLLoader(getClass().getResource("GameWindow.fxml"));
         try {
-            GameWindowController.setLevel(Data.getInstance().getAvailableLevels().getFirst());
+            Level levelToStart = getLevelFromPane(selectedPane);
+            if (levelToStart != null) {
+                GameWindowController.setLevel(levelToStart);
+            }
 
             Parent root = loader.load();
 
@@ -86,8 +138,18 @@ public class LevelController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-
     }
+
+    private Level getLevelFromPane(Pane pane) {
+        String levelNameAssignedToPane = (String) pane.getUserData();
+        Level levelToStart = null;
+        for (Level level : Data.getInstance().getAvailableLevels()) {
+            if (level.getLevelName().equals(levelNameAssignedToPane)) {
+                levelToStart = level;
+            }
+        }
+        return levelToStart;
+    }
+
 
 }

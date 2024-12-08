@@ -61,4 +61,8 @@ public class Level implements Serializable {
     public ArrayList<HighScore> getHighScores() {
         return highScores;
     }
+
+    public String getLevelName() {
+        return levelName;
+    }
 }

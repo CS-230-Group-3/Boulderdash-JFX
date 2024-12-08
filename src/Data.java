@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class Data implements Serializable {
 
@@ -94,6 +95,7 @@ public class Data implements Serializable {
                 );
             }
         }
+        levels.sort(Comparator.comparing(Level::getLevelName));
         save();
         return levels;
     }
