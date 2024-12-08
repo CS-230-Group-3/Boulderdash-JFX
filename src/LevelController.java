@@ -46,8 +46,6 @@ public class LevelController {
         //levelThreeHighScores.setOnMouseClicked(event -> openNewWindow("level1.fxml"));
 
         Data data = Data.getInstance();
-        Data.getInstance().getAvailableLevels().getFirst().addUserScore(new User("Test Score 1"), 1919);
-        Data.getInstance().save();
         Level levelOne = data.getAvailableLevels().getFirst();
         System.out.println(levelOne);
         for (HighScore hs: levelOne.getHighScores()) {
@@ -55,6 +53,7 @@ public class LevelController {
         }
 
         //TODO: Get scores for other levels
+        //TODO: Get levels availible and unavaliable
 
     }
     private void openNewWindow(String fxmlFileName) {
