@@ -218,6 +218,16 @@ public class SaveLoadController {
                 return new Frog();
             case 'O':
                 return new Gem();
+            case '@':
+                return new Amoeba();
+            case '!':
+                return new RedKey();
+            case '"':
+                return new BlueKey();
+            case '£':
+                return new YellowKey();
+            case '$':
+                return new GreenKey();
             default:
                 return new Path();
         }

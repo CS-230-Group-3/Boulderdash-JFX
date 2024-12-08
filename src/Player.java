@@ -182,6 +182,7 @@ public class Player extends Entity {
     public void collectDiamond(Map map, Item diamond) {
         map.removeItem(diamond);
         this.diamonds++;
+        System.out.println(diamonds);
     }
 
     @Override

@@ -12,6 +12,7 @@ public class Amoeba extends Enemy {
 
     public Amoeba() {
         super(FILE_PATH, new GridPosition(0, 0));
+        this.updateRate = 4;
     }
 
     public void createGroup() {
