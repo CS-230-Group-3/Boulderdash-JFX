@@ -1,5 +1,18 @@
 public class RedKey extends Key {
 
-    private GridPosition position;
- // OLLIE I BEG DONT BREAK THE REPO
+    private static final String FILE_PATH = "resources/assets/keyred.png";
+
+
+    public RedKey() {
+        super(KeyColour.RED);
+
+    }
+
+    @Override
+    public String toString(){
+        return "Red Key";
+    }
+
+
+
 }
