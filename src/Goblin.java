@@ -1,135 +1,110 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
- * <p>This Goblin class represents a pathfinding enemy character in the game. It includes logic
- * for movement, collision handling, and interactions with the player or the game environment.</p>
- * @author Diya Patel
+ * <p>This Frog class is intended to hold information related to the Sprite, the position as well as an Update,
+ * Delete and 3 Collision functions.</p>
+ *
+ * @author Joseph Parish.
+ * @version 1.0.5
+ * Last Changed: 30/11/24
  */
-public abstract class Goblin extends PathfindingEnemy {
+public class Goblin extends PathfindingEnemy {
 
+    private static final String FILE_PATH = "resources/assets/frog.png";
     /**
-     * Constructor to create a new Goblin instance with a given starting position.
-     *
-     * @param position the initial grid position of the goblin.
+     * Constructor to create a new Frog instance with a given starting position.
      */
-    public Goblin(GridPosition position) {
-        super("goblin_sprite.png", position);
+    public Goblin() {
+        super(FILE_PATH, new GridPosition(0,0));
+        this.updateRate = 5;
     }
 
     /**
-     * Updates the goblin's state on every game tick. This includes logic to move the goblin.
-     *
-     * @param gameController the game controller that manages the game state and entities.
+     * Updates the frog's state. This method is called every tick to perform actions such as moving the frog.
      */
-    public void update(GameController gameController) {
-        move(gameController, Direction.UP);
+    @Override
+    public void update(Map map) {
+        move(map, Direction.UP);
+    }
+
+    @Override
+    public boolean collisionCheck() {
+        return false;
+    }
+
+    @Override
+    public boolean collisionCheck(Map map, Direction dir) {
+        return false;
     }
 
     /**
      * Checks for potential collisions at a given position.
-     * If the goblin collides with the player, the player's score is reduced, and the player is moved to a safe position.
+     * This method checks if the frog collides with the player or an impassable tile.
      *
-     * @param gameController the game controller managing the game world.
      * @param position the position to check for a collision.
-     * @return true if a collision occurs, false otherwise.
+     * @return boolean indicating whether there is a collision.
      */
-    public boolean collisionCheck(GameController gameController, GridPosition position) {
-        Player player = gameController.getMap().getPlayerObjectReference();
-
-        if (position.equals(player.getPosition())) {
-            int penalty = 10; // Example penalty value
-            player.setDiamonds(player.getDiamonds() - penalty);
-            System.out.println("Player collided with Goblin! Score reduced by " + penalty);
-
-            GridPosition safePosition = findSafePosition(gameController.getMap());
-            if (safePosition != null) {
-                player.setPosition(safePosition);
-                System.out.println("Player moved to a safe position: " + safePosition);
-            } else {
-                System.out.println("No safe position found for the player!");
-            }
-
+    public boolean collisionCheck(Map map, GridPosition position) {
+        GameObject objectAt = map.getObjectAt(position);
+        if (objectAt == null) {
             return true;
-        } else if (!gameController.getMap().getObjectAt(position).isWalkable()) {
-            return true; // Collision with an impassable tile
+        } else if (position == map.getPlayerObjectReference().getPosition()) {
+            map.getPlayerObjectReference().die();
+            return true;
+        } else if (objectAt.isWalkable()) {
+            return true;
+        } else {
+            return false;
         }
-
-        return false;
     }
 
-
     /**
-     * Finds a safe position for the player on the map.
-     * A safe position is defined as a walkable tile that does not contain an enemy.
-     *
-     * @param map the game map to search for a safe position.
-     * @return a {@link GridPosition} representing a safe position on the map,
-     *         or {@code null} if no such position is found.
+     * Moves the frog based on pathfinding logic. This method uses an algorithm called A* to find
+     * a path towards the player and update the frog's position accordingly.
      */
-    private GridPosition findSafePosition(Map map) {
-        for (int x = 0; x < map.getMapWidth(); x++) { // Changed getWidth to getMapWidth
-            for (int y = 0; y < map.getMapHeight(); y++) { // Changed getHeight to getMapHeight
-                GridPosition position = new GridPosition(x, y);
-                GameObject object = map.getObjectAt(position);
+    public void move(Map map, final Direction dir) {
+        ArrayList<int[]> path = AStarAlgorithm(map, this.getPosition(), map.getPlayerObjectReference().getPosition());
+        if (path != null)
+        {
+            if(collisionCheck(map, new GridPosition(path.get(1)[0], path.get(1)[1])))
+            {
+                this.setPosition(new GridPosition(path.get(1)[0], path.get(1)[1]));
+            } else {
+                map.getPlayerObjectReference().die();
+                this.setPosition(new GridPosition(path.get(1)[0], path.get(1)[1]));
+            }
+        } else {
+            Random rand = new Random();
+            List<GameObject> neighbours = new ArrayList<>();
 
-                if (object != null && object.isWalkable() && !(object instanceof Enemy)) {
-                    return position;
+            neighbours.add(map.getNeighbourOf(this, Direction.UP));
+            neighbours.add(map.getNeighbourOf(this, Direction.LEFT));
+            neighbours.add(map.getNeighbourOf(this, Direction.RIGHT));
+            neighbours.add(map.getNeighbourOf(this, Direction.DOWN));
+
+            List<GameObject> pathNeighbours = new ArrayList<>();
+            for (GameObject neighbour : neighbours) {
+                if (neighbour instanceof Path) {
+                    pathNeighbours.add(neighbour);
                 }
             }
-        }
-        return null;
-    }
-
-    /**
-     * Moves the goblin based on pathfinding logic. This method uses the A* algorithm
-     * to find a path towards the player and updates the goblin's position.
-     *
-     * @param gameController the game controller managing the game world.
-     * @param dir the direction to initiate movement (not directly used in A* pathfinding).
-     */
-    public void move(GameController gameController, Direction dir) {
-        ArrayList<int[]> path = findPath(
-                gameController,
-                this.getPosition(),
-                gameController.getMap().getPlayerObjectReference().getPosition()
-        );
-
-        if (!path.isEmpty()) {
-            int[] nextStep = path.getFirst();
-            GridPosition nextPosition = new GridPosition(nextStep[0], nextStep[1]);
-            if (!collisionCheck(gameController, nextPosition)) {
-                this.setPosition(nextPosition);
-            } else {
-                System.out.println("Goblin Collision: Unable to move to " + nextPosition);
-            }
+            int randindex = rand.nextInt(pathNeighbours.size());
+            this.setPosition(pathNeighbours.get(randindex).getPosition());
         }
     }
 
     /**
-     * Finds a path from the goblin's position to the player's position using the A* algorithm.
-     *
-     * @param gameController the game controller managing the game state.
-     * @param enemyPosition  the goblin's current position.
-     * @param playerPosition the player's current position.
-     * @return an {@link ArrayList} of int arrays representing the path to the player.
-     */
-    public ArrayList<int[]> findPath(GameController gameController, GridPosition enemyPosition, GridPosition playerPosition) {
-        return AStarAlgorithm(
-                gameController.getMap(),
-                enemyPosition,
-                playerPosition
-        );
-    }
-
-    /**
-     * Deletes the Goblin object from the game.
-     * This can include logic to remove the object from the game map and free up resources.
+     * Deletes the Frog object from the game.
      */
     @Override
     public void delete() {
-        System.out.println("Goblin removed from the game.");
+        // Add logic to remove the Frog object from the game world
+    }
+
+    public void steal() {
+
     }
 }
-
 

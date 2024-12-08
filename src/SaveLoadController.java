@@ -236,6 +236,8 @@ public class SaveLoadController {
                 return new YellowDoor();
             case '4':
                 return new PinkDoor();
+            case 'N':
+                return new Goblin();
             default:
                 return new Path();
         }
@@ -285,6 +287,8 @@ public class SaveLoadController {
                 return 'O';
             case "Firefly":
                 return 'S';
+            case "Goblin":
+                return 'N';
             case "RedKey":
                 return '!';
             case "BlueKey":
