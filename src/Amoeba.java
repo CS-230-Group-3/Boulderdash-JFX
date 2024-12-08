@@ -43,11 +43,6 @@ public class Amoeba extends Enemy {
     }
 
     @Override
-    public ArrayList<int[]> findPath(Map map, GridPosition enemyPosition, GridPosition playerPosition) {
-        return null;
-    }
-
-    @Override
     public void move(Map map, Direction dir) {
 
     }

@@ -7,11 +7,9 @@
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Firefly extends Enemy {
+public class Firefly  extends PatrollingEnemy {
 
     private static final String FILE_PATH = "resources/assets/firefly.png";
-    private boolean leftMoving;
-    private Direction lastMovement = Direction.UP;
 
     public Firefly() {
         super(FILE_PATH, new GridPosition(0, 0));
@@ -21,45 +19,7 @@ public class Firefly extends Enemy {
 
     @Override
     public void update(Map map) {
-        calculateNextMove(map);
-    }
-
-    /**
-     * calculates how the butterfly should try to move using 90 degree rotations
-     * @return list of directions to move in order of highest priority
-     */
-    public Direction[] calculateMovePriority() {
-        if (this.leftMoving) {
-            return new Direction[]{
-                    lastMovement.antiClockwiseRotation(),
-                    lastMovement,
-                    lastMovement.clockwiseRotation(),
-                    lastMovement.clockwiseRotation().clockwiseRotation()
-            };
-        } else {
-            return new Direction[]{
-                    lastMovement.clockwiseRotation(),
-                    lastMovement,
-                    lastMovement.antiClockwiseRotation(),
-                    lastMovement.clockwiseRotation().clockwiseRotation()
-            };
-        }
-    }
-
-    /**
-     * finds the first valid move in the priority list. does nothing if none found,
-     * calls move otherwise
-     * @param map the level map
-     */
-    public void calculateNextMove(Map map) {
-        for (Direction direction : this.calculateMovePriority()) {
-            GameObject neighbour = map.getNeighbourOf(this, direction);
-            if (neighbour instanceof Path) {
-                this.move(map, direction);
-                this.lastMovement = direction;
-            }
-        }
-
+        super.calculateNextMove(map);
     }
 
     /**
@@ -69,30 +29,22 @@ public class Firefly extends Enemy {
      */
     @Override
     public void move(Map map, Direction dir) {
-        if (dir == Direction.UP) {
-            this.setPosition(this.getPosition().add(new GridPosition(0, -1)));
-        } else if (dir == Direction.DOWN) {
-            this.setPosition(this.getPosition().add(new GridPosition(0, 1)));
-        } else if (dir == Direction.LEFT) {
-            this.setPosition(this.getPosition().add(new GridPosition(-1, 0)));
-        } else if (dir == Direction.RIGHT) {
-            this.setPosition(this.getPosition().add(new GridPosition(1, 0)));
-        }
+        super.move(map, dir);
     }
 
     @Override
     public boolean collisionCheck(Map map, GridPosition position) {
-        return false;
+        return super.collisionCheck(map, position);
     }
 
     @Override
     public boolean collisionCheck(Map map, Direction dir) {
-        return false;
+        return super.collisionCheck(map, dir);
     }
 
     @Override
     public boolean collisionCheck() {
-        return false;
+        return super.collisionCheck();
     }
 
     @Override
@@ -100,8 +52,4 @@ public class Firefly extends Enemy {
         //explode - destroy a 9x9 grid of tiles
     }
 
-    @Override
-    public ArrayList<int[]> findPath(Map map, GridPosition enemyPosition, GridPosition playerPosition) {
-        return null;
-    }
 }
