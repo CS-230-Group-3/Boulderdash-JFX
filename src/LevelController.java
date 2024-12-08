@@ -60,7 +60,7 @@ public class LevelController {
         }
 
         //Populate lvl 3 HS
-        Level levelThree = Data.getInstance().getAvailableLevels().get(1);
+        Level levelThree = Data.getInstance().getAvailableLevels().getLast();
         for (HighScore hs: levelThree.getHighScores()) {
             levelThreeHighScores.getItems().add(
                     hs.getUserName() + "\t\t" + hs.getScore());
@@ -77,7 +77,7 @@ public class LevelController {
 
         //TODO assign list views to take mouse click even
         if (currentUser.getUnlockedLevels().size() < 2) {
-            // 1 levels unlocked
+            // 1 level unlocked
             selectLevel2.setOpacity(0.5);
             selectLevel3.setOpacity(0.5);
             selectLevel1.setOnMouseClicked(event ->

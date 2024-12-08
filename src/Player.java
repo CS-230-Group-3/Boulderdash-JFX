@@ -152,6 +152,7 @@ public class Player extends Entity {
 
     private void pushBoulder(Map map, Direction dir, Boulder boulder) {
         boulder.push(map, dir);
+        boulder.push(map, dir);
         move(map, dir);
     }
 

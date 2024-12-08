@@ -1,6 +1,7 @@
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.robot.Robot;
 
 /**
  * GameController class is responsible for managing the core logic of the game. It
@@ -16,6 +17,12 @@ public class GameController {
     private final SaveLoadController saveLoadController;
     private final GraphicsController graphicsController;
     private TimeController timeController;
+
+    private boolean gameIsRunning = true;
+
+    public boolean isGameIsRunning() {
+        return gameIsRunning;
+    }
 
     private Map map; //Check w spas
 
@@ -82,7 +89,10 @@ public class GameController {
                     player.move(map, Direction.DOWN);
                     break;
                 case SPACE:
-                    map.getPlayerObjectReference().die();
+                    player.setDiamonds(player.getDiamonds() + 1);
+//                    gameIsRunning = false;
+//                    someRandoStuff();
+//                    map.getPlayerObjectReference().die();
                     break;
                 case ESCAPE:
                     timeController.handlePause();
@@ -99,6 +109,14 @@ public class GameController {
             }
             event.consume();
         }
+    }
+
+    private void someRandoStuff() {
+        //Would be part of the handle victory & da feet
+        //Learned from https://stackoverflow.com/questions/24258995/how-to-programmatically-simulate-arrow-key-presses-in-java-fx
+        Robot r = new Robot();
+        r.keyPress(KeyCode.ESCAPE);
+        r.keyRelease(KeyCode.ESCAPE);
     }
 
     /**

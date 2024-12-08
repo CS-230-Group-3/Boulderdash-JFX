@@ -62,6 +62,10 @@ public class TimeController {
         }
     }
 
+    private void handleVictory() {
+
+    }
+
     /**
      * Pauses the games ticks if active,
      * resumes otherwise.
