@@ -81,7 +81,8 @@ public abstract class PathfindingEnemy extends Enemy {
             } else if (map.getObjectAt(new GridPosition(x, y)) == map.getPlayerObjectReference()) {
                 return true;
             } else {
-                return map.getObjectAt(new GridPosition(x, y)) instanceof Path;
+                return map.getObjectAt(new GridPosition(x, y)) instanceof Path ||
+                        map.getObjectAt(new GridPosition(x, y)) instanceof Water;
             }
         }
         return false;
