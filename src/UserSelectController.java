@@ -3,8 +3,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -15,6 +18,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class UserSelectController {
+
+    @FXML
+    private AnchorPane selectWindow;
 
     @FXML
     private ResourceBundle resources;
@@ -42,7 +48,7 @@ public class UserSelectController {
 
 
         newProfileButton.setOnAction(event -> handleNewProfileButton());
-        selectButton.setOnAction(event -> handleSelectButton());
+        selectButton.setOnAction(event -> handleSelectButton(event));
         selectButton.setDisable(true);
         userList.getSelectionModel().selectedItemProperty().addListener(
                 observable -> selectButton.setDisable(false)
@@ -82,7 +88,7 @@ public class UserSelectController {
         }
     }
 
-    private void handleSelectButton() {
+    private void handleSelectButton(ActionEvent event) {
         int index = userList.getSelectionModel().getSelectedIndex();
 
         if (index < 0) {
@@ -94,19 +100,17 @@ public class UserSelectController {
         } else {
             User selectedUser = users.get(index);
             Data.getInstance().setCurrentUser(selectedUser);
-            openLevelWindow();
+            openLevelWindow(event);
         }
     }
-    private void openLevelWindow() {
+    private void openLevelWindow(ActionEvent event){
         try {
-            // user.fxml
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("select-level.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 700, 400);
-
-            //
-            Stage stage = new Stage();
+            selectWindow = (AnchorPane) FXMLLoader.
+                    load(getClass().getResource("select-level.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).
+                    getScene().getWindow();
+            Scene scene = new Scene(selectWindow);
             stage.setScene(scene);
-            stage.setTitle("Level Window");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

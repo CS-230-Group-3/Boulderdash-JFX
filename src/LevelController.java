@@ -7,10 +7,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class LevelController {
+    @FXML
+    private AnchorPane selectLevelWindow;
 
     @FXML
     private ResourceBundle resources;
@@ -138,6 +141,8 @@ public class LevelController {
             throw new RuntimeException(e);
         }
     }
+
+
 
     private Level getLevelFromPane(Pane pane) {
         String levelNameAssignedToPane = (String) pane.getUserData();
