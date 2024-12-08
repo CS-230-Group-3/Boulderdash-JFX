@@ -123,6 +123,7 @@ public class LevelController {
                 new FXMLLoader(getClass().getResource("GameWindow.fxml"));
         try {
             Level levelToStart = getLevelFromPane(selectedPane);
+            Data.getInstance().getCurrentUser().setCurrentLevel(levelToStart);
             if (levelToStart != null) {
                 GameWindowController.setLevel(levelToStart);
             }

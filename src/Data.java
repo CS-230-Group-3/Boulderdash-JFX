@@ -100,7 +100,7 @@ public class Data implements Serializable {
         return levels;
     }
 
-    public static void addScoreForCurrentUser(int score) {
+    public void addScoreForCurrentUser(int score) {
         if (currentUser != null
                 && currentUser.getCurrentLevel() != null) {
             //🍝, but it would do for now

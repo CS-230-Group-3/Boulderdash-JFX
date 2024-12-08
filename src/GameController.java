@@ -27,17 +27,21 @@ public class GameController {
     private Map map; //Check w spas
 
     private int currentScene; //Maybe of type Scene instead?
+    private final int secondsToBeatLevel;
 
-    /**
-     * Creates a Game Controller,
-     * responsible for displaying & handling logic for the game.
-     * @param canvasToDisplayGame the canvas to display the game on
-     */
-    public GameController(Canvas canvasToDisplayGame) {
-        this.canvas = canvasToDisplayGame;
-        this.saveLoadController = new SaveLoadController();
-        this.graphicsController = new GraphicsController();
+    public int getSecondsToBeatLevel() {
+        return secondsToBeatLevel;
     }
+//    /**
+//     * Creates a Game Controller,
+//     * responsible for displaying & handling logic for the game.
+//     * @param canvasToDisplayGame the canvas to display the game on
+//     */
+//    public GameController(Canvas canvasToDisplayGame) {
+//        this.canvas = canvasToDisplayGame;
+//        this.saveLoadController = new SaveLoadController();
+//        this.graphicsController = new GraphicsController();
+//    }
 
     /**
      * Creates a Game Controller,
@@ -51,6 +55,8 @@ public class GameController {
         this.graphicsController = new GraphicsController();
 
         displayMapFromFilePth(filePath);
+        //TODO remove
+        this.secondsToBeatLevel = 105;
     }
 
     /**
@@ -140,5 +146,8 @@ public class GameController {
      */
     public GraphicsController getGraphicsController() {
         return graphicsController;
+    }
+    public int getGemsCollected() {
+        return map.getPlayerObjectReference().getDiamonds();
     }
 }

@@ -57,12 +57,31 @@ public class TimeController {
             if (exit != null
                     && player.getPosition().equals(exit.getPosition())) {
                 System.out.println("Wow you won, impressive :)");
+                handleVictory();
                 handlePause();
             }
         }
     }
 
     private void handleVictory() {
+        int collectedGems = gameController.getGemsCollected();
+        int secondsPassed = TimeController.getTickCount() / 5;
+        int remainingSeconds =
+                gameController.getSecondsToBeatLevel() - secondsPassed;
+        int playerScore = collectedGems * remainingSeconds;
+
+        //TODO make method non-static - will delete all data
+        Data data = Data.getInstance();
+        data.addScoreForCurrentUser(playerScore);
+
+        int userLevelsUnlocked = data.getCurrentUser().
+                getUnlockedLevels().size();
+        if (userLevelsUnlocked
+                < data.getAvailableLevels().size()) {
+            data.getCurrentUser().unlockLevel(
+                    data.getAvailableLevels().get(userLevelsUnlocked)
+            );
+        }
 
     }
 
