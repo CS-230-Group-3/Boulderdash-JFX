@@ -177,7 +177,7 @@ public class GameWindowController {
                     load(getClass().getResource("select-level.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).
                     getScene().getWindow();
-            Scene scene = new Scene(gameWindow);
+            Scene scene = new Scene(gameWindow, MainUI.MAIN_WINDOW_WIDTH, MainUI.MAIN_WINDOW_HEIGHT);
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
@@ -195,9 +195,9 @@ public class GameWindowController {
         try {
             gameWindow = (AnchorPane) FXMLLoader.
                     load(getClass().getResource("select-level.fxml"));
-            Stage stage = (Stage) ((Node) event.getSource()).
+            Stage stage = (Stage) ((Node) event.getSource() ).
                     getScene().getWindow();
-            Scene scene = new Scene(gameWindow);
+            Scene scene = new Scene(gameWindow, MainUI.MAIN_WINDOW_WIDTH, MainUI.MAIN_WINDOW_HEIGHT);
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {

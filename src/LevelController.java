@@ -143,7 +143,7 @@ public class LevelController {
                     load(getClass().getResource("GameWindow.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).
                     getScene().getWindow();
-            Scene scene = new Scene(selectLevelWindow);
+            Scene scene = new Scene(selectLevelWindow, MainUI.MAIN_WINDOW_WIDTH, MainUI.MAIN_WINDOW_HEIGHT);
             stage.setScene(scene);
             stage.show();
 
@@ -169,7 +169,7 @@ public class LevelController {
                     load(getClass().getResource("choose-user.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).
                     getScene().getWindow();
-            Scene scene = new Scene(selectLevelWindow);
+            Scene scene = new Scene(selectLevelWindow, MainUI.MAIN_WINDOW_WIDTH, MainUI.MAIN_WINDOW_HEIGHT);
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
