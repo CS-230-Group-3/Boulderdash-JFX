@@ -13,6 +13,7 @@ public class Key extends Item {
 
     private final int id;
 
+    private boolean waterSkip = true;
 
 
     public Key(String pathToSprite, GridPosition gridPosition) {
@@ -22,6 +23,12 @@ public class Key extends Item {
     }
 
     public void update(Map map) {
+        if (map.getTileAt(this.getPosition()) instanceof Water && !waterSkip) {
+            waterSkip = true;
+        } else if (map.getTileAt(this.getPosition()) instanceof Water && waterSkip) {
+            waterSkip = false;
+            return;
+        }
         this.fall(map);
     }
 

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>This Abstract Enemy class extends Entity
@@ -16,5 +17,32 @@ public abstract class Enemy extends Entity
     public Enemy(String pathToSprite, GridPosition position) {
         super(pathToSprite, position);
         this.type = "enemy";
+    }
+
+    public void dostroi(Map map) {
+        for (GameObject object : get9x9Grid(map)) {
+            if (!(object instanceof TitaniumWall)) {
+                map.getPendingRemovals().add(object);
+            }
+        }
+    }
+
+    public List<GameObject> get9x9Grid(Map map) {
+        List<GameObject> destroyedObjects = new ArrayList<>();
+        List<Direction> northSouthEastWest = new ArrayList<>();
+
+        northSouthEastWest.add(Direction.UP);
+        northSouthEastWest.add(Direction.DOWN);
+        northSouthEastWest.add(Direction.LEFT);
+        northSouthEastWest.add(Direction.RIGHT);
+
+        destroyedObjects.add(this);
+        for (Direction direction : northSouthEastWest) {
+            GameObject orthogonalNeighbour = map.getTileNeighbourOf(this, direction);
+            GameObject evilNonOrthogonalNeighbour = map.getTileNeighbourOf(orthogonalNeighbour, direction.clockwiseRotation());
+            destroyedObjects.add(orthogonalNeighbour);
+            destroyedObjects.add(evilNonOrthogonalNeighbour);
+        }
+        return destroyedObjects;
     }
 }

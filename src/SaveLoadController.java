@@ -78,7 +78,7 @@ public class SaveLoadController {
      */
     public void saveMapToFile(Map mapToSave) {
         //TODO give the file name a more robust name (date + time maybe?)
-        String outputFile = "src/resources/saves/LevelSave1.txt";
+        String outputFile = "src/resources/saves/LevelSave2.txt";
         try {
             PrintWriter writer = new PrintWriter(outputFile);
             int mapWidth = mapToSave.getMapWidth();
@@ -285,6 +285,14 @@ public class SaveLoadController {
                 return 'O';
             case "Firefly":
                 return 'S';
+            case "RedKey":
+                return '!';
+            case "BlueKey":
+                return '"';
+            case "YellowKey":
+                return '£';
+             case "PinkKey":
+                 return '$';
             default:
                 return '*';
         }

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>This Frog class is intended to hold information related to the Sprite, the position as well as an Update,
@@ -10,11 +11,12 @@ import java.util.ArrayList;
  */
 public class Frog extends PathfindingEnemy {
 
+    private static final String FILE_PATH = "resources/assets/frog.png";
     /**
      * Constructor to create a new Frog instance with a given starting position.
      */
     public Frog() {
-        super("resources/assets/frog.png", new GridPosition(0,0));
+        super(FILE_PATH, new GridPosition(0,0));
         this.updateRate = 5;
     }
 
@@ -67,10 +69,10 @@ public class Frog extends PathfindingEnemy {
         {
             if(collisionCheck(map, new GridPosition(path.get(1)[0], path.get(1)[1])))
             {
-                System.out.println("Frog moving");
                 this.setPosition(new GridPosition(path.get(1)[0], path.get(1)[1]));
             } else {
-                System.out.println("Frog Collision");
+                map.getPlayerObjectReference().die();
+                this.setPosition(new GridPosition(path.get(1)[0], path.get(1)[1]));
             }
         }
     }
@@ -80,7 +82,6 @@ public class Frog extends PathfindingEnemy {
      */
     @Override
     public void delete() {
-        System.out.println("Player object removed from the game.");
         // Add logic to remove the Frog object from the game world
     }
 }

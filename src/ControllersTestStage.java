@@ -13,11 +13,11 @@ public class ControllersTestStage extends Application {
 
         // Create a scene based on the pane.
 //        Color bg = Color.web("#4B2C3D");
-        Scene scene = new Scene(root, 640, 400, Color.GRAY);
+        Scene scene = new Scene(root, 1920, 1080, Color.BLACK);
 
 
         String levelOne = "src/resources/levels/level1.txt";
-        Canvas canvas = new Canvas(640, 400);
+        Canvas canvas = new Canvas(1920, 1080);
 
         GameController gameController = new GameController(canvas, levelOne);
 

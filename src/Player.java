@@ -19,7 +19,7 @@ public class Player extends Entity {
     private GridPosition position = new GridPosition(0, 0);
     // Note, change above to be gridPosition later once it comes up.
     private int diamonds;
-    private int drowningTime;
+    private int drowningTime = 5;
     private int tickCounter = 0;
     private int waterEntryCounter;
     private int exitCounter;
@@ -158,6 +158,8 @@ public class Player extends Entity {
             return true;
         }
         switch (gameObjectAt.getType()) {
+            case "amoeba":
+                return false;
             case "enemy":
                 die();
             case "tile":
@@ -213,7 +215,7 @@ public class Player extends Entity {
      * player drowning if they stay underwater too long.
      */
     public void underwaterCountDown() {
-        exitCounter = tickCounter + 50;
+        exitCounter = tickCounter + (5*drowningTime);
         System.out.println("Countdown begun. Start: " + tickCounter + " End: " + exitCounter);
     }
 
