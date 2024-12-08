@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>This Goblin class represents a pathfinding enemy character in the game. It includes logic

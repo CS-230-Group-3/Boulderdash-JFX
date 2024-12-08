@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>This Frog class is intended to hold information related to the Sprite, the position as well as an Update,

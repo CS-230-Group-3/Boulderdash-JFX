@@ -6,7 +6,7 @@ public class Boulder extends Item {
     public Boulder() {
         super(FILE_PATH, new GridPosition(0, 0));
         this.type = "boulder";
-        this.updateRate = 3;
+        this.updateRate = 1;
     }
 
     public void update(Map map) {
