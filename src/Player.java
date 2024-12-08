@@ -8,17 +8,21 @@
 import java.util.ArrayList;
 import java.util.Timer;
 
+import static java.lang.Integer.MAX_VALUE;
+
 public class Player extends Entity {
     private Boolean livingState;
     private int score; // high score perhaps
     private static final String SPRITE_PATH = "resources/assets/player.png";
-    private Boolean isUnderwater;
+    private Boolean isUnderwater = false;
     private ArrayList<Key> keyChain = new ArrayList<>();
     private GridPosition position = new GridPosition(0, 0);
     // Note, change above to be gridPosition later once it comes up.
     private int diamonds;
-    protected int updateRate = 1;
+    private int drowningTime;
     private int tickCounter = 0;
+    private int waterEntryCounter;
+    private int exitCounter;
     private Direction movingDirection;
 
     /**
@@ -28,9 +32,11 @@ public class Player extends Entity {
     public Player() {
         super(SPRITE_PATH, new GridPosition(0, 0));
         this.livingState = true;
-        this.keyChain = null;
+      //  this.keyChain = null;
         this.diamonds = 0;
         this.type = "player";
+        this.keyChain = new ArrayList<>();
+        this.updateRate = 1;
     }
 
     /**
@@ -45,22 +51,7 @@ public class Player extends Entity {
         this.type = "player";
     }
 
-    /**
-     * Starts a countdown from x number of seconds, resulting in the
-     * player drowning if they stay underwater too long.
-     *
-     * @param number the number of seconds for the player to drown
-     */
-    public void underwaterCountDown(int number) throws InterruptedException {
-        int startingTime = tickCounter;
-        int deathTime = (int) startingTime + 50;
-        if (tickCounter == deathTime){
-            System.out.println("Player has drowned.");
-            die();
-        }
 
-
-    }
 
     /**
      * Adds a key to the player's keychain and logs the action.
@@ -79,7 +70,12 @@ public class Player extends Entity {
      */
     public void unlockDoor(final LockedDoor door) {
         for (Key key : keyChain) {
-            if (door.unlock(key)) {
+            if ((key instanceof RedKey && door.getColour() == KeyColour.RED) ||
+                    (key instanceof BlueKey && door.getColour() == KeyColour.BLUE) ||
+                    (key instanceof YellowKey && door.getColour() == KeyColour.YELLOW) ||
+                    (key instanceof PinkKey && door.getColour() == KeyColour.PINK)) {
+                System.out.println("Door " + door + " unlocked.");
+                keyChain.remove(key); // Remove the key from the player's inv{
                 System.out.println("Door " + door + " unlocked.");
                 return;
             }
@@ -143,16 +139,6 @@ public class Player extends Entity {
         }
     }
 
-    private boolean checkForWater(Map map, GridPosition desiredPosition) throws InterruptedException {
-        if (map.getTileAt(desiredPosition) instanceof Water) {
-            isUnderwater = true;
-            System.out.println("UNDERWATER DETECTED");
-            underwaterCountDown(10);
-            return true;
-        }
-        return false;
-    }
-
     private void keyCheck(Map map, GridPosition desiredPosition) {
         if (map.getObjectAt(desiredPosition) instanceof Key key) {
             pickUpKey(key);
@@ -210,10 +196,50 @@ public class Player extends Entity {
      * Updates the player's state based on input or game events.
      */
     @Override
-    public void update(Map map) throws InterruptedException {
+    public void update(Map map) {
         tickCounter ++;
         System.out.println("PLAYER UPDATING");
+        checkForWater(map, position);
+        System.out.println("Current tick: " + tickCounter);
+        checkForDrowning();
+        // checks if going from out to in water
+        // if so, log water entry tick
+        // exit tick is entry + 50
+        // if currentTick >= entrytick, player.die
+    }
 
+    /**
+     * Starts a countdown from x number of seconds, resulting in the
+     * player drowning if they stay underwater too long.
+     */
+    public void underwaterCountDown() {
+        exitCounter = tickCounter + 50;
+        System.out.println("Countdown begun. Start: " + tickCounter + " End: " + exitCounter);
+    }
+
+    private boolean checkForWater(Map map, GridPosition currentPosition)  {
+        if (map.getTileAt(currentPosition) instanceof Water) {
+            if (!isUnderwater){ //Entering water
+                isUnderwater = true;
+                waterEntryCounter = tickCounter;
+                System.out.println("UNDERWATER DETECTED");
+                underwaterCountDown();
+                return true;
+            }
+        } else {
+            if (isUnderwater){
+                System.out.println("Exiting water");
+                isUnderwater = false;
+                exitCounter = 0;
+            }
+        }
+        return false;
+    }
+
+    private void checkForDrowning(){
+        if (tickCounter == exitCounter){
+            die();
+        }
     }
 
 

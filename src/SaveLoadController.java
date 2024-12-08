@@ -222,6 +222,12 @@ public class SaveLoadController {
                 return new Firefly();
             case '@':
                 return new AmoebaGroup();
+            case '!':
+                return new RedKey();
+            case '"':
+                return new BlueKey();
+            case '£':
+                return new YellowKey();
             default:
                 return new Path();
         }
@@ -271,8 +277,6 @@ public class SaveLoadController {
                 return 'O';
             case "Firefly":
                 return 'S';
-            case "AmoebaGroup":
-                return '@';
             default:
                 return '*';
         }

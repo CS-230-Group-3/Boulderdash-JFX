@@ -10,6 +10,7 @@ import java.util.Objects;
 public class Key extends Item {
 
     private static final String FILE_PATH = "resources/assets/key.png";
+
     private final int id;
 
     private final KeyColour colour;
@@ -33,7 +34,16 @@ public class Key extends Item {
         return id;
     }
 
+    public KeyColour getColour() {
+        return colour;
+    }
+
     public void delete() {
         //play key collection sound
+
+
+
+
+
     }
 }
