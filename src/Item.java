@@ -17,18 +17,26 @@ public class Item extends Entity {
                 return true;
             }
             //kill player if gem or boulder
-            case Player _ when (this instanceof Boulder && this.isFalling) -> {
+            case Player _ when ((this instanceof Boulder || this instanceof Gem) && this.isFalling) -> {
                 map.getPlayerObjectReference().die();
                 this.move(map, Direction.DOWN);
                 this.isFalling = true;
                 return true;
             }
-            case Player _ when (this instanceof Gem) -> {
-                map.getPlayerObjectReference().collisionCheck(map, this.getPosition());
-                return false;
+            case Butterfly _ -> {
+                Butterfly downNeighbourButterfly = (Butterfly) downNeighbour;
+                downNeighbourButterfly.dostroi(map);
+                map.getPendingRemovals().add(this);
+                map.getPendingRemovals().add((downNeighbourButterfly));
+                this.move(map, Direction.DOWN);
+                this.isFalling = true;
+                return true;
             }
-            case Enemy _ -> {
-                downNeighbour.delete();
+            case Firefly _ -> {
+                Firefly downNeighbourFirefly = (Firefly) downNeighbour;
+                downNeighbourFirefly.dostroi(map);
+                map.getPendingRemovals().add(this);
+                map.getPendingRemovals().add((downNeighbourFirefly));
                 this.move(map, Direction.DOWN);
                 this.isFalling = true;
                 return true;
@@ -52,7 +60,6 @@ public class Item extends Entity {
                 this.move(map, Direction.LEFT);
             } else if (map.getNeighbourOf(downNeighbour, Direction.RIGHT) instanceof Path &&
                     rightNeighbour instanceof Path) {
-                System.out.println("Moving right");
                 this.move(map, Direction.RIGHT);
             }
         }
