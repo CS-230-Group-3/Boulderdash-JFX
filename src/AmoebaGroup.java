@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class AmoebaGroup extends Enemy {
+public class AmoebaGroup extends Entity {
     private List<Amoeba> amoebas;
     int amoebaGrowthLimit = 10; //temporary variable, the growth limit will be specified in level file
     private static final String FILE_PATH = "resources/assets/amoeba.png";
