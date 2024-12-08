@@ -24,12 +24,14 @@ public class GameWindowController {
     @FXML private AnchorPane gameWindow;
     @FXML private Canvas gameCanvas;
     @FXML private AnchorPane pauseMenu;
+    @FXML private Text pauseTitle;
     @FXML private VBox buttonsBox;
     @FXML private Button saveAndExitButton;
 
     @FXML private Text timeLeft;
     @FXML private Text diamondsCollected;
     @FXML private Text diamondsToCollect;
+    @FXML private Text breathRemainingInSeconds;
 
     private boolean pauseMenuIsVisible = false;
 
@@ -53,7 +55,7 @@ public class GameWindowController {
         });
 
         //TODO hook to SLC to save game in progress for current player
-        saveAndExitButton.setOnAction(this::handleExitButtonAction);
+        saveAndExitButton.setOnAction(this::handleSaveAndExitButton);
 
         gameWindow.setFocusTraversable(true);
         gameWindow.requestFocus();
@@ -134,27 +136,62 @@ public class GameWindowController {
             gameWindow.requestFocus();
             e.consume();
         } else {
-            System.out.println("We here lads");
-            pauseMenu.setOpacity(1);
-            pauseMenuIsVisible = true;
-            buttonsBox.getChildren().forEach(child ->
-                    child.setDisable(false));
-            saveAndExitButton.setText("Go Back to Level Select :)");
-            saveAndExitButton.setOnAction(this::handleLevelRestart);
+            Player player = gameController.getMap().getPlayerObjectReference();
 
+            if (player.getLivingState()) {
+                handleLevelComplete();
+            } else {
+                handleLoseScreen();
+            }
         }
     }
 
-    private void handleExitButtonAction(ActionEvent event) {
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.close();
+    public void handleLoseScreen() {
+        pauseMenu.setOpacity(1);
+        pauseMenuIsVisible = true;
+        buttonsBox.getChildren().forEach(child ->
+                child.setDisable(false));
+
+        saveAndExitButton.setText("Back to Level Select");
+        saveAndExitButton.setOnAction(this::handleBackToLevels);
+        //TODO Change
+        pauseTitle.setText("Ya lost L 🤣");
+
     }
 
-    private void handleLevelComplete(ActionEvent event) {
+    private void handleLevelComplete() {
+        pauseMenu.setOpacity(1);
+        pauseMenuIsVisible = true;
+        buttonsBox.getChildren().forEach(child ->
+                child.setDisable(false));
+
+        saveAndExitButton.setText("Back to Level Select");
+        saveAndExitButton.setOnAction(this::handleBackToLevels);
+        //TODO Change
+        pauseTitle.setText("Ya won W 🥸");
+    }
+
+    private void handleBackToLevels(ActionEvent event) {
+        try {
+            gameWindow = (AnchorPane) FXMLLoader.
+                    load(getClass().getResource("select-level.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).
+                    getScene().getWindow();
+            Scene scene = new Scene(gameWindow);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void handleReturnToLevels() {
 
     }
 
-    private void handleLevelRestart(ActionEvent event) {
+    private void handleSaveAndExitButton(ActionEvent event) {
+        //Save GAme in progress
+        //Call to handleBackToLevels()
         try {
             gameWindow = (AnchorPane) FXMLLoader.
                     load(getClass().getResource("select-level.fxml"));
