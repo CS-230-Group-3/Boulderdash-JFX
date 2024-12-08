@@ -92,7 +92,9 @@ public class UserSelectController {
             alert.setContentText("Please select a user first :) ");
             alert.showAndWait();
         } else {
-           openLevelWindow();
+            User selectedUser = users.get(index);
+            Data.getInstance().setCurrentUser(selectedUser);
+            openLevelWindow();
         }
     }
     private void openLevelWindow() {

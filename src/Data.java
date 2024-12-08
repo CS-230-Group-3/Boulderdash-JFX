@@ -71,13 +71,13 @@ public class Data implements Serializable {
     }
 
     //TODO make it return bool to confirm if user was added?
-    public void addNewUser(String name) {
-        User newUser = new User(name);
-        users.indexOf(newUser);
-        if (!users.contains(newUser)) {
-            newUser.getUnlockedLevels().
-                    add(availableLevels.getFirst());
-            users.add(newUser);
+    public void addNewUser(User user) {
+        if (!users.contains(user)) {
+            if (user.getUnlockedLevels().isEmpty()) {
+                user.getUnlockedLevels().
+                        add(availableLevels.getFirst());
+                users.add(user);
+            }
         }
         save();
     }

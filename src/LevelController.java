@@ -45,16 +45,14 @@ public class LevelController {
         //levelTwoHighScores.setOnMouseClicked(event -> openNewWindow("level1.fxml"));
         //levelThreeHighScores.setOnMouseClicked(event -> openNewWindow("level1.fxml"));
 
-        Data data = Data.getInstance();
-        Level levelOne = data.getAvailableLevels().getFirst();
-        System.out.println(levelOne);
+
+        Level levelOne = Data.getInstance().getAvailableLevels().getFirst();
         for (HighScore hs: levelOne.getHighScores()) {
             levelOneHighScores.getItems().add(hs.getUserName() + "\t\t" + hs.getScore());
         }
 
-        //TODO: Get scores for other levels
-        //TODO: Get levels availible and unavaliable
-
+        //TODO Get scores for other levels
+        //TODO Get levels available and unavailable
     }
     private void openNewWindow(String fxmlFileName) {
         try {
@@ -75,7 +73,7 @@ public class LevelController {
         FXMLLoader loader =
                 new FXMLLoader(getClass().getResource("GameWindow.fxml"));
         try {
-            GameWindowController.setLevel(new Level("level1"));
+            GameWindowController.setLevel(Data.getInstance().getAvailableLevels().getFirst());
 
             Parent root = loader.load();
 

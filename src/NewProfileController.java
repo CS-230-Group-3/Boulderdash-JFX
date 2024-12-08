@@ -19,14 +19,7 @@ public class NewProfileController {
 
     public void initialize() {
 
-        createButton.setOnAction(event -> {
-            try {
-                handleCreateButton();
-            } catch (IOException | ClassNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-        });
-
+        createButton.setOnAction(event -> handleCreateButton());
         cancelButton.setOnAction(event -> handleCancelButton());
     }
 
@@ -34,15 +27,12 @@ public class NewProfileController {
         this.users = users;
     }
 
-    private void handleCreateButton() throws IOException, ClassNotFoundException {
+    private void handleCreateButton()  {
         String name = nameField.getText();
         User newUser = new User(name);
 
         if (!users.contains(newUser)) {
-            users.add(newUser);
-
-            Data data = Data.getInstance();
-            data.addNewUser(newUser.getName());
+            Data.getInstance().addNewUser(newUser);
 
             close();
         } else {
