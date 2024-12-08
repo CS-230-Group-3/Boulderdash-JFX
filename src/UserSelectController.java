@@ -35,6 +35,9 @@ public class UserSelectController {
     private Button selectButton;
 
     @FXML
+    private Button backButton;
+
+    @FXML
     private BorderPane selectProfile;
 
     @FXML
@@ -48,6 +51,7 @@ public class UserSelectController {
 
 
         newProfileButton.setOnAction(event -> handleNewProfileButton());
+        backButton.setOnAction(event -> handleBackButton(event));
         selectButton.setOnAction(event -> handleSelectButton(event));
         selectButton.setDisable(true);
         userList.getSelectionModel().selectedItemProperty().addListener(
@@ -116,5 +120,17 @@ public class UserSelectController {
             e.printStackTrace();
         }
     }
+    private void handleBackButton(ActionEvent event){
+        try {
+            selectWindow = (AnchorPane) FXMLLoader.
+                    load(getClass().getResource("hello-view.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).
+                    getScene().getWindow();
+            Scene scene = new Scene(selectWindow);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
-

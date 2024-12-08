@@ -1,10 +1,14 @@
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -40,6 +44,9 @@ public class LevelController {
     private ListView levelThreeHighScores;
 
     @FXML
+    private Button backButton;
+
+    @FXML
     void initialize() {
 
 
@@ -48,6 +55,7 @@ public class LevelController {
 //        selectLevel3.setOnMouseClicked(event ->
 //          playLevel(event, selectLevel3));
 
+        backButton.setOnAction(event -> handleBackButton(event));
         //Populate lvl 1 HS
         Level levelOne = Data.getInstance().getAvailableLevels().getFirst();
         for (HighScore hs: levelOne.getHighScores()) {
@@ -155,5 +163,18 @@ public class LevelController {
         return levelToStart;
     }
 
+    private void handleBackButton(ActionEvent event){
+        try {
+            selectLevelWindow = (AnchorPane) FXMLLoader.
+                    load(getClass().getResource("choose-user.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).
+                    getScene().getWindow();
+            Scene scene = new Scene(selectLevelWindow);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }
