@@ -47,6 +47,9 @@ public class TimeController {
                 gameController.getMap()
         );
 
+        int currentLevel = gameController.getCurrentLevel();
+        int maxLevel = gameController.getMaxLevel();
+
         //Check if player is dead or on top of an exit
         Player player = gameController.getMap().getPlayerObjectReference();
         if (!player.getLivingState()) {
@@ -56,7 +59,14 @@ public class TimeController {
             Exit exit = gameController.getMap().getExitObjectReference();
             if (exit != null
                     && player.getPosition().equals(exit.getPosition())) {
-                System.out.println("Wow you won, impressive :)");
+                if (currentLevel != maxLevel)
+                {
+                    gameController.setCurrentLevel(currentLevel++);
+                    System.out.println("Wow you won, NEXT LEVEL :)");
+                } else
+                {
+                    //System.out.println("Wow you won, impressive :)\n" + "Score: " + HighScore.getScore());
+                }
                 handlePause();
             }
         }
