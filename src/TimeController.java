@@ -1,6 +1,8 @@
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.scene.input.KeyCode;
+import javafx.scene.robot.Robot;
 import javafx.util.Duration;
 
 public class TimeController {
@@ -50,19 +52,22 @@ public class TimeController {
         //Check if player is dead or on top of an exit
         Player player = gameController.getMap().getPlayerObjectReference();
         if (!player.getLivingState()) {
-            handlePause();
             System.out.println("Dead lol");
+            handleLose();
         } else {
             Exit exit = gameController.getMap().getExitObjectReference();
             if (exit != null
                     && player.getPosition().equals(exit.getPosition())) {
                 System.out.println("Wow you won, impressive :)");
                 handleVictory();
-                handlePause();
             }
         }
     }
 
+    private void handleLose() {
+        gameController.setGameIsRunning(false);
+        showPauseMenu();
+    }
     private void handleVictory() {
         int collectedGems = gameController.getGemsCollected();
         int secondsPassed = TimeController.getTickCount() / 5;
@@ -70,7 +75,6 @@ public class TimeController {
                 gameController.getSecondsToBeatLevel() - secondsPassed;
         int playerScore = collectedGems * remainingSeconds;
 
-        //TODO make method non-static - will delete all data
         Data data = Data.getInstance();
         data.addScoreForCurrentUser(playerScore);
 
@@ -82,7 +86,16 @@ public class TimeController {
                     data.getAvailableLevels().get(userLevelsUnlocked)
             );
         }
+        gameController.setGameIsRunning(false);
+        showPauseMenu();
+    }
 
+    private void showPauseMenu() {
+        //Would be part of the handle victory & da feet
+        //Learned from https://stackoverflow.com/questions/24258995/how-to-programmatically-simulate-arrow-key-presses-in-java-fx
+        Robot r = new Robot();
+        r.keyPress(KeyCode.ESCAPE);
+        r.keyRelease(KeyCode.ESCAPE);
     }
 
     /**

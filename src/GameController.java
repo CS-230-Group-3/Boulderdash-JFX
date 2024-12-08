@@ -20,6 +20,10 @@ public class GameController {
 
     private boolean gameIsRunning = true;
 
+    public void setGameIsRunning(boolean gameIsRunning) {
+        this.gameIsRunning = gameIsRunning;
+    }
+
     public boolean isGameIsRunning() {
         return gameIsRunning;
     }
@@ -96,9 +100,6 @@ public class GameController {
                     break;
                 case SPACE:
                     player.setDiamonds(player.getDiamonds() + 1);
-//                    gameIsRunning = false;
-//                    someRandoStuff();
-//                    map.getPlayerObjectReference().die();
                     break;
                 case ESCAPE:
                     timeController.handlePause();
@@ -115,14 +116,6 @@ public class GameController {
             }
             event.consume();
         }
-    }
-
-    private void someRandoStuff() {
-        //Would be part of the handle victory & da feet
-        //Learned from https://stackoverflow.com/questions/24258995/how-to-programmatically-simulate-arrow-key-presses-in-java-fx
-        Robot r = new Robot();
-        r.keyPress(KeyCode.ESCAPE);
-        r.keyRelease(KeyCode.ESCAPE);
     }
 
     /**
