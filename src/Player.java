@@ -170,20 +170,17 @@ public class Player extends Entity {
                 System.out.println("Boulder detected");
                 return true;
             case "gem":
-                Item gem = (Item) gameObjectAt;
-                collectDiamond(map, gem);
+                map.getPendingRemovals().add(gameObjectAt);
+                this.diamonds++;
+                this.setPosition(gameObjectAt.getPosition());
+                return true;
             case "door":
                 LockedDoor doorObject = (LockedDoor) gameObjectAt;
                 this.unlockDoor(doorObject);
+                return true;
             default:
                 return false;
         }
-    }
-
-    public void collectDiamond(Map map, Item diamond) {
-        map.removeItem(diamond);
-        this.diamonds++;
-        System.out.println(diamonds);
     }
 
     @Override

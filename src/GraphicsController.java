@@ -44,7 +44,8 @@ public class GraphicsController {
      */
     public void updateGameObjectsOnMap(Map map) throws InterruptedException {
         map.getPendingAdditions().clear();
-        map.getPendingRemovals().clear();
+        map.getPendingRemovals().removeIf(object -> !(object instanceof Gem));
+
 
         List<Entity> entitiesToRemove = new ArrayList<>();
 
@@ -57,7 +58,6 @@ public class GraphicsController {
                 object.update(map);
             }
         }
-
         for (GameObject object: map.getTileLayer()) {
             /* Update only of UpdateRate is defined
                & UpdateRate Matches TickCount */
@@ -79,6 +79,7 @@ public class GraphicsController {
         for (GameObject object : map.getPendingAdditions()) {
             map.spawnGameObject(object);
         }
+        map.getPendingRemovals().clear();
     }
 
     private void drawBackground(Canvas canvas, Map mapToCover) {
