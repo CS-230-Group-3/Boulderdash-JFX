@@ -30,7 +30,7 @@
          </font>
       </Button>
         <ListView fx:id="userList" editable="true" layoutX="224.0" layoutY="262.0" prefHeight="556.0" prefWidth="1444.0" stylesheets="@resources/style.css">
-            <style>-fx-font-family: "SimSun"; -fx-text-fill: #ae0017; -fx-font-size: 30; -fx-background-color: transparent; -fx-background-position: center; -fx-background-size: cover; -fx-background-color: transparent;</style>
+            <style>-fx-font-family: "PO52 Roman"; -fx-text-fill: #ae0017; -fx-font-size: 30; -fx-background-color: transparent; -fx-background-position: center; -fx-background-size: cover; -fx-background-color: transparent;</style>
          <effect>
             <Glow level="0.48" />
          </effect>
