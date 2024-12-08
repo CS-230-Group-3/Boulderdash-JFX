@@ -218,6 +218,8 @@ public class SaveLoadController {
                 return new Frog();
             case 'O':
                 return new Gem();
+            case 'S':
+                return new Firefly();
             case '@':
                 return new Amoeba();
             case '!':
@@ -273,6 +275,8 @@ public class SaveLoadController {
                 return 'U';
             case "Gem":
                 return 'O';
+            case "Firefly":
+                return 'S';
             default:
                 return '*';
         }

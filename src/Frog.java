@@ -62,7 +62,7 @@ public class Frog extends PathfindingEnemy {
      * a path towards the player and update the frog's position accordingly.
      */
     public void move(Map map, final Direction dir) {
-        ArrayList<int[]> path = findPath(map, this.getPosition(), map.getPlayerObjectReference().getPosition());
+        ArrayList<int[]> path = AStarAlgorithm(map, this.getPosition(), map.getPlayerObjectReference().getPosition());;
         if (path != null)
         {
             if(collisionCheck(map, new GridPosition(path.get(1)[0], path.get(1)[1])))
@@ -73,11 +73,6 @@ public class Frog extends PathfindingEnemy {
                 System.out.println("Frog Collision");
             }
         }
-    }
-
-    public ArrayList<int[]> findPath(Map map, GridPosition enemyPosition, GridPosition playerPosition) {
-        ArrayList<int[]> path = AStarAlgorithm(map, enemyPosition, playerPosition);
-        return path;
     }
 
     /**

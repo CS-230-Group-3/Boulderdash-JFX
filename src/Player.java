@@ -6,17 +6,23 @@
  * Last changed: 25/11/2024
  */
 import java.util.ArrayList;
+import java.util.Timer;
+
+import static java.lang.Integer.MAX_VALUE;
 
 public class Player extends Entity {
     private Boolean livingState;
     private int score; // high score perhaps
     private static final String SPRITE_PATH = "resources/assets/player.png";
-    private Boolean isUnderwater;
+    private Boolean isUnderwater = false;
     private ArrayList<Key> keyChain = new ArrayList<>();
     private GridPosition position = new GridPosition(0, 0);
     // Note, change above to be gridPosition later once it comes up.
     private int diamonds;
-    protected int updateRate = 1;
+    private int drowningTime;
+    private int tickCounter = 0;
+    private int waterEntryCounter;
+    private int exitCounter;
     private Direction movingDirection;
 
     /**
@@ -30,6 +36,7 @@ public class Player extends Entity {
         this.diamonds = 0;
         this.type = "player";
         this.keyChain = new ArrayList<>();
+        this.updateRate = 1;
     }
 
     /**
@@ -44,24 +51,7 @@ public class Player extends Entity {
         this.type = "player";
     }
 
-    /**
-     * Starts a countdown from x number of seconds, resulting in the
-     * player drowning if they stay underwater too long.
-     *
-     * @param number the number of seconds for the player to drown
-     */
-    public void underwaterCountDown(int number) throws InterruptedException {
-        for (int i = number; i > 0; i--) {
-            System.out.println("Time remaining underwater: " + i + " seconds");
-            Thread.sleep(1000);
-            if (!isUnderwater) {
-                System.out.println("Player surfaced in time!");
-                return;
-            }
-        }
-        System.out.println("Player has drowned.");
-        die();
-    }
+
 
     /**
      * Adds a key to the player's keychain and logs the action.
@@ -206,9 +196,49 @@ public class Player extends Entity {
      * Updates the player's state based on input or game events.
      */
     @Override
-    public void update(Map map) throws InterruptedException {
-        if (isUnderwater){
-            underwaterCountDown(10);
+    public void update(Map map) {
+        tickCounter ++;
+        System.out.println("PLAYER UPDATING");
+        checkForWater(map, position);
+        System.out.println("Current tick: " + tickCounter);
+        checkForDrowning();
+        // checks if going from out to in water
+        // if so, log water entry tick
+        // exit tick is entry + 50
+        // if currentTick >= entrytick, player.die
+    }
+
+    /**
+     * Starts a countdown from x number of seconds, resulting in the
+     * player drowning if they stay underwater too long.
+     */
+    public void underwaterCountDown() {
+        exitCounter = tickCounter + 50;
+        System.out.println("Countdown begun. Start: " + tickCounter + " End: " + exitCounter);
+    }
+
+    private boolean checkForWater(Map map, GridPosition currentPosition)  {
+        if (map.getTileAt(currentPosition) instanceof Water) {
+            if (!isUnderwater){ //Entering water
+                isUnderwater = true;
+                waterEntryCounter = tickCounter;
+                System.out.println("UNDERWATER DETECTED");
+                underwaterCountDown();
+                return true;
+            }
+        } else {
+            if (isUnderwater){
+                System.out.println("Exiting water");
+                isUnderwater = false;
+                exitCounter = 0;
+            }
+        }
+        return false;
+    }
+
+    private void checkForDrowning(){
+        if (tickCounter == exitCounter){
+            die();
         }
     }
 
@@ -268,10 +298,4 @@ public class Player extends Entity {
     public Boolean getLivingState() {
         return livingState;
     }
-
-
-
-
-
-
 }

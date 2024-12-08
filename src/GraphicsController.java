@@ -43,7 +43,10 @@ public class GraphicsController {
      * @param map map to update
      */
     public void updateGameObjectsOnMap(Map map) throws InterruptedException {
-        map.getPendingObjects().clear();
+        map.getPendingAdditions().clear();
+        map.getPendingRemovals().clear();
+
+        List<Entity> entitiesToRemove = new ArrayList<>();
 
         for (GameObject object: map.getEntityLayer()) {
             /* Update only of UpdateRate is defined
@@ -53,7 +56,6 @@ public class GraphicsController {
                         % object.getUpdateRate()) == 0) {
                 object.update(map);
             }
-
         }
 
         for (GameObject object: map.getTileLayer()) {
@@ -66,7 +68,15 @@ public class GraphicsController {
             }
 
         }
-        for (GameObject object : map.getPendingObjects()) {
+        for (GameObject object : map.getPendingRemovals()) {
+            if (object instanceof Entity entity) {
+                entitiesToRemove.add(entity);
+            } else if (object instanceof Tile tile) {
+                map.destroyTile(tile);
+            }
+        map.getEntityLayer().removeAll(entitiesToRemove);
+        }
+        for (GameObject object : map.getPendingAdditions()) {
             map.spawnGameObject(object);
         }
     }

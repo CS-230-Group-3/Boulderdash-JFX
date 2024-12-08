@@ -1,31 +1,16 @@
 import java.util.*;
 
-// DOES NOT WORK ATM
-
 public abstract class PathfindingEnemy extends Enemy {
     Node start, end;
     ArrayList<Node> walkableTiles = new ArrayList<>();
     ArrayList<Node> walkedTiles = new ArrayList<>();
 
     int rows, cols;
-    int[] dx = {-1, 1, 0, 0};  // Directions: left, right, up, down
-    int[] dy = {0, 0, -1, 1};  // Directions: left, right, up, down
+    int[] dx = {-1, 1, 0, 0};
+    int[] dy = {0, 0, -1, 1};
 
     public PathfindingEnemy(String pathToSprite, GridPosition position) {
         super(pathToSprite, position);
-    }
-
-    private void initializeWalkableTiles(Map map) {
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                GameObject objectAt = map.getObjectAt(new GridPosition(i, j));
-                if (objectAt == null) {
-                    walkableTiles.add(new Node(i, j, null));
-                } else if (objectAt.isWalkable()) {
-                    walkableTiles.add(new Node(i, j, null));
-                }
-            }
-        }
     }
 
     public ArrayList<int[]> AStarAlgorithm(Map map, GridPosition enemyPos, GridPosition playerPos) {
@@ -51,7 +36,6 @@ public abstract class PathfindingEnemy extends Enemy {
             System.out.println("CURRENT: " + current.x + " " + current.y);
             walkableTiles.remove(current);
 
-            // If we reached the goal, reconstruct the path
             if (current.x == playerPos.getX() && current.y == playerPos.getY()) {
                 System.out.println("found");
                 ArrayList<int[]> path = new ArrayList<>();
@@ -74,7 +58,7 @@ public abstract class PathfindingEnemy extends Enemy {
                 int newY = current.y + dy[i];
 
                 System.out.println("try: " + newX + " " + newY + " " + current);
-                // If the new position is valid and walkable
+
                 if (isValid(newX, newY, map) && !containsNode(walkedTiles, newX, newY)) {
                     int newG = current.g + 1;
                     int newH = calculateHeuristic(newX, newY, end.x, end.y);
@@ -82,7 +66,6 @@ public abstract class PathfindingEnemy extends Enemy {
                     System.out.println("    VALID: " + newX + " " + newY + " " + current);
                     neighbor.f = neighbor.g + neighbor.h;
 
-                    // If neighbor is not in the open list, add it
                     if (!containsNode(walkableTiles, newX, newY)) {
                         walkableTiles.add(neighbor);
                     }
