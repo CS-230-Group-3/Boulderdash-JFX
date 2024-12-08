@@ -27,25 +27,18 @@ public abstract class PathfindingEnemy extends Enemy {
         start.f = start.g + start.h;
 
         walkableTiles.add(start);
-        System.out.println(enemyPos.getX() + " " + enemyPos.getY());
-        System.out.println(playerPos.getX() + " " + playerPos.getY());
 
         while (!walkableTiles.isEmpty()) {
             Node current = walkableTiles.get(lowestF());
-            System.out.println("CURRENT: " + current.x + " " + current.y);
             walkableTiles.remove(current);
 
             if (current.x == playerPos.getX() && current.y == playerPos.getY()) {
-                System.out.println("found");
                 ArrayList<int[]> path = new ArrayList<>();
                 while (current != null) {
                     path.add(new int[]{current.x, current.y});
                     current = current.parent;
                 }
                 Collections.reverse(path);
-                for (int[] i : path) {
-                    System.out.println(i[0] + " " + i[1]);
-                }
                 return path;
             }
 
@@ -56,13 +49,10 @@ public abstract class PathfindingEnemy extends Enemy {
                 int newX = current.x + dx[i];
                 int newY = current.y + dy[i];
 
-                System.out.println("try: " + newX + " " + newY + " " + current);
-
                 if (isValid(newX, newY, map) && !containsNode(walkedTiles, newX, newY)) {
                     int newG = current.g + 1;
                     int newH = calculateHeuristic(newX, newY, end.x, end.y);
                     Node neighbor = new Node(newX, newY, newG, newH, current);
-                    System.out.println("    VALID: " + newX + " " + newY + " " + current);
                     neighbor.f = neighbor.g + neighbor.h;
 
                     if (!containsNode(walkableTiles, newX, newY)) {
@@ -71,7 +61,6 @@ public abstract class PathfindingEnemy extends Enemy {
                 }
             }
         }
-        System.out.println("null");
         return null;
     }
 
