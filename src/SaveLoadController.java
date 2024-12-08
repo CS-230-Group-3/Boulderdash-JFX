@@ -291,10 +291,19 @@ public class SaveLoadController {
                 return '"';
             case "YellowKey":
                 return '£';
-             case "PinkKey":
+            case "PinkKey":
                  return '$';
-            default:
+            case "RedDoor":
+                return '1';
+            case "BlueDoor":
+                return '2';
+            case "YellowDoor":
+                return '3';
+            case "PinkDoor":
+                return '4';
+             default:
                 return '*';
+
         }
     }
     private String playerToDataString(Player player) {
