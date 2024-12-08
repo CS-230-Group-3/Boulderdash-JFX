@@ -6,6 +6,7 @@
  */
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Butterfly extends Enemy {
@@ -27,7 +28,7 @@ public class Butterfly extends Enemy {
         super(FILE_PATH, new GridPosition(0, 0));
         Random random = new Random();
         leftMoving = random.nextInt(2) == 0;
-        this.updateRate = 2;
+        this.updateRate = 3;
     }
 
     /**
@@ -168,7 +169,30 @@ public class Butterfly extends Enemy {
      */
     @Override
     public void delete() {
-        //explode - destroy a 9x9 grid of tiles and spawn diamonds in their places.
+    }
+
+    public void dostroi(Map map) {
+        for (GameObject object : get9x9Grid(map)) {
+            if (!(object instanceof TitaniumWall)) {
+                map.getPendingRemovals().add(object);
+                GridPosition diamondPos = object.getPosition();
+                Gem diamond = new Gem();
+                diamond.setPosition(diamondPos);
+                map.getPendingAdditions().add(diamond);
+            }
+        }
+    }
+
+    public List<GameObject> get9x9Grid(Map map) {
+        List<GameObject> destroyedObjects = new ArrayList<>();
+        destroyedObjects.add(this);
+        for (Direction direction : this.calculateMovePriority()) {
+            GameObject orthogonalNeighbour = map.getTileNeighbourOf(this, direction);
+            GameObject evilNonOrthogonalNeighbour = map.getTileNeighbourOf(orthogonalNeighbour, direction.clockwiseRotation());
+            destroyedObjects.add(orthogonalNeighbour);
+            destroyedObjects.add(evilNonOrthogonalNeighbour);
+        }
+        return destroyedObjects;
     }
 
     /**
@@ -179,8 +203,4 @@ public class Butterfly extends Enemy {
      * @param playerPosition the player's position.
      * @return an {@link ArrayList} of int arrays representing the path from enemy to player.
      */
-    @Override
-    public ArrayList<int[]> findPath(Map map, GridPosition enemyPosition, GridPosition playerPosition) {
-        return null; // Implement pathfinding logic here.
-    }
 }

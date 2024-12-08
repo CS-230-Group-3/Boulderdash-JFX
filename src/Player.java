@@ -6,6 +6,7 @@
  * Last changed: 25/11/2024
  */
 import java.util.ArrayList;
+import java.util.Timer;
 
 public class Player extends Entity {
     private Boolean livingState;
@@ -17,6 +18,7 @@ public class Player extends Entity {
     // Note, change above to be gridPosition later once it comes up.
     private int diamonds;
     protected int updateRate = 1;
+    private int tickCounter = 0;
     private Direction movingDirection;
 
     /**
@@ -50,16 +52,14 @@ public class Player extends Entity {
      * @param number the number of seconds for the player to drown
      */
     public void underwaterCountDown(int number) throws InterruptedException {
-        for (int i = number; i > 0; i--) {
-            System.out.println("Time remaining underwater: " + i + " seconds");
-            Thread.sleep(1000);
-            if (!isUnderwater) {
-                System.out.println("Player surfaced in time!");
-                return;
-            }
+        int startingTime = tickCounter;
+        int deathTime = (int) startingTime + 50;
+        if (tickCounter == deathTime){
+            System.out.println("Player has drowned.");
+            die();
         }
-        System.out.println("Player has drowned.");
-        die();
+
+
     }
 
     /**
@@ -143,6 +143,16 @@ public class Player extends Entity {
         }
     }
 
+    private boolean checkForWater(Map map, GridPosition desiredPosition) throws InterruptedException {
+        if (map.getTileAt(desiredPosition) instanceof Water) {
+            isUnderwater = true;
+            System.out.println("UNDERWATER DETECTED");
+            underwaterCountDown(10);
+            return true;
+        }
+        return false;
+    }
+
     private void keyCheck(Map map, GridPosition desiredPosition) {
         if (map.getObjectAt(desiredPosition) instanceof Key key) {
             pickUpKey(key);
@@ -202,9 +212,9 @@ public class Player extends Entity {
      */
     @Override
     public void update(Map map) throws InterruptedException {
-        if (isUnderwater){
-            underwaterCountDown(10);
-        }
+        tickCounter ++;
+        System.out.println("PLAYER UPDATING");
+
     }
 
 

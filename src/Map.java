@@ -15,7 +15,8 @@ public class Map {
     private ArrayList<GameObject> tileLayer;
     private ArrayList<GameObject> entityLayer;
 
-    private List<GameObject> pendingObjects = new ArrayList<>();
+    private List<GameObject> pendingAdditions = new ArrayList<>();
+    private List<GameObject> pendingRemovals = new ArrayList<>();
 
     /**
      * Create a new map with empty game objects.
@@ -57,6 +58,15 @@ public class Map {
             return null;
         }
         return tileLayer.get(index);
+    }
+
+    public Entity getEntityAt(GridPosition coordinate) {
+        for (GameObject object : entityLayer) {
+            if (object.getPosition().equals(coordinate)) {
+                return (Entity) object;
+            }
+        }
+        return null;
     }
 
     /**
@@ -126,6 +136,15 @@ public class Map {
         }
     }
 
+    public void removeEntity(Entity entityToRemove) {
+        for (GameObject object: entityLayer) {
+            if (object.getPosition().equals(
+                    entityToRemove.getPosition())) {
+                entityLayer.remove(entityToRemove);
+            }
+        }
+    }
+
     /**
      * Returns a references to player object on the map.
      * @return first instance of player object if one exists, null otherwise
@@ -181,6 +200,19 @@ public class Map {
             return null;
         } else {
             return getTileAt(positionOfNeighbour);
+        }
+    }
+
+    public Entity getEntityNeighbourOf(GameObject object, Direction direction) {
+        GridPosition offset = directionToOffset(direction);
+        GridPosition positionOfNeighbour = new GridPosition(
+                object.getPosition().getX() + offset.getX(),
+                object.getPosition().getY() + offset.getY()
+        );
+        if (!isInBounds(positionOfNeighbour)) {
+            return null;
+        } else {
+            return getEntityAt(positionOfNeighbour);
         }
     }
 
@@ -286,7 +318,13 @@ public class Map {
         }
     }
 
-    public List<GameObject> getPendingObjects() {
-        return pendingObjects;
+    public List<GameObject> getPendingAdditions() {
+        return pendingAdditions;
+    }
+
+    public List<GameObject> getPendingRemovals() {
+        return pendingRemovals;
     }
 }
+
+
