@@ -9,17 +9,11 @@ import java.util.Objects;
 
 public abstract class Key extends Item {
 
-    private static final String FILE_PATH = "resources/assets/key.png";
-
-    private final int id;
-
     private boolean waterSkip = true;
 
 
     public Key(String pathToSprite, GridPosition gridPosition) {
-        super(FILE_PATH, new GridPosition(0, 0));
-        this.id = Objects.hash(this); // Generate a unique hash for this key
-        this.type = "key";
+        super(pathToSprite, new GridPosition(0, 0));
     }
 
     public void update(Map map) {
@@ -30,15 +24,6 @@ public abstract class Key extends Item {
             return;
         }
         this.fall(map);
-    }
-
-    /**
-     * Gets the ID of the key.
-     *
-     * @return the unique hash ID
-     */
-    public int getId() {
-        return id;
     }
 
 

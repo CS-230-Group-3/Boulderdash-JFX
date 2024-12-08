@@ -1,8 +1,11 @@
 public class LockedDoor extends Tile {
 
-
+    private boolean isLocked = true;
     protected KeyColour colour;
 
+    public boolean isLocked() {
+        return isLocked;
+    }
 
     public LockedDoor(String pathToSprite, GridPosition position) {
         super(pathToSprite, position);
