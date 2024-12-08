@@ -1,7 +1,5 @@
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -41,6 +39,7 @@ public class LevelController {
     @FXML
     void initialize() {
 
+
 //        selectLevel2.setOnMouseClicked(event ->
 //          playLevel(event, selectLevel2));
 //        selectLevel3.setOnMouseClicked(event ->
@@ -76,6 +75,7 @@ public class LevelController {
 
         User currentUser = Data.getInstance().getCurrentUser();
 
+        //TODO assign list views to take mouse click even
         if (currentUser.getUnlockedLevels().size() < 2) {
             // 1 levels unlocked
             selectLevel2.setOpacity(0.5);
@@ -131,7 +131,6 @@ public class LevelController {
 
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
-            stage.setTitle("Level One");
             stage.show();
 
             event.consume();
