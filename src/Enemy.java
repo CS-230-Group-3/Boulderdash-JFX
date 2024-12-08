@@ -17,6 +17,4 @@ public abstract class Enemy extends Entity
         super(pathToSprite, position);
         this.type = "enemy";
     }
-
-    public abstract ArrayList<int[]> findPath(Map map, GridPosition enemyPosition, GridPosition playerPosition);
 }

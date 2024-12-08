@@ -12,9 +12,12 @@ public class Key extends Item {
     private static final String FILE_PATH = "resources/assets/key.png";
     private final int id;
 
-    public Key() {
+    private final KeyColour colour;
+
+    public Key(KeyColour colour) {
         super(FILE_PATH, new GridPosition(0, 0));
         this.id = Objects.hash(this); // Generate a unique hash for this key
+        this.colour = colour;
     }
 
     public void update(Map map) {

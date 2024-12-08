@@ -180,16 +180,8 @@ public class SaveLoadController {
                 return new Frog();
             case 'O':
                 return new Gem();
-            case '@':
-                return new Amoeba();
-            case '!':
-                return new RedKey();
-            case '"':
-                return new BlueKey();
-            case '£':
-                return new YellowKey();
-            case '$':
-                return new GreenKey();
+            case 'S':
+                return new Firefly();
             default:
                 return new Path();
         }
@@ -237,6 +229,8 @@ public class SaveLoadController {
                 return 'U';
             case "Gem":
                 return 'O';
+            case "Firefly":
+                return 'S';
             default:
                 return '*';
         }

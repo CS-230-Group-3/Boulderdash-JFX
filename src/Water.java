@@ -30,8 +30,7 @@ public class Water extends Tile {
         GridPosition newWaterPos = tile.getPosition();
         Water water = new Water();
         water.setPosition(newWaterPos);
-        map.getPendingObjects().add(water);
-        System.out.println("Flowing");
+        map.getPendingAdditions().add(water);
         //play flowing sound
     }
 
