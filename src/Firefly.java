@@ -199,8 +199,4 @@ public class Firefly extends Enemy {
      * @param playerPosition the player's position.
      * @return an {@link ArrayList} of int arrays representing the path from enemy to player.
      */
-    @Override
-    public ArrayList<int[]> findPath(Map map, GridPosition enemyPosition, GridPosition playerPosition) {
-        return null; // Implement pathfinding logic here.
-    }
 }

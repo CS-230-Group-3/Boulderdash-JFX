@@ -83,7 +83,7 @@ public class Amoeba extends Enemy {
         }
         Amoeba amoeba = new Amoeba();
         amoeba.setPosition(newPos);
-        map.getPendingObjects().add(amoeba);
+        map.getPendingAdditions().add(amoeba);
         System.out.println(newPos);
     }
 
