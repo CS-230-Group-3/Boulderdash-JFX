@@ -22,28 +22,39 @@ public class SaveLoadController {
         boolean isMapSizeRead = false;
         ArrayList<GameObject> tileLayer = new ArrayList<>();
         ArrayList<GameObject> entityLayer = new ArrayList<>();
-        //Reader pares an empty String after reading map size
-        //Initializing height to -1 fixes it
         int height = -1;
         int width = 0;
+
+        int time = 0;
+        int gemsToCollect = 0;
+        int amoebaLimit = 0;
+        int amoebaGrowthRate = 0;
 
         try {
             Scanner reader = new Scanner(fileToRead);
             while (reader.hasNextLine()) {
-                if (isMapSizeRead) {
-                    String line = reader.nextLine();
+                String line = reader.nextLine();
+
+                // Read new properties first
+                if (line.startsWith("TIME:")) {
+                    time = Integer.parseInt(line.split(":")[1].trim());
+                } else if (line.startsWith("DIAMONDS:")) {
+                    gemsToCollect = Integer.parseInt(line.split(":")[1].trim());
+                } else if (line.startsWith("AMOEBA_LIMIT:")) {
+                    amoebaLimit = Integer.parseInt(line.split(":")[1].trim());
+                } else if (line.startsWith("AMOEBA_RATE:")) {
+                    amoebaGrowthRate = Integer.parseInt(line.split(":")[1].trim());
+                } else if (isMapSizeRead) {
                     if (!line.equals("-")) {
                         for (char c : line.toCharArray()) {
                             GameObject objectToAdd = getObjectFromChar(c);
-                            GridPosition objectPosition =
-                                    new GridPosition(width, height);
+                            GridPosition objectPosition = new GridPosition(width, height);
                             if (objectToAdd instanceof Tile) {
                                 objectToAdd.setPosition(objectPosition);
                                 tileLayer.add(objectToAdd);
                                 width++;
                             } else if (objectToAdd instanceof Entity) {
                                 objectToAdd.setPosition(objectPosition);
-
                                 tileLayer.add(new Path(objectPosition));
                                 entityLayer.add(objectToAdd);
                                 width++;
@@ -56,19 +67,25 @@ public class SaveLoadController {
                         parsePlayerData(reader, playerRef);
                     }
                 } else {
-                    int mapWidth =  Integer.parseInt(reader.next());
+                    // Read map dimensions
+                    int mapWidth = Integer.parseInt(reader.next());
                     int mapHeight = Integer.parseInt(reader.next());
-
                     map = new Map(mapWidth, mapHeight);
                     isMapSizeRead = true;
                 }
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-
         }
-        return populateMapWithLayers(map, tileLayer, entityLayer);
 
+        // Pass the new properties to the Map object
+        if (map != null) {
+            map.setGemsToCollect(gemsToCollect);
+            map.setTimeLimit(time);
+            map.setAmoebaProperties(amoebaGrowthRate, amoebaLimit);
+        }
+
+        return populateMapWithLayers(map, tileLayer, entityLayer);
     }
 
     /**
