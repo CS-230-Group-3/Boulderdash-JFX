@@ -220,6 +220,8 @@ public class SaveLoadController {
                 return new Gem();
             case 'S':
                 return new Firefly();
+            case '@':
+                return new AmoebaGroup();
             default:
                 return new Path();
         }
@@ -269,6 +271,8 @@ public class SaveLoadController {
                 return 'O';
             case "Firefly":
                 return 'S';
+            case "AmoebaGroup":
+                return '@';
             default:
                 return '*';
         }

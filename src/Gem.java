@@ -4,7 +4,7 @@ public class Gem extends Item {
 
     public Gem() {
         super(FILE_PATH, new GridPosition(0, 0));
-        this.updateRate = 2;
+        this.updateRate = 1;
         this.type = "gem";
     }
 
