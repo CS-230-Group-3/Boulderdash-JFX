@@ -8,13 +8,13 @@ import javafx.fxml.FXMLLoader;
 import java.io.IOException;
 
 public class MainUI extends Application {
-	private static final int MAIN_WINDOW_WIDTH = 700;
-	private static final int MAIN_WINDOW_HEIGHT = 400;
+	public static final int MAIN_WINDOW_WIDTH = 1920;
+	public static final int MAIN_WINDOW_HEIGHT = 1080;
 
 	@Override
 	public void start(Stage stage) throws IOException {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("hello-view.fxml"));
-		Scene scene = new Scene(fxmlLoader.load());
+		Scene scene = new Scene(fxmlLoader.load(),MAIN_WINDOW_WIDTH, MAIN_WINDOW_HEIGHT);
 		stage.setTitle("JungleGameStart");
 		stage.setScene(scene);
 		stage.show();
