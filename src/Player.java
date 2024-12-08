@@ -139,13 +139,6 @@ public class Player extends Entity {
         }
     }
 
-    private void keyCheck(Map map, GridPosition desiredPosition) {
-        if (map.getObjectAt(desiredPosition) instanceof Key key) {
-            pickUpKey(key);
-            map.removeItem(key);
-        }
-    }
-
     private void pushBoulder(Map map, Direction dir, Boulder boulder) {
         boulder.push(map, dir);
         move(map, dir);
@@ -162,6 +155,8 @@ public class Player extends Entity {
                 return false;
             case "enemy":
                 die();
+            case "key":
+                pickUpKey(map, (Key)gameObjectAt);
             case "tile":
                 return !gameObjectAt.isWalkable();
             case "boulder":
@@ -176,8 +171,12 @@ public class Player extends Entity {
                 return true;
             case "door":
                 LockedDoor doorObject = (LockedDoor) gameObjectAt;
-                this.unlockDoor(doorObject);
-                return true;
+                if (doorObject.isLocked()){
+                    return false;
+                } else {
+                    unlockDoor(doorObject);
+                    return true;
+                }
             default:
                 return false;
         }
@@ -249,9 +248,9 @@ public class Player extends Entity {
      * Handles logic for a player picking up a key
      * @param keyToPickUp the key the player should pick up
      */
-    public void pickUpKey(final Key keyToPickUp) {
+    public void pickUpKey(Map map, final Key keyToPickUp) {
         keyChain.add(keyToPickUp);
-        // BEFORE FINALISING - delete the key afterwards
+        map.removeItem(keyToPickUp);
     }
 
     /**
