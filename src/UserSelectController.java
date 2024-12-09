@@ -53,6 +53,13 @@ public class UserSelectController {
 
     private ArrayList<User> users = new ArrayList<>();
 
+    /**
+     * Initializes the user selection screen by loading user data,
+     * setting up button actions, and updating the user list.
+     *
+     * @throws IOException            if an error occurs while loading user data.
+     * @throws ClassNotFoundException if the user data cannot be deserialised.
+     */
     @FXML
     void initialize() throws IOException, ClassNotFoundException {
         users = Data.getInstance().getUsers();
@@ -69,6 +76,9 @@ public class UserSelectController {
         updateUsers();
     }
 
+    /**
+     * Updates the displayed list of users in the ListView.
+     */
     private void updateUsers() {
         userList.getItems().clear();
 
@@ -77,6 +87,10 @@ public class UserSelectController {
         }
     }
 
+    /**
+     * Handles the action of creating a new user profile.
+     * Opens a new window for profile creation and updates the user list after completion.
+     */
     private void handleNewProfileButton() {
         try {
             FXMLLoader loader =
@@ -101,6 +115,14 @@ public class UserSelectController {
         }
     }
 
+    /**
+     * Handles the action of selecting an existing user profile.
+     * Validates that a user is selected, sets the selected user
+     * as the current user,
+     * and opens the level selection window.
+     *
+     * @param event the ActionEvent triggered by the button click.
+     */
     private void handleSelectButton(ActionEvent event) {
         int index = userList.getSelectionModel().getSelectedIndex();
 
@@ -117,6 +139,11 @@ public class UserSelectController {
         }
     }
 
+    /**
+     * Opens the level selection window.
+     *
+     * @param event the ActionEvent triggered by the button click.
+     */
     private void openLevelWindow(ActionEvent event) {
         try {
             selectWindow = (AnchorPane) FXMLLoader.
@@ -132,6 +159,11 @@ public class UserSelectController {
         }
     }
 
+    /**
+     * Handles the action of navigating back to the main menu.
+     *
+     * @param event the ActionEvent triggered by the button click.
+     */
     private void handleBackButton(ActionEvent event) {
         try {
             selectWindow = (AnchorPane) FXMLLoader.
