@@ -31,11 +31,6 @@ public class Goblin extends PathfindingEnemy {
     }
 
     @Override
-    public boolean collisionCheck() {
-        return false;
-    }
-
-    @Override
     public boolean collisionCheck(Map map, Direction dir) {
         return false;
     }

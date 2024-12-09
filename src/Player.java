@@ -13,12 +13,10 @@ import static java.lang.Integer.MAX_VALUE;
 
 public class Player extends Entity {
     private Boolean livingState;
-    private int score; // high score perhaps
     private static final String SPRITE_PATH = "resources/assets/player.png";
     private Boolean isUnderwater = false;
     private ArrayList<Key> keyChain = new ArrayList<>();
     private GridPosition position = new GridPosition(0, 0);
-    // Note, change above to be gridPosition later once it comes up.
     private int diamonds;
     private int tickCounter = 0;
     private int waterEntryCounter;
@@ -32,7 +30,6 @@ public class Player extends Entity {
     public Player() {
         super(SPRITE_PATH, new GridPosition(0, 0));
         this.livingState = true;
-        //  this.keyChain = null;
         this.diamonds = 0;
         this.type = "player";
         this.keyChain = new ArrayList<>();
@@ -150,7 +147,7 @@ public class Player extends Entity {
                 return !gameObjectAt.isWalkable();
             case "boulder":
                 Boulder boulderToPush = (Boulder) gameObjectAt;
-                pushBoulder(map, movingDirection, boulderToPush); //Must pass in map, boulder, direction
+                pushBoulder(map, movingDirection, boulderToPush);
                 System.out.println("Boulder detected");
                 return true;
             case "gem":
@@ -172,12 +169,6 @@ public class Player extends Entity {
         return false;
     }
 
-
-    @Override
-    public boolean collisionCheck() {
-        return false;
-    }
-
     /**
      * Updates the player's state based on input or game events.
      */
@@ -189,10 +180,6 @@ public class Player extends Entity {
         System.out.println("Current tick: " + tickCounter);
         checkForDrowning();
         System.out.println(keyChain);
-        // checks if going from out to in water
-        // if so, log water entry tick
-        // exit tick is entry + 50
-        // if currentTick >= entrytick, player.die
     }
 
     /**
@@ -201,13 +188,13 @@ public class Player extends Entity {
      */
     public void underwaterCountDown() {
         int drowningTime = 5;
-        exitCounter = tickCounter + (5 * drowningTime);
-        System.out.println("Countdown begun. Start: " + tickCounter + " End: " + exitCounter);
+        exitCounter = waterEntryCounter + (5 * drowningTime);
+        System.out.println("Countdown begun. Start: " + waterEntryCounter + " End: " + exitCounter);
     }
 
     private boolean checkForWater(Map map, GridPosition currentPosition) {
         if (map.getTileAt(currentPosition) instanceof Water) {
-            if (!isUnderwater) { //Entering water
+            if (!isUnderwater) {
                 isUnderwater = true;
                 waterEntryCounter = tickCounter;
                 System.out.println("UNDERWATER DETECTED");
@@ -217,6 +204,7 @@ public class Player extends Entity {
         } else {
             if (isUnderwater) {
                 System.out.println("Exiting water");
+                System.out.println("Countdown end. Seconds remaining: " + getSecondsLeft());
                 isUnderwater = false;
                 exitCounter = 0;
             }
@@ -243,15 +231,6 @@ public class Player extends Entity {
     }
 
     /**
-     * Deletes the player object from the game.
-     */
-    @Override
-    public void delete() {
-        System.out.println("Player object removed from the game.");
-        // Add logic to remove the player object from the game world
-    }
-
-    /**
      * Returns the players collection of keys.
      *
      * @return array list representing all player collected keys
@@ -263,7 +242,7 @@ public class Player extends Entity {
     /**
      * Sets the player's living state to false and performs cleanup.
      */
-    public void die() { //Set alive to false
+    public void die() {
         this.livingState = false;
     }
 

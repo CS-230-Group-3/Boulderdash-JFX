@@ -115,7 +115,7 @@ public class Map {
     /**
      * Destroys the passed tile.
      * Places a path on it's position
-     * @param tileToDestroy tile to be dostroied
+     * @param tileToDestroy tile to be destroyed
      */
     public void destroyTile(Tile tileToDestroy) {
         int tileIndex = gridToIndex(tileToDestroy.getPosition());
@@ -126,19 +126,10 @@ public class Map {
     }
 
     /**
-     * Removes the passed item from the Map.
-     * @param itemToRemove item to be removed
+     * Removes the passed Entity from the Map.
+     * @param entityToRemove Entity to be removed
      */
-    public void removeItem(Item itemToRemove) {
-        for (GameObject object: entityLayer) {
-            if (object.getPosition().equals(
-                    itemToRemove.getPosition())) {
-                entityLayer.remove(itemToRemove);
-            }
-        }
-    }
-
-    public void removeEntity(Entity entityToRemove) {
+    public void destroyEntity(Entity entityToRemove) {
         for (GameObject object: entityLayer) {
             if (object.getPosition().equals(
                     entityToRemove.getPosition())) {

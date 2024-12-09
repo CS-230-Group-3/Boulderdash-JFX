@@ -12,14 +12,13 @@ import java.util.List;
 public abstract class Enemy extends Entity
 {
     private Boolean livingState;
-    private int[][] path;
 
     public Enemy(String pathToSprite, GridPosition position) {
         super(pathToSprite, position);
         this.type = "enemy";
     }
 
-    public void dostroi(Map map) {
+    public void destroy(Map map) {
         for (GameObject object : get9x9Grid(map)) {
             if (!(object instanceof TitaniumWall)) {
                 map.getPendingRemovals().add(object);

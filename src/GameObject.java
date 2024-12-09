@@ -14,9 +14,8 @@ public abstract class GameObject {
 
     private final Image sprite;
     private GridPosition gridPosition;
-    protected int updateRate; // The rate at which the game object updates in ticks.
+    protected int updateRate;
     private boolean isWalkable;
-    private int collisionRate;
 
     protected String type;
 
@@ -34,16 +33,6 @@ public abstract class GameObject {
      * Updates the state of the game object.
      */
     public abstract void update(Map map) throws InterruptedException;
-
-    /**
-     * Checks for collisions with other game objects.
-     */
-    public abstract boolean collisionCheck();
-
-    /**
-     * Removes the game object from the level.
-     */
-    public abstract void delete();
 
     /**
      * Returns the object's sprite.

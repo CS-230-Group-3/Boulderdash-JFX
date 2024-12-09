@@ -15,14 +15,4 @@ public class Explosion extends Tile {
         }
         deleteNextUpdate = true;
     }
-
-    @Override
-    public boolean collisionCheck() {
-        return false;
-    }
-
-    @Override
-    public void delete() {
-
-    }
 }

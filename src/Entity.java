@@ -17,6 +17,10 @@ public abstract class Entity extends GameObject {
         super(pathToSprite, position);
     }
 
+    public void delete(Map map){
+        map.destroyEntity(this);
+    }
+
     /**
      * Changes the entity's position.
      */
