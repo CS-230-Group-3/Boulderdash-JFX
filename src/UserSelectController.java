@@ -1,4 +1,3 @@
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -17,6 +16,14 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+/**
+ * Controller for managing user selection and profile creation.
+ * Handles user interaction for selecting or creating a user profile,
+ * and navigating between different stages in the game.
+ *
+ * @author Spas Dikov, Yuulia Shubina, Bailey Cockett
+ * @version 1.1
+ */
 public class UserSelectController {
 
     @FXML
@@ -45,10 +52,16 @@ public class UserSelectController {
 
     private ArrayList<User> users = new ArrayList<>();
 
+    /**
+     * Initializes the controller, loading the list of users and
+     * setting up event handlers for buttons.
+     *
+     * @throws IOException if there is an issue with loading resources
+     * @throws ClassNotFoundException if user data class is not found
+     */
     @FXML
     void initialize() throws IOException, ClassNotFoundException {
         users = Data.getInstance().getUsers();
-
 
         newProfileButton.setOnAction(event -> handleNewProfileButton());
         backButton.setOnAction(event -> handleBackButton(event));
@@ -61,6 +74,9 @@ public class UserSelectController {
         updateUsers();
     }
 
+    /**
+     * Updates the displayed list of users in the ListView.
+     */
     private void updateUsers() {
         userList.getItems().clear();
 
@@ -69,6 +85,10 @@ public class UserSelectController {
         }
     }
 
+    /**
+     * Handles the action for creating a new user profile.
+     * Opens a new window to create a profile.
+     */
     private void handleNewProfileButton() {
         try {
             FXMLLoader loader =
@@ -93,6 +113,12 @@ public class UserSelectController {
         }
     }
 
+    /**
+     * Handles the action for selecting a user.
+     * Validates if a user is selected and then loads the level window.
+     *
+     * @param event the action event triggered by the user
+     */
     private void handleSelectButton(ActionEvent event) {
         int index = userList.getSelectionModel().getSelectedIndex();
 
@@ -109,6 +135,11 @@ public class UserSelectController {
         }
     }
 
+    /**
+     * Opens the level selection window for the selected user.
+     *
+     * @param event the action event triggered by the user
+     */
     private void openLevelWindow(ActionEvent event) {
         try {
             selectWindow = (AnchorPane) FXMLLoader.
@@ -124,6 +155,12 @@ public class UserSelectController {
         }
     }
 
+    /**
+     * Handles the action for going back to the previous window.
+     * Opens the main menu window.
+     *
+     * @param event the action event triggered by the user
+     */
     private void handleBackButton(ActionEvent event) {
         try {
             selectWindow = (AnchorPane) FXMLLoader.

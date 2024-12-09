@@ -5,6 +5,7 @@ import java.util.Scanner;
 /**
  * Utility class for saving & loading map data.
  * @author Yuliia & Spas
+ * @version 1.4.0
  */
 public class SaveLoadController {
 
