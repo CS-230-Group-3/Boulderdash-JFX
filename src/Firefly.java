@@ -111,17 +111,4 @@ public class Firefly extends PatrollingEnemy {
         }
         return destroyedObjects;
     }
-
-    /**
-     * Finds a path from the firefly's position to the player's position using a pathfinding algorithm.
-     *
-     * @param map            the current level map.
-     * @param enemyPosition  the firefly's current position.
-     * @param playerPosition the player's position.
-     * @return an {@link ArrayList} of int arrays representing the path from enemy to player.
-     */
-    public ArrayList<int[]> findPath(Map map, GridPosition enemyPosition, GridPosition playerPosition) {
-        // Pathfinding implementation (e.g., A* algorithm)
-        return new ArrayList<>();
-    }
 }
