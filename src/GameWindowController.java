@@ -76,7 +76,7 @@ public class GameWindowController {
         timeLeft.setText(formatSecondsToString(remainingTimeInSeconds));
         //Update so diamonds are players actual starting ones
         diamondsCollected.setText("0");
-        diamondsToCollect.setText("/35");
+        diamondsToCollect.setText("/ 0");
 
         Timeline dTimeline = new Timeline(
                 new KeyFrame(Duration.millis(200),
@@ -94,8 +94,12 @@ public class GameWindowController {
     }
 
     private void handleUiUpdate() {
+        int totalGems = gameController.getMap().getGemsToCollect();
+        diamondsToCollect.setText("/ " + totalGems);
         Integer diamondsCollectedByPlayer =
                 gameController.getMap().getPlayerObjectReference().getDiamonds();
+        //TODO add when var is exposed
+
         System.out.println("Player D:" + diamondsCollectedByPlayer);
         diamondsCollected.setText(diamondsCollectedByPlayer.toString());
 
@@ -164,8 +168,7 @@ public class GameWindowController {
 
         saveAndExitButton.setText("Back to Level Select");
         saveAndExitButton.setOnAction(this::handleBackToLevels);
-        //TODO Change
-        pauseTitle.setText("Ya lost L 🤣");
+        pauseTitle.setText("You Lose!");
 
     }
 
@@ -178,7 +181,8 @@ public class GameWindowController {
         saveAndExitButton.setText("Back to Level Select");
         saveAndExitButton.setOnAction(this::handleBackToLevels);
         //TODO Change
-        pauseTitle.setText("Ya won W 🥸");
+//        breathRemainingInSeconds.setText(gameController.getMap().getPlayerObjectReference().getTimer());
+        pauseTitle.setText("Congratulations!");
     }
 
     private void handleBackToLevels(ActionEvent event) {
