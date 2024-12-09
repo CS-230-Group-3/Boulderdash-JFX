@@ -23,7 +23,7 @@ public class Item extends Entity {
                 this.isFalling = true;
                 return true;
             }
-            case Butterfly _ -> {
+            case Butterfly _ when (this instanceof Boulder || this instanceof Gem) -> {
                 Butterfly downNeighbourButterfly = (Butterfly) downNeighbour;
                 downNeighbourButterfly.dostroi(map);
                 map.getPendingRemovals().add(this);
@@ -32,11 +32,11 @@ public class Item extends Entity {
                 this.isFalling = true;
                 return true;
             }
-            case Firefly _ -> {
-                Firefly downNeighbourFirefly = (Firefly) downNeighbour;
-                downNeighbourFirefly.dostroi(map);
+            case Enemy _ when (this instanceof Boulder || this instanceof Gem) -> {
+                Enemy downNeighbourEnemy = (Enemy) downNeighbour;
+                downNeighbourEnemy.dostroi(map);
                 map.getPendingRemovals().add(this);
-                map.getPendingRemovals().add((downNeighbourFirefly));
+                map.getPendingRemovals().add((downNeighbourEnemy));
                 this.move(map, Direction.DOWN);
                 this.isFalling = true;
                 return true;

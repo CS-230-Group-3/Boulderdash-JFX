@@ -1,5 +1,16 @@
 public class PinkDoor extends LockedDoor{
-    public PinkDoor(String pathToSprite, GridPosition position) {
-        super(pathToSprite, position);
+
+    private static final String FILE_PATH = "resources/assets/door.png";
+
+    KeyColour colour = KeyColour.PINK;
+    public PinkDoor() {
+        super(FILE_PATH, new GridPosition(0,0));
+        this.type = "door";
     }
+
+
+
+
+
+
 }

@@ -1,8 +1,15 @@
 public class LockedDoor extends Tile {
 
+    private boolean isLocked = true;
+    protected KeyColour colour;
+
+    public boolean isLocked() {
+        return isLocked;
+    }
+
     public LockedDoor(String pathToSprite, GridPosition position) {
         super(pathToSprite, position);
-        this.type = "tile";
+        this.type = "door";
     }
 
     @Override
@@ -23,4 +30,13 @@ public class LockedDoor extends Tile {
     public boolean unlock(Key key) {
         return true;
     }
+
+
+    public KeyColour getColour() {
+        return colour;
+    }
+
+
+
+
 }
