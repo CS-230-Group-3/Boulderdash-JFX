@@ -1,4 +1,6 @@
-public class LockedDoor extends Tile {
+import java.util.ArrayList;
+
+public abstract class LockedDoor extends Tile {
 
     private boolean isLocked = true;
     protected KeyColour colour;
@@ -7,8 +9,8 @@ public class LockedDoor extends Tile {
         return isLocked;
     }
 
-    public LockedDoor(String pathToSprite, GridPosition position) {
-        super(pathToSprite, position);
+    public LockedDoor(String pathToSprite, GridPosition gridPositionposition) {
+        super(pathToSprite, new GridPosition(0,0));
         this.type = "door";
     }
 
@@ -27,9 +29,7 @@ public class LockedDoor extends Tile {
 
     }
 
-    public boolean unlock(Key key) {
-        return true;
-    }
+    public abstract void unlock(ArrayList<Key> keychain);
 
 
     public KeyColour getColour() {

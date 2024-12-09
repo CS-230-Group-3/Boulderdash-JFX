@@ -19,7 +19,6 @@ public class Player extends Entity {
     private GridPosition position = new GridPosition(0, 0);
     // Note, change above to be gridPosition later once it comes up.
     private int diamonds;
-    private int drowningTime = 5;
     private int tickCounter = 0;
     private int waterEntryCounter;
     private int exitCounter;
@@ -61,26 +60,6 @@ public class Player extends Entity {
     public void takeKey(Key key) {
         System.out.println("Key " + key.toString() + " obtained.");
         keyChain.add(key);
-    }
-
-    /**
-     * Unlocks the given door if the player has the required key.
-     *
-     * @param door the locked door to be unlocked
-     */
-    public void unlockDoor(LockedDoor door) {
-        for (Key key : keyChain) {
-            if ((key instanceof RedKey && door.getColour() == KeyColour.RED) ||
-                    (key instanceof BlueKey && door.getColour() == KeyColour.BLUE) ||
-                    (key instanceof YellowKey && door.getColour() == KeyColour.YELLOW) ||
-                    (key instanceof PinkKey && door.getColour() == KeyColour.PINK)) {
-                System.out.println("Door " + door + " unlocked.");
-                keyChain.remove(key); // Remove the key from the player's inv{
-                System.out.println("Door " + door + " unlocked.");
-                return;
-            }
-        }
-        System.out.println("You don't have the required key to unlock this door."); //maybe try catch
     }
 
     public GridPosition getPosition() {
@@ -170,10 +149,10 @@ public class Player extends Entity {
             case "door":
                 LockedDoor doorObject = (LockedDoor) gameObjectAt;
                 if (doorObject.isLocked()){
-                    return false;
-                } else {
-                    unlockDoor(doorObject);
+                    doorObject.unlock(keyChain);
                     return true;
+                } else {
+                    return false;
                 }
             default:
                 return false;
@@ -207,6 +186,7 @@ public class Player extends Entity {
         checkForWater(map, position);
         System.out.println("Current tick: " + tickCounter);
         checkForDrowning();
+        System.out.println(keyChain);
         // checks if going from out to in water
         // if so, log water entry tick
         // exit tick is entry + 50
@@ -217,10 +197,11 @@ public class Player extends Entity {
      * Starts a countdown from x number of seconds, resulting in the
      * player drowning if they stay underwater too long.
      */
-    public void underwaterCountDown() {
-        exitCounter = tickCounter + (5*drowningTime);
-        System.out.println("Countdown begun. Start: " + tickCounter + " End: " + exitCounter);
-    }
+        public void underwaterCountDown() {
+            int drowningTime = 5;
+            exitCounter = tickCounter + (5* drowningTime);
+            System.out.println("Countdown begun. Start: " + tickCounter + " End: " + exitCounter);
+        }
 
     private boolean checkForWater(Map map, GridPosition currentPosition)  {
         if (map.getTileAt(currentPosition) instanceof Water) {
