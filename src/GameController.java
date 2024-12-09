@@ -20,14 +20,6 @@ public class GameController {
 
     private boolean gameIsRunning = true;
 
-    public void setGameIsRunning(boolean gameIsRunning) {
-        this.gameIsRunning = gameIsRunning;
-    }
-
-    public boolean isGameIsRunning() {
-        return gameIsRunning;
-    }
-
     private Map map; //Check w spas
 
     private int currentScene; //Maybe of type Scene instead?
@@ -139,11 +131,21 @@ public class GameController {
     public GraphicsController getGraphicsController() {
         return graphicsController;
     }
+
     public int getGemsCollected() {
         return map.getPlayerObjectReference().getDiamonds();
     }
 
+
     public int getSecondsToBeatLevel() {
         return map.getTimeLimit();
+    }
+
+    public void setGameIsRunning(boolean gameIsRunning) {
+        this.gameIsRunning = gameIsRunning;
+    }
+
+    public boolean isGameIsRunning() {
+        return gameIsRunning;
     }
 }
