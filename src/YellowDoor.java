@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class YellowDoor extends LockedDoor{
 
-    private static final String FILE_PATH = "resources/assets/keyyellow.png";
+    private static final String FILE_PATH = "resources/assets/dooryellow.png";
     public boolean isLocked = true;
 
     public YellowDoor() {
