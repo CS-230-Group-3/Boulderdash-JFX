@@ -21,17 +21,27 @@ import java.io.IOException;
 
 public class GameWindowController {
 
-    @FXML private AnchorPane gameWindow;
-    @FXML private Canvas gameCanvas;
-    @FXML private AnchorPane pauseMenu;
-    @FXML private Text pauseTitle;
-    @FXML private VBox buttonsBox;
-    @FXML private Button saveAndExitButton;
+    @FXML
+    private AnchorPane gameWindow;
+    @FXML
+    private Canvas gameCanvas;
+    @FXML
+    private AnchorPane pauseMenu;
+    @FXML
+    private Text pauseTitle;
+    @FXML
+    private VBox buttonsBox;
+    @FXML
+    private Button saveAndExitButton;
 
-    @FXML private Text timeLeft;
-    @FXML private Text diamondsCollected;
-    @FXML private Text diamondsToCollect;
-    @FXML private Text breathRemainingInSeconds;
+    @FXML
+    private Text timeLeft;
+    @FXML
+    private Text diamondsCollected;
+    @FXML
+    private Text diamondsToCollect;
+    @FXML
+    private Text breathRemainingInSeconds;
 
     private boolean pauseMenuIsVisible = false;
 
@@ -44,15 +54,15 @@ public class GameWindowController {
 
         gameWindow.sceneProperty().addListener(
                 (observable, oldScene, newScene) -> {
-            if (newScene != null) {
-                newScene.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-                    gameController.handleEvent(event);
-                    if (event.getCode() == KeyCode.ESCAPE) {
-                        togglePauseMenu(event);
+                    if (newScene != null) {
+                        newScene.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+                            gameController.handleEvent(event);
+                            if (event.getCode() == KeyCode.ESCAPE) {
+                                togglePauseMenu(event);
+                            }
+                        });
                     }
                 });
-            }
-        });
 
         //TODO hook to SLC to save game in progress for current player
         saveAndExitButton.setOnAction(this::handleSaveAndExitButton);
@@ -87,10 +97,10 @@ public class GameWindowController {
         int totalGems = gameController.getMap().getGemsToCollect();
         diamondsToCollect.setText("/ " + totalGems);
         Integer diamondsCollectedByPlayer =
-            gameController.getMap().getPlayerObjectReference().getDiamonds();
+                gameController.getMap().getPlayerObjectReference().getDiamonds();
         //TODO add when var is exposed
 
-        System.out.println("Player D:" +  diamondsCollectedByPlayer);
+        System.out.println("Player D:" + diamondsCollectedByPlayer);
         diamondsCollected.setText(diamondsCollectedByPlayer.toString());
 
         if (TimeController.getTickCount() % 5 == 0) {
@@ -199,7 +209,7 @@ public class GameWindowController {
         try {
             gameWindow = (AnchorPane) FXMLLoader.
                     load(getClass().getResource("select-level.fxml"));
-            Stage stage = (Stage) ((Node) event.getSource() ).
+            Stage stage = (Stage) ((Node) event.getSource()).
                     getScene().getWindow();
             Scene scene = new Scene(gameWindow, MainUI.MAIN_WINDOW_WIDTH, MainUI.MAIN_WINDOW_HEIGHT);
             stage.setScene(scene);
