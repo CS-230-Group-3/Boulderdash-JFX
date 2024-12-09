@@ -3,18 +3,19 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * <p>This Goblin class is intended to hold information related to the Sprite, the position as well as an Update,
- * Delete and 3 Collision functions.</p>
+ * <p>This Goblin class is a branch of Frog intended to steal diamonds from the player,
+ * then explode when they touch instead of killing the player.</p>
  *
- * @author Diya Patel.
+ * @author Joseph Parish & Diya Patel.
  * @version 1.0.5
- * Last Changed: 30/11/24
+ * Last Changed: 8/12/24
  */
 public class Goblin extends PathfindingEnemy {
 
     private static final String FILE_PATH = "resources/assets/goblin.png";
+
     /**
-     * Constructor to create a new Goblin instance with a given starting position.
+     * Goblin Constructor
      */
     public Goblin() {
         super(FILE_PATH, new GridPosition(0, 0));
@@ -23,13 +24,19 @@ public class Goblin extends PathfindingEnemy {
     }
 
     /**
-     * Updates the goblin's state. This method is called every tick to perform actions such as moving the goblin.
+     * Update implemented
+     * @param map
      */
     @Override
     public void update(Map map) {
         move(map, Direction.UP);
     }
 
+    /**
+     * Default collisionCheck
+     * @param map
+     * @param dir
+     */
     @Override
     public boolean collisionCheck(Map map, Direction dir) {
         return false;
@@ -38,7 +45,6 @@ public class Goblin extends PathfindingEnemy {
     /**
      * Checks for potential collisions at a given position.
      * This method checks if the goblin collides with the player or an impassable tile.
-     *
      * @param position the position to check for a collision.
      * @return boolean indicating whether there is a collision.
      */
@@ -59,6 +65,8 @@ public class Goblin extends PathfindingEnemy {
     /**
      * Moves the goblin based on pathfinding logic. This method uses an algorithm called A* to find
      * a path towards the player and update the goblin's position accordingly.
+     * @param map
+     * @param dir
      */
     public void move(Map map, final Direction dir) {
         ArrayList<int[]> path = AStarAlgorithm(map, this.getPosition(), map.getPlayerObjectReference().getPosition());
@@ -102,6 +110,10 @@ public class Goblin extends PathfindingEnemy {
         }
     }
 
+    /**
+     * removes half the players diamonds
+     * @param player
+     */
     public void steal(Player player) {
         player.setDiamonds(player.getDiamonds() / 2);
     }
