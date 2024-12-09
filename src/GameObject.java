@@ -30,7 +30,6 @@ public abstract class GameObject {
         this.gridPosition = position;
     }
 
-
     /**
      * Updates the state of the game object.
      */

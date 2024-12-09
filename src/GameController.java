@@ -36,16 +36,17 @@ public class GameController {
     public int getSecondsToBeatLevel() {
         return secondsToBeatLevel;
     }
-//    /**
-//     * Creates a Game Controller,
-//     * responsible for displaying & handling logic for the game.
-//     * @param canvasToDisplayGame the canvas to display the game on
-//     */
-//    public GameController(Canvas canvasToDisplayGame) {
-//        this.canvas = canvasToDisplayGame;
-//        this.saveLoadController = new SaveLoadController();
-//        this.graphicsController = new GraphicsController();
-//    }
+
+    /**
+     * Creates a Game Controller,
+     * responsible for displaying & handling logic for the game.
+     * @param canvasToDisplayGame the canvas to display the game on
+     */
+    public GameController(Canvas canvasToDisplayGame) {
+        this.canvas = canvasToDisplayGame;
+        this.saveLoadController = new SaveLoadController();
+        this.graphicsController = new GraphicsController();
+    }
 
     /**
      * Creates a Game Controller,

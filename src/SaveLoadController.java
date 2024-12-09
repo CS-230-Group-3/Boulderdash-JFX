@@ -22,28 +22,39 @@ public class SaveLoadController {
         boolean isMapSizeRead = false;
         ArrayList<GameObject> tileLayer = new ArrayList<>();
         ArrayList<GameObject> entityLayer = new ArrayList<>();
-        //Reader pares an empty String after reading map size
-        //Initializing height to -1 fixes it
         int height = -1;
         int width = 0;
+
+        int time = 0;
+        int gemsToCollect = 0;
+        int amoebaLimit = 0;
+        int amoebaGrowthRate = 0;
 
         try {
             Scanner reader = new Scanner(fileToRead);
             while (reader.hasNextLine()) {
-                if (isMapSizeRead) {
-                    String line = reader.nextLine();
+                String line = reader.nextLine();
+
+                // Read new properties first
+                if (line.startsWith("TIME:")) {
+                    time = Integer.parseInt(line.split(":")[1].trim());
+                } else if (line.startsWith("DIAMONDS:")) {
+                    gemsToCollect = Integer.parseInt(line.split(":")[1].trim());
+                } else if (line.startsWith("AMOEBA_LIMIT:")) {
+                    amoebaLimit = Integer.parseInt(line.split(":")[1].trim());
+                } else if (line.startsWith("AMOEBA_RATE:")) {
+                    amoebaGrowthRate = Integer.parseInt(line.split(":")[1].trim());
+                } else if (isMapSizeRead) {
                     if (!line.equals("-")) {
                         for (char c : line.toCharArray()) {
                             GameObject objectToAdd = getObjectFromChar(c);
-                            GridPosition objectPosition =
-                                    new GridPosition(width, height);
+                            GridPosition objectPosition = new GridPosition(width, height);
                             if (objectToAdd instanceof Tile) {
                                 objectToAdd.setPosition(objectPosition);
                                 tileLayer.add(objectToAdd);
                                 width++;
                             } else if (objectToAdd instanceof Entity) {
                                 objectToAdd.setPosition(objectPosition);
-
                                 tileLayer.add(new Path(objectPosition));
                                 entityLayer.add(objectToAdd);
                                 width++;
@@ -56,19 +67,25 @@ public class SaveLoadController {
                         parsePlayerData(reader, playerRef);
                     }
                 } else {
-                    int mapWidth =  Integer.parseInt(reader.next());
+                    // Read map dimensions
+                    int mapWidth = Integer.parseInt(reader.next());
                     int mapHeight = Integer.parseInt(reader.next());
-
                     map = new Map(mapWidth, mapHeight);
                     isMapSizeRead = true;
                 }
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-
         }
-        return populateMapWithLayers(map, tileLayer, entityLayer);
 
+        // Pass the new properties to the Map object
+        if (map != null) {
+            map.setGemsToCollect(gemsToCollect);
+            map.setTimeLimit(time);
+            map.setAmoebaProperties(amoebaGrowthRate, amoebaLimit);
+        }
+
+        return populateMapWithLayers(map, tileLayer, entityLayer);
     }
 
     /**
@@ -78,7 +95,7 @@ public class SaveLoadController {
      */
     public void saveMapToFile(Map mapToSave) {
         //TODO give the file name a more robust name (date + time maybe?)
-        String outputFile = "src/resources/saves/LevelSave1.txt";
+        String outputFile = "src/resources/saves/LevelSave2.txt";
         try {
             PrintWriter writer = new PrintWriter(outputFile);
             int mapWidth = mapToSave.getMapWidth();
@@ -138,8 +155,8 @@ public class SaveLoadController {
     private void populatePlayerItem(String item, int amount, Player player) {
         switch (item) {
             case "D":
-            player.setDiamonds(amount);
-            break;
+                player.setDiamonds(amount);
+                break;
             //TODO
 //            case 'K':
 //            player.setKeysCollected(amount);
@@ -182,6 +199,24 @@ public class SaveLoadController {
                 return new Gem();
             case 'S':
                 return new Firefly();
+            case '@':
+                return new AmoebaGroup();
+            case '!':
+                return new RedKey();
+            case '"':
+                return new BlueKey();
+            case '£':
+                return new YellowKey();
+            case '1':
+                return new RedDoor();
+            case '2':
+                return new BlueDoor();
+            case '3':
+                return new YellowDoor();
+            case '4':
+                return new PinkDoor();
+            case 'N':
+                return new Goblin();
             default:
                 return new Path();
         }
@@ -231,8 +266,27 @@ public class SaveLoadController {
                 return 'O';
             case "Firefly":
                 return 'S';
-            default:
+            case "Goblin":
+                return 'N';
+            case "RedKey":
+                return '!';
+            case "BlueKey":
+                return '"';
+            case "YellowKey":
+                return '£';
+            case "PinkKey":
+                 return '$';
+            case "RedDoor":
+                return '1';
+            case "BlueDoor":
+                return '2';
+            case "YellowDoor":
+                return '3';
+            case "PinkDoor":
+                return '4';
+             default:
                 return '*';
+
         }
     }
     private String playerToDataString(Player player) {

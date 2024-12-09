@@ -7,33 +7,33 @@
  */
 import java.util.Objects;
 
-public class Key extends Item {
+public abstract class Key extends Item {
 
-    private static final String FILE_PATH = "resources/assets/key.png";
-    private final int id;
+    private boolean waterSkip = true;
 
-    private final KeyColour colour;
 
-    public Key(KeyColour colour) {
-        super(FILE_PATH, new GridPosition(0, 0));
-        this.id = Objects.hash(this); // Generate a unique hash for this key
-        this.colour = colour;
+    public Key(String pathToSprite, GridPosition gridPosition) {
+        super(pathToSprite, new GridPosition(0, 0));
     }
 
     public void update(Map map) {
+        if (map.getTileAt(this.getPosition()) instanceof Water && !waterSkip) {
+            waterSkip = true;
+        } else if (map.getTileAt(this.getPosition()) instanceof Water && waterSkip) {
+            waterSkip = false;
+            return;
+        }
         this.fall(map);
     }
 
-    /**
-     * Gets the ID of the key.
-     *
-     * @return the unique hash ID
-     */
-    public int getId() {
-        return id;
-    }
+
 
     public void delete() {
         //play key collection sound
+
+
+
+
+
     }
 }

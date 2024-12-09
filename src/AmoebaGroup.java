@@ -2,6 +2,8 @@
  * holds a list of amoeba objects. can find available space to grow and add new amoebas to the group.
  * its not a game object so im not 100% sure how thats gonna work. it wont be a problem for collision
  * because entities will identify the individual amoebas rather than the whole group.
+ * Other than general clean up there is a redundancy issue in that initFirstAmoeba is called every
+ * update when it only needs to be called once but idk how to do it
  * @author Oscar
  */
 
@@ -9,20 +11,43 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class AmoebaGroup {
+public class AmoebaGroup extends Entity {
     private List<Amoeba> amoebas;
-    int amoebaGrowthLimit = 10; //temporary variable, the growth limit will be specified in level file
+    int amoebaGrowthLimit = 5; //temporary variable, the growth limit will be specified in level file
+    private static final String FILE_PATH = "resources/assets/amoeba.png";
+    private Amoeba firstAmoeba;
 
     public AmoebaGroup() {
+        super(FILE_PATH, new GridPosition(0, 0));
+        this.updateRate = 15; //amoebaGrowthLimit in level file should specify this
+
         amoebas = new ArrayList<>();
+
+        this.firstAmoeba = new Amoeba();
+        this.addAmoeba(firstAmoeba);
+    }
+
+    public void initFirstAmoeba() {
+        firstAmoeba.setPosition(this.getPosition());
     }
 
     public void update(Map map) {
+        initFirstAmoeba();
         if (this.isLimitReached(amoebaGrowthLimit)) {
-            this.die(true);
+            this.die(map, true);
         } else {
             this.findSpace(map);
         }
+    }
+
+    @Override
+    public boolean collisionCheck() {
+        return false;
+    }
+
+    @Override
+    public void delete() {
+
     }
 
     /**
@@ -42,7 +67,6 @@ public class AmoebaGroup {
      */
     public void findSpace(Map map) {
         List<GridPosition> freeSpaces = new ArrayList<>();
-
         for (Amoeba amoeba : amoebas) {
             List<GameObject> neighbours = new ArrayList<>();
             neighbours.add(map.getNeighbourOf(amoeba, Direction.UP));
@@ -56,9 +80,9 @@ public class AmoebaGroup {
             }
         }
         if (!freeSpaces.isEmpty()) {
-            this.grow(freeSpaces);
+            this.grow(map, freeSpaces);
         } else {
-            this.die(false);
+            this.die(map, false);
         }
     }
 
@@ -66,21 +90,40 @@ public class AmoebaGroup {
      * randomly selects one of the free spaces found in findSpace and instantiates a new amoeba there
      * @param freeSpaces
      */
-    public void grow(List<GridPosition> freeSpaces) {
+    public void grow(Map map, List<GridPosition> freeSpaces) {
         Random random = new Random();
         int randomIndex = random.nextInt(freeSpaces.size());
-        //create amoeba at chosen grid position. call amoeba.setGroup(this)
+        Amoeba newAmoeba = new Amoeba();
+        GridPosition amoebaTile = freeSpaces.get(randomIndex);
+        newAmoeba.setPosition(amoebaTile);
+        this.addAmoeba(newAmoeba);
+
+        GameObject grownOver = map.getObjectAt(amoebaTile);
+        map.getPendingRemovals().add(grownOver);
+        map.getPendingAdditions().add(newAmoeba);
     }
 
     /**
-     * not 100% sure if this is done by a controller or not, deletes each amoeba and replaces with
+     * deletes each amoeba and replaces with
      * a diamond one by one
      * @param limitReached flag to mark if growth limit reached
      */
-    public void die(boolean limitReached) {
+    public void die(Map map, boolean limitReached) {
         for (Amoeba amoeba : amoebas) {
-            //get position and replace with boulders if limit reached, diamond if not
+            GridPosition amoebaTile = amoeba.getPosition();
+            if (limitReached) {
+                map.getPendingRemovals().add(amoeba);
+                Boulder boulder = new Boulder();
+                boulder.setPosition(amoebaTile);
+                map.getPendingAdditions().add(boulder);
+            } else {
+                map.getPendingRemovals().add(amoeba);
+                Gem diamond = new Gem();
+                diamond.setPosition(amoebaTile);
+                map.getPendingAdditions().add(diamond);
+            }
         }
+        map.getPendingRemovals().add(this);
     }
 
     /**
@@ -95,5 +138,28 @@ public class AmoebaGroup {
 
     public String toString() {
         return amoebas.toString();
+    }
+
+    @Override
+    public void move(Map map, Direction dir) {
+
+    }
+
+    @Override
+    public boolean collisionCheck(Map map, GridPosition position) {
+        return false;
+    }
+
+    @Override
+    public boolean collisionCheck(Map map, Direction dir) {
+        return false;
+    }
+
+    public void setGrowthLimit(int limit) {
+        this.amoebaGrowthLimit = limit;
+    }
+
+    public void setGrowthRate(int rate) {
+        this.updateRate = rate;
     }
 }

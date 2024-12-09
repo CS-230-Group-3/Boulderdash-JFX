@@ -1,5 +1,15 @@
 public class RedDoor extends LockedDoor {
-    public RedDoor(String pathToSprite, GridPosition position) {
-        super(pathToSprite, position);
+
+
+    private static final String FILE_PATH = "resources/assets/door.png";
+
+    KeyColour colour = KeyColour.RED;
+    public RedDoor() {
+        super(FILE_PATH, new GridPosition(0,0));
+        this.type = "door";
     }
+
+
+
+
 }

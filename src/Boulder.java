@@ -1,22 +1,32 @@
 public class Boulder extends Item {
 
     private static final String FILE_PATH = "resources/assets/boulder.png";
+    private boolean waterSkip = true;
 
     public Boulder() {
         super(FILE_PATH, new GridPosition(0, 0));
         this.type = "boulder";
-        this.updateRate = 2;
+        this.updateRate = 1;
     }
 
     public void update(Map map) {
+        if (map.getTileAt(this.getPosition()) instanceof Water && !waterSkip) {
+            waterSkip = true;
+        } else if (map.getTileAt(this.getPosition()) instanceof Water && waterSkip) {
+            waterSkip = false;
+            return;
+        }
         GameObject downNeighbour = map.getNeighbourOf(this, Direction.DOWN);
 
         if (!this.fall(map)) {
             this.roll(map);
         }
         if (downNeighbour instanceof MagicWall) {
-            this.delete();
-            //spawn gem under magic wall
+            map.getPendingRemovals().add(this);
+            GameObject belowMagicWall = map.getNeighbourOf(downNeighbour, Direction.DOWN);
+            Gem diamond = new Gem();
+            diamond.setPosition(belowMagicWall.getPosition());
+            map.getPendingAdditions().add(diamond);
         }
     }
 
