@@ -21,16 +21,25 @@ public class NewProfileController {
 
     private ArrayList<User> users = new ArrayList<>();
 
+    /**
+     * initializes what button should do when clicked
+     */
     public void initialize() {
 
         createButton.setOnAction(event -> handleCreateButton());
         cancelButton.setOnAction(event -> handleCancelButton());
     }
 
+    /**
+     * @param users ArrayList of users
+     */
     public void setListToUpdate(ArrayList<User> users) {
         this.users = users;
     }
 
+    /**
+     * Adds new users if they don't already exist
+     */
     private void handleCreateButton() {
         String name = nameField.getText();
         User newUser = new User(name);
@@ -44,15 +53,24 @@ public class NewProfileController {
         }
     }
 
+    /**
+     * closes window
+     */
     private void handleCancelButton() {
         close();
     }
 
+    /**
+     * Closes window
+     */
     private void close() {
         Stage stage = (Stage) anchorPane.getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * Creates alert for a user being preexisting
+     */
     private void displayUserExistsAlert() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error: User already exists");
