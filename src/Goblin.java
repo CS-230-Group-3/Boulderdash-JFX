@@ -12,14 +12,14 @@ import java.util.Random;
  */
 public class Goblin extends PathfindingEnemy {
 
-    private static final String FILE_PATH = "resources/assets/frog.png";
+    private static final String FILE_PATH = "resources/assets/goblin.png";
     /**
      * Constructor to create a new Goblin instance with a given starting position.
      */
     public Goblin() {
         super(FILE_PATH, new GridPosition(0,0));
         this.updateRate = 5;
-        this.type = "enemy";
+        this.type = "goblin";
     }
 
     /**
@@ -73,8 +73,11 @@ public class Goblin extends PathfindingEnemy {
             {
                 this.setPosition(new GridPosition(path.get(1)[0], path.get(1)[1]));
             } else {
-                map.getPlayerObjectReference().die();
-                this.setPosition(new GridPosition(path.get(1)[0], path.get(1)[1]));
+                this.steal(map.getPlayerObjectReference());
+                map.getPendingRemovals().add(this);
+                Explosion explosion = new Explosion();
+                explosion.setPosition(this.getPosition());
+                map.getPendingAdditions().add(explosion);
             }
         } else {
             Random rand = new Random();
@@ -104,8 +107,8 @@ public class Goblin extends PathfindingEnemy {
         // Add logic to remove the Frog object from the game world
     }
 
-    public void steal() {
-
+    public void steal(Player player) {
+        player.setDiamonds(player.getDiamonds() / 2);
     }
 }
 
