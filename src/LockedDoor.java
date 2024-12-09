@@ -29,7 +29,7 @@ public abstract class LockedDoor extends Tile {
 
     }
 
-    public abstract void unlock(ArrayList<Key> keychain);
+    public abstract void unlock(Map map, ArrayList<Key> keychain);
 
 
     public KeyColour getColour() {

@@ -4,6 +4,7 @@ import javafx.scene.image.Image;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.locks.Lock;
 
 public class GraphicsController {
 
@@ -44,7 +45,8 @@ public class GraphicsController {
      */
     public void updateGameObjectsOnMap(Map map) throws InterruptedException {
         map.getPendingAdditions().clear();
-        map.getPendingRemovals().removeIf(object -> !(object instanceof Gem));
+        map.getPendingRemovals().removeIf(object -> !(object instanceof Gem || object instanceof Key ||
+                object instanceof LockedDoor));
 
 
         List<Entity> entitiesToRemove = new ArrayList<>();

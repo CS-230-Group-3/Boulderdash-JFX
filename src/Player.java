@@ -119,8 +119,14 @@ public class Player extends Entity {
     }
 
     private void pushBoulder(Map map, Direction dir, Boulder boulder) {
-        boulder.push(map, dir);
-        move(map, dir);
+        GameObject tilePushingInto = map.getNeighbourOf(boulder, dir);
+        if ((dir == Direction.UP || dir == Direction.DOWN)) {
+            return;
+        }
+        if (tilePushingInto instanceof Path || tilePushingInto instanceof Water) {
+            boulder.push(map, dir);
+            move(map, dir);
+        }
     }
 
     @Override
@@ -150,12 +156,8 @@ public class Player extends Entity {
                 return true;
             case "door":
                 LockedDoor doorObject = (LockedDoor) gameObjectAt;
-                if (doorObject.isLocked()){
-                    doorObject.unlock(keyChain);
-                    return true;
-                } else {
-                    return false;
-                }
+                doorObject.unlock(map, keyChain);
+                return true;
             default:
                 return false;
         }
@@ -231,7 +233,8 @@ public class Player extends Entity {
      */
     public void pickUpKey(Map map, final Key keyToPickUp) {
         keyChain.add(keyToPickUp);
-        map.removeItem(keyToPickUp);
+        map.getPendingRemovals().add(keyToPickUp);
+        this.setPosition(keyToPickUp.getPosition());
     }
 
     /**

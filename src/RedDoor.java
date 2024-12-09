@@ -11,11 +11,10 @@ public class RedDoor extends LockedDoor {
         this.type = "door";
     }
 
-    public void unlock(ArrayList<Key> keychain) {
+    public void unlock(Map map, ArrayList<Key> keychain) {
         for (Key key : keychain) {
-            if (key instanceof PinkKey) {
-                isLocked = false;
-                System.out.println("DOOR UNLOCKED SKIBIDI OHIO");
+            if (key instanceof RedKey) {
+                map.getPendingRemovals().add(this);
             }
         }
     }

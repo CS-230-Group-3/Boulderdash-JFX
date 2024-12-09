@@ -10,10 +10,10 @@ public class PinkDoor extends LockedDoor{
         this.type = "door";
     }
 
-    public void unlock(ArrayList<Key> keychain) {
+    public void unlock(Map map, ArrayList<Key> keychain) {
         for (Key key : keychain) {
             if (key instanceof PinkKey) {
-                isLocked = false;
+                map.getPendingRemovals().add(this);
             }
         }
     }

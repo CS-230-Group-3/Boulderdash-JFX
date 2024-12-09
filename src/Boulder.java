@@ -31,17 +31,10 @@ public class Boulder extends Item {
     }
 
     public void push(Map map, Direction direction) {
-        GameObject rightNeighbour = map.getNeighbourOf(this, Direction.RIGHT);
-        GameObject leftNeighbour = map.getNeighbourOf(this, Direction.LEFT);
-
         if (direction == Direction.RIGHT) {
-            if (rightNeighbour instanceof Path || rightNeighbour instanceof Water) {
-                this.move(map, Direction.RIGHT);
-            }
+            this.move(map, Direction.RIGHT);
         } else if (direction == Direction.LEFT) {
-            if (leftNeighbour instanceof Path || leftNeighbour instanceof Water) {
-                this.move(map, Direction.LEFT);
-            }
+            this.move(map, Direction.LEFT);
         }
     }
 
