@@ -17,6 +17,14 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+/**
+ * Controller class for the user selection screen in the application.
+ * Provides functionality for selecting an existing user profile, creating a new profile,
+ * or navigating back to the main screen.
+ *
+ * @author: Yuliia Shubina, Spas Dikov
+ */
+
 public class UserSelectController {
 
     @FXML
