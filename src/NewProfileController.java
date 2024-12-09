@@ -8,7 +8,13 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
 
-
+/**
+ * <p> Code for NewProfile window.</p>
+ *
+ * @author Yuliia & Spas.
+ * @version 1.0.1
+ * Last Changed: 9/12/24
+ */
 public class NewProfileController {
     @FXML
     TextField nameField;
