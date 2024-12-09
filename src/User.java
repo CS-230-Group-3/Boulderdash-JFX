@@ -3,6 +3,8 @@ import java.util.ArrayList;
 
 public class User implements Serializable {
     private final String name;
+    private boolean hasLevelInProgress;
+
     private final ArrayList<Level> unlockedLevels;
     private Level currentLevel;
 
@@ -54,5 +56,13 @@ public class User implements Serializable {
     public void setCurrentLevel(Level selectedLevel) {
         this.currentLevel = selectedLevel;
         Data.getInstance().save();
+    }
+
+    public boolean hasLevelInProgress() {
+        return hasLevelInProgress;
+    }
+
+    public void setHasLevelInProgress(boolean hasLevelInProgress) {
+        this.hasLevelInProgress = hasLevelInProgress;
     }
 }

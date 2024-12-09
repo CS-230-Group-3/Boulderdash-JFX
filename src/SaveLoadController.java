@@ -7,8 +7,6 @@ import java.util.Scanner;
  * @author Yuliia & Spas
  */
 public class SaveLoadController {
-    private static final String PATH_TO_DATA_CLASS_SAVE =
-            "src/resources/data/data.bin";
 
     /**
      * Loads map data from file.
@@ -93,9 +91,9 @@ public class SaveLoadController {
      * The file is created in ...
      * @param mapToSave the Map object to save`
      */
-    public void saveMapToFile(Map mapToSave) {
+    public static void saveMapToFile(Map mapToSave, String filePath) {
         //TODO give the file name a more robust name (date + time maybe?)
-        String outputFile = "src/resources/saves/LevelSave2.txt";
+        String outputFile = "src/resources/saves/" + filePath +  ".txt";
         try {
             PrintWriter writer = new PrintWriter(outputFile);
             int mapWidth = mapToSave.getMapWidth();
@@ -128,7 +126,7 @@ public class SaveLoadController {
         }
     }
 
-    private ArrayList<Character> writeObjectsFromMap(Map map) {
+    private static ArrayList<Character> writeObjectsFromMap(Map map) {
         ArrayList<Character> output = new ArrayList<>();
         for (GameObject object: map.getTileLayer()) {
             output.add(
@@ -240,7 +238,7 @@ public class SaveLoadController {
 
     //Saving Helpers
     //TODO Extend for each concrete GameObject
-    private char getCharFromObject(GameObject object) {
+    private static char getCharFromObject(GameObject object) {
         switch (object.getClass().getSimpleName()) {
             case "Path":
                 return 'P';

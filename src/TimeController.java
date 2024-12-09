@@ -49,8 +49,15 @@ public class TimeController {
                 gameController.getMap()
         );
 
+
         //Check if player is dead or on top of an exit
         Player player = gameController.getMap().getPlayerObjectReference();
+        if ((tickCount / 5) >= gameController.getSecondsToBeatLevel()) {
+            System.out.println("TICKS" + tickCount * 5);
+//            System.out.println(gameController.getSecondsToBeatLevel());
+            player.die();
+        }
+
         if (!player.getLivingState()) {
             System.out.println("Dead lol");
             handleLose();

@@ -48,6 +48,7 @@ public class GameWindowController {
     private GameController gameController;
     private static Level levelToLoad;
     private int remainingTimeInSeconds;
+    private boolean secToBeatLvlRead = false;
 
     @FXML
     void initialize() {
@@ -71,12 +72,9 @@ public class GameWindowController {
         gameWindow.requestFocus();
 
         //Change to assign from seconds in map?
-        remainingTimeInSeconds = 62;
-
-        timeLeft.setText(formatSecondsToString(remainingTimeInSeconds));
-        //Update so diamonds are players actual starting ones
-        diamondsCollected.setText("0");
-        diamondsToCollect.setText("/ 0");
+//        remainingTimeInSeconds = gameController.getSecondsToBeatLevel();
+//
+//        timeLeft.setText(formatSecondsToString(remainingTimeInSeconds));
 
         Timeline dTimeline = new Timeline(
                 new KeyFrame(Duration.millis(200),
@@ -94,13 +92,19 @@ public class GameWindowController {
     }
 
     private void handleUiUpdate() {
+        if (!secToBeatLvlRead) {
+            remainingTimeInSeconds = gameController.getSecondsToBeatLevel();
+            timeLeft.setText(formatSecondsToString(remainingTimeInSeconds));
+            secToBeatLvlRead = true;
+        }
         int totalGems = gameController.getMap().getGemsToCollect();
         diamondsToCollect.setText("/ " + totalGems);
         Integer diamondsCollectedByPlayer =
                 gameController.getMap().getPlayerObjectReference().getDiamonds();
-        //TODO add when var is exposed
 
-        System.out.println("Player D:" + diamondsCollectedByPlayer);
+        //TODO add when var is exposed
+//        breathRemainingInSeconds.setText(gameController.getMap().getPlayerObjectReference().getTimer());
+
         diamondsCollected.setText(diamondsCollectedByPlayer.toString());
 
         if (TimeController.getTickCount() % 5 == 0) {
@@ -122,13 +126,20 @@ public class GameWindowController {
             }
         } else {
             output = "0 : " + seconds;
+            if (seconds > 9) {
+                output =  "0 : " + seconds;
+            } else {
+                output = "0 : 0" + seconds;
+            }
+        }
+        if (seconds < 0) {
+            output = "0 : 00";
         }
         return output;
 
     }
 
     public static void setLevel(Level level) {
-        System.out.println("Setting level to " + level.getFilePath());
         levelToLoad = level;
     }
 
@@ -180,8 +191,7 @@ public class GameWindowController {
 
         saveAndExitButton.setText("Back to Level Select");
         saveAndExitButton.setOnAction(this::handleBackToLevels);
-        //TODO Change
-//        breathRemainingInSeconds.setText(gameController.getMap().getPlayerObjectReference().getTimer());
+
         pauseTitle.setText("Congratulations!");
     }
 
@@ -205,17 +215,14 @@ public class GameWindowController {
 
     private void handleSaveAndExitButton(ActionEvent event) {
         //Save GAme in progress
-        //Call to handleBackToLevels()
-        try {
-            gameWindow = (AnchorPane) FXMLLoader.
-                    load(getClass().getResource("select-level.fxml"));
-            Stage stage = (Stage) ((Node) event.getSource()).
-                    getScene().getWindow();
-            Scene scene = new Scene(gameWindow, MainUI.MAIN_WINDOW_WIDTH, MainUI.MAIN_WINDOW_HEIGHT);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Data.getInstance().getCurrentUser().setHasLevelInProgress(true);
+        //Call SLC.saveFile(String)
+        User currentUser = Data.getInstance().getCurrentUser();
+        SaveLoadController.saveMapToFile(gameController.getMap(),
+                currentUser.getName() +
+                        " " +
+                        currentUser.getCurrentLevel().getLevelName());
+
+        handleBackToLevels(event);
     }
 }
