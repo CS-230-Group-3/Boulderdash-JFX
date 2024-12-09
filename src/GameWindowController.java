@@ -71,11 +71,6 @@ public class GameWindowController {
         gameWindow.setFocusTraversable(true);
         gameWindow.requestFocus();
 
-        //Change to assign from seconds in map?
-//        remainingTimeInSeconds = gameController.getSecondsToBeatLevel();
-//
-//        timeLeft.setText(formatSecondsToString(remainingTimeInSeconds));
-
         Timeline dTimeline = new Timeline(
                 new KeyFrame(Duration.millis(200),
                         event -> {
@@ -87,7 +82,13 @@ public class GameWindowController {
 
 
         if (levelToLoad != null) {
-            this.gameController = new GameController(gameCanvas, levelToLoad.getFilePath());
+            System.out.println(Data.getInstance().getCurrentUser().hasLevelInProgress());
+            if (!Data.getInstance().getCurrentUser().hasLevelInProgress()) {
+                this.gameController = new GameController(gameCanvas, levelToLoad.getFilePath());
+            } else {
+                System.out.println(levelToLoad.getInProgressFilePath());
+                this.gameController = new GameController(gameCanvas, levelToLoad.getInProgressFilePath());
+            }
         }
     }
 
@@ -209,9 +210,7 @@ public class GameWindowController {
         }
     }
 
-    private void handleReturnToLevels() {
 
-    }
 
     private void handleSaveAndExitButton(ActionEvent event) {
         //Save GAme in progress

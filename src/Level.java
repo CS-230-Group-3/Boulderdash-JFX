@@ -19,6 +19,13 @@ public class Level implements Serializable {
         );
     }
 
+    public String getInProgressFilePath() {
+        return String.format(
+                "src/resources/saves/%s.txt",
+                levelName
+        );
+    }
+
     public void addUserScore(User user, int score) {
         HighScore newHighScore = new HighScore(user.getName(), score);
         int index = 0;

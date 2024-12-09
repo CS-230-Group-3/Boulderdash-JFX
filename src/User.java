@@ -64,5 +64,6 @@ public class User implements Serializable {
 
     public void setHasLevelInProgress(boolean hasLevelInProgress) {
         this.hasLevelInProgress = hasLevelInProgress;
+        Data.getInstance().save();
     }
 }

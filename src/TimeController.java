@@ -72,6 +72,10 @@ public class TimeController {
     }
 
     private void handleLose() {
+        Data data = Data.getInstance();
+        if (data.getCurrentUser().hasLevelInProgress()) {
+            data.getCurrentUser().setHasLevelInProgress(false);
+        }
         gameController.setGameIsRunning(false);
         showPauseMenu();
     }
@@ -84,6 +88,9 @@ public class TimeController {
 
         Data data = Data.getInstance();
         data.addScoreForCurrentUser(playerScore);
+        if (data.getCurrentUser().hasLevelInProgress()) {
+            data.getCurrentUser().setHasLevelInProgress(false);
+        }
 
         int userLevelsUnlocked = data.getCurrentUser().
                 getUnlockedLevels().size();

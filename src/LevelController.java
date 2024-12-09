@@ -16,6 +16,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class LevelController {
+    private static final double DISABLED_ELEMENT_OPACITY = 0.5;
     @FXML
     private AnchorPane selectLevelWindow;
 
@@ -45,6 +46,8 @@ public class LevelController {
 
     @FXML
     private Button backButton;
+    @FXML
+    private Button continueButton;
 
     @FXML
     void initialize() {
@@ -56,48 +59,54 @@ public class LevelController {
 //          playLevel(event, selectLevel3));
 
         backButton.setOnAction(event -> handleBackButton(event));
-        //Populate lvl 1 HS
+        //Populate lvl 1 HSs
         Level levelOne = Data.getInstance().getAvailableLevels().getFirst();
         for (HighScore hs: levelOne.getHighScores()) {
             levelOneHighScores.getItems().add(
                     hs.getUserName() + "\t\t" + hs.getScore());
         }
 
-        //Populate lvl 2 HS
+        //Populate lvl 2 HSs
         Level levelTwo = Data.getInstance().getAvailableLevels().get(1);
         for (HighScore hs: levelTwo.getHighScores()) {
             levelTwoHighScores.getItems().add(
                     hs.getUserName() + "\t\t" + hs.getScore());
         }
 
-        //Populate lvl 3 HS
+        //Populate lvl 3 HSs
         Level levelThree = Data.getInstance().getAvailableLevels().getLast();
         for (HighScore hs: levelThree.getHighScores()) {
             levelThreeHighScores.getItems().add(
                     hs.getUserName() + "\t\t" + hs.getScore());
         }
 
-        //Hard coded level to each Pane, name needs to match level name,
-        // no file extension
         selectLevel1.setUserData("level1");
         selectLevel2.setUserData("level2");
         selectLevel3.setUserData("level3");
 
+        if (Data.getInstance().getCurrentUser().hasLevelInProgress()) {
+            handleLevelInProgress();
+        } else {
+            handleUnlockedLevels();
+        }
 
+    }
+
+    private void handleUnlockedLevels() {
         User currentUser = Data.getInstance().getCurrentUser();
 
         //TODO assign list views to take mouse click even
         if (currentUser.getUnlockedLevels().size() < 2) {
             // 1 level unlocked
-            selectLevel2.setOpacity(0.5);
-            selectLevel3.setOpacity(0.5);
+            selectLevel2.setOpacity(DISABLED_ELEMENT_OPACITY);
+            selectLevel3.setOpacity(DISABLED_ELEMENT_OPACITY);
             selectLevel1.setOnMouseClicked(event ->
                     playLevel(event, selectLevel1));
             levelOneHighScores.setOnMouseClicked(event -> playLevel(event, selectLevel1));
 
         } else if (currentUser.getUnlockedLevels().size() < 3) {
             // 2 levels unlocked
-            selectLevel3.setOpacity(0.5);
+            selectLevel3.setOpacity(DISABLED_ELEMENT_OPACITY);
             selectLevel1.setOnMouseClicked(event ->
                     playLevel(event, selectLevel1));
             levelOneHighScores.setOnMouseClicked(event -> playLevel(event, selectLevel1));
@@ -117,17 +126,47 @@ public class LevelController {
                     playLevel(event, selectLevel3));
             levelThreeHighScores.setOnMouseClicked(event -> playLevel(event, selectLevel3));
         }
+    }
+
+    private void handleLevelInProgress() {
+        selectLevel1.setOpacity(DISABLED_ELEMENT_OPACITY);
+        selectLevel2.setOpacity(DISABLED_ELEMENT_OPACITY);
+        selectLevel3.setOpacity(DISABLED_ELEMENT_OPACITY);
+
+        continueButton.setOpacity(1);
+        continueButton.setOnAction(this::handleContinue);
+    }
+    private void handleContinue(ActionEvent event) {
+
+        System.out.println("We are so back" +
+        Data.getInstance().getCurrentUser().getCurrentLevel() );
+        User currentUser = Data.getInstance().getCurrentUser();
+        Level levelToLoad = new Level(
+                currentUser.getName() +
+                        " " +
+                        currentUser.getCurrentLevel().getLevelName()
+        );
+
+        continueLevel(event, levelToLoad);
+
+
 
     }
-    private void openNewWindow(String fxmlFileName) {
-        try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource(fxmlFileName));
-            Parent root = loader.load();
 
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Level Window");
+    private void playLevel(MouseEvent event, Pane selectedPane) {
+        try {
+            Level levelToStart = getLevelFromPane(selectedPane);
+            Data.getInstance().getCurrentUser().setCurrentLevel(levelToStart);
+            if (levelToStart != null) {
+                GameWindowController.setLevel(levelToStart);
+            }
+
+            selectLevelWindow = (AnchorPane) FXMLLoader.
+                    load(getClass().getResource("GameWindow.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).
+                    getScene().getWindow();
+            Scene scene = new Scene(selectLevelWindow, MainUI.MAIN_WINDOW_WIDTH, MainUI.MAIN_WINDOW_HEIGHT);
+            stage.setScene(scene);
             stage.show();
 
         } catch (IOException e) {
@@ -135,14 +174,11 @@ public class LevelController {
         }
     }
 
-    private void playLevel(MouseEvent event, Pane selectedPane) {
-        FXMLLoader loader =
-                new FXMLLoader(getClass().getResource("GameWindow.fxml"));
+    private void continueLevel(ActionEvent event, Level levelToLoad) {
         try {
-            Level levelToStart = getLevelFromPane(selectedPane);
-            Data.getInstance().getCurrentUser().setCurrentLevel(levelToStart);
-            if (levelToStart != null) {
-                GameWindowController.setLevel(levelToStart);
+            if (levelToLoad != null) {
+                System.out.println(levelToLoad.getInProgressFilePath());
+                GameWindowController.setLevel(levelToLoad);
             }
 
             selectLevelWindow = (AnchorPane) FXMLLoader.

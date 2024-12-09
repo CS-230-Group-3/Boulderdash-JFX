@@ -232,7 +232,6 @@ public class SaveLoadController {
                     populatePlayerItem(itemToBeRead, amountToAdd, player);
                 }
             }
-
         }
     }
 
