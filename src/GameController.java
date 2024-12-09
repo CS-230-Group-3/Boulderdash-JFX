@@ -19,7 +19,8 @@ public class GameController {
 
     private Map map; //Check w spas
 
-    private int currentScene; //Maybe of type Scene instead?
+    private int currentLevel;
+    private int maxLevel;
 
     /**
      * Creates a Game Controller,
@@ -122,5 +123,21 @@ public class GameController {
      */
     public GraphicsController getGraphicsController() {
         return graphicsController;
+    }
+
+    public int getMaxLevel() {
+        return maxLevel;
+    }
+
+    public void setMaxLevel(int maxLevel) {
+        this.maxLevel = maxLevel;
+    }
+
+    public int getCurrentLevel() {
+        return currentLevel;
+    }
+
+    public void setCurrentLevel(int currentLevel) {
+        this.currentLevel = currentLevel;
     }
 }

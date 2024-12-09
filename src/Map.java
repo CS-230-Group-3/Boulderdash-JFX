@@ -11,6 +11,8 @@ import java.util.List;
 public class Map {
     private final int mapWidth;
     private final int mapHeight;
+    private int timeLimit;
+    private int gemsToCollect;
 
     private ArrayList<GameObject> tileLayer;
     private ArrayList<GameObject> entityLayer;
@@ -216,6 +218,15 @@ public class Map {
         }
     }
 
+    public void setAmoebaProperties(int growthRate, int growthLimit) {
+        for (GameObject object: entityLayer) {
+            if (object instanceof AmoebaGroup) {
+                ((AmoebaGroup) object).setGrowthLimit(growthLimit);
+                ((AmoebaGroup) object).setGrowthRate(growthRate);
+            }
+        }
+    }
+
     /**
      * Maps the index at the passed grid position
      * to linear array index.
@@ -324,6 +335,21 @@ public class Map {
 
     public List<GameObject> getPendingRemovals() {
         return pendingRemovals;
+    }
+
+    public int getTimeLimit() {
+        return timeLimit;
+    }
+
+    public int getGemsToCollect() {
+        return gemsToCollect;
+    }
+    public void setTimeLimit(int timeLimit) {
+        this.timeLimit = timeLimit;
+    }
+
+    public void setGemsToCollect(int gemsToCollect) {
+        this.gemsToCollect = gemsToCollect;
     }
 }
 
