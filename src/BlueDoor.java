@@ -1,14 +1,20 @@
-public class BlueDoor extends LockedDoor {
+import java.util.ArrayList;
 
-    KeyColour colour = KeyColour.BLUE;
-    public boolean locked = true;
-    private static final String FILE_PATH = "resources/assets/door.png";
+public class BlueDoor extends LockedDoor{
 
+    private static final String FILE_PATH = "resources/assets/keyblue.png";
 
     public BlueDoor() {
         super(FILE_PATH, new GridPosition(0, 0));
         this.type = "door";
     }
 
+    public void unlock(Map map, ArrayList<Key> keychain) {
+        for (Key key : keychain) {
+            if (key instanceof BlueKey) {
+                map.getPendingRemovals().add(this);
+            }
+        }
+    }
 
 }

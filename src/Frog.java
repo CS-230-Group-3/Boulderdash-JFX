@@ -20,6 +20,7 @@ public class Frog extends PathfindingEnemy {
     public Frog() {
         super(FILE_PATH, new GridPosition(0, 0));
         this.updateRate = 5;
+        this.type = "enemy";
     }
 
     /**

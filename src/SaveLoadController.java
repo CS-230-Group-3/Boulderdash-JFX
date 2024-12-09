@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 /**
  * Utility class for saving & loading map data.
- *
  * @author Yuliia & Spas
  */
 public class SaveLoadController {
@@ -12,7 +11,6 @@ public class SaveLoadController {
     /**
      * Loads map data from file.
      * Creates and returns a new map object
-     *
      * @param filePath path to level file
      * @return a Map object populated with data form the level file
      */
@@ -91,7 +89,6 @@ public class SaveLoadController {
     /**
      * Creates a new save file from Map object.
      * The file is created in ...
-     *
      * @param mapToSave the Map object to save`
      */
     public static void saveMapToFile(Map mapToSave, String filePath) {
@@ -186,6 +183,7 @@ public class SaveLoadController {
         }
     }
 
+
     private static ArrayList<Character> writeObjectsFromMap(Map map) {
         ArrayList<Character> output = new ArrayList<>();
         for (GameObject object : map.getTileLayer()) {
@@ -267,6 +265,8 @@ public class SaveLoadController {
                 return new BlueKey();
             case '£':
                 return new YellowKey();
+            case '$':
+                return new PinkKey();
             case '1':
                 return new RedDoor();
             case '2':

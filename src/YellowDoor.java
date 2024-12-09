@@ -1,14 +1,21 @@
-public class YellowDoor extends LockedDoor {
+import java.util.ArrayList;
 
-    KeyColour colour = KeyColour.YELLOW;
+public class YellowDoor extends LockedDoor{
 
-    private static final String FILE_PATH = "resources/assets/exit.png";
-
+    private static final String FILE_PATH = "resources/assets/keyyellow.png";
+    public boolean isLocked = true;
 
     public YellowDoor() {
         super(FILE_PATH, new GridPosition(0, 0));
         this.type = "door";
     }
 
+    public void unlock(Map map, ArrayList<Key> keychain) {
+        for (Key key : keychain) {
+            if (key instanceof YellowKey) {
+                map.getPendingRemovals().add(this);
+            }
+        }
+    }
 
 }

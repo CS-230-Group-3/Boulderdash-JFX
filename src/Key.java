@@ -15,6 +15,7 @@ public abstract class Key extends Item {
 
     public Key(String pathToSprite, GridPosition gridPosition) {
         super(pathToSprite, new GridPosition(0, 0));
+        this.type = "key";
     }
 
     public void update(Map map) {

@@ -10,8 +10,7 @@ public class GraphicsController {
     /**
      * Draws the passed map on the provided canvas.
      * GameObjects are draw on the screen based on their position.
-     *
-     * @param canvas    canvas to draw to
+     * @param canvas canvas to draw to
      * @param mapToDraw map to draw to canvas
      */
     public void drawGame(Canvas canvas, Map mapToDraw) {
@@ -41,12 +40,13 @@ public class GraphicsController {
 
     /**
      * Updates each GameObject on the passed map.
-     *
      * @param map map to update
      */
     public void updateGameObjectsOnMap(Map map) throws InterruptedException {
         map.getPendingAdditions().clear();
-        map.getPendingRemovals().clear();
+        map.getPendingRemovals().removeIf(object -> !(object instanceof Gem || object instanceof Key ||
+                object instanceof LockedDoor));
+
 
         List<Entity> entitiesToRemove = new ArrayList<>();
 
@@ -81,6 +81,7 @@ public class GraphicsController {
         for (GameObject object : map.getPendingAdditions()) {
             map.spawnGameObject(object);
         }
+        map.getPendingRemovals().clear();
     }
 
     private void drawBackground(Canvas canvas, Map mapToCover) {
