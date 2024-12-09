@@ -126,6 +126,63 @@ public class SaveLoadController {
         }
     }
 
+    public static void saveMapToFileB(Map mapToSave, String filePath) {
+        String outputFile = "src/resources/saves/" + filePath +  ".txt";
+        try {
+            PrintWriter writer = new PrintWriter(outputFile);
+            int mapWidth = mapToSave.getMapWidth();
+            int mapHeight = mapToSave.getMapHeight();
+            int remainingTime = mapToSave.getTimeLimit()
+                    - (TimeController.getTickCount() / 5);
+            int gems = mapToSave.getGemsToCollect();
+
+            int amoebaLimit = 0;
+            int amoebaGrowthRate = 0;
+            for (GameObject object: mapToSave.getEntityLayer()) {
+                if (object instanceof AmoebaGroup) {
+                    amoebaGrowthRate = object.getUpdateRate();
+                    amoebaLimit = ((AmoebaGroup) object).getAmoebaGrowthLimit();
+                }
+            }
+
+            writer.println("TIME:" + remainingTime);
+            writer.println("DIAMONDS:" + gems);
+
+            if (amoebaGrowthRate != 0 && amoebaLimit != 0) {
+                writer.println("AMOEBA_LIMIT:" + amoebaLimit);
+                writer.println("AMOEBA_RATE:" + amoebaGrowthRate);
+            }
+            writer.println();
+
+            writer.println(mapWidth + " " + mapHeight);
+
+            int charsWritten = 0;
+            ArrayList<Character> charToWrite = writeObjectsFromMap(mapToSave);
+            for (Character character: charToWrite) {
+                writer.print(character);
+                charsWritten++;
+                if (charsWritten % mapWidth == 0) {
+                    writer.println();
+                }
+            }
+            //Player data parsing
+            Player playerRef = mapToSave.getPlayerObjectReference();
+            if (!playerRef.getKeyChain().isEmpty()
+                    || playerRef.getDiamonds() > 0) {
+                //Map & Player Run stats divider
+                writer.println("-");
+                String playerData = playerToDataString(playerRef);
+                writer.println(playerData);
+            }
+            writer.close();
+
+
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
     private static ArrayList<Character> writeObjectsFromMap(Map map) {
         ArrayList<Character> output = new ArrayList<>();
         for (GameObject object: map.getTileLayer()) {
@@ -288,13 +345,22 @@ public class SaveLoadController {
     }
     private String playerToDataString(Player player) {
         String output = "";
+        ArrayList<Key> keyChain = player.getKeyChain();
         if (player.getDiamonds() > 0) {
             output += "D " + player.getDiamonds() + "\n";
         }
         //TODO Extend so it describes which type of key is collected
-//        if (!player.getKeyChain().isEmpty()) {
-//            output += "K " + player.getKeyChain().size() + "\n";
-//        }
+        if (!keyChain.isEmpty()) {
+            int redKey = 0;
+            int blueKey = 0;
+            int yellowKey = 0;
+            int pinkKey = 0;
+            output += "K " + player.getKeyChain().size() + "\n";
+//            for (Key key: keyChain) {
+//                if (key instanceof )
+//            }
+
+        }
         return output;
     }
 }

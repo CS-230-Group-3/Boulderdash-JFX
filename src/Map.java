@@ -347,7 +347,6 @@ public class Map {
     public void setTimeLimit(int timeLimit) {
         this.timeLimit = timeLimit;
     }
-
     public void setGemsToCollect(int gemsToCollect) {
         this.gemsToCollect = gemsToCollect;
     }

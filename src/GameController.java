@@ -50,8 +50,6 @@ public class GameController {
         this.graphicsController = new GraphicsController();
 
         displayMapFromFilePth(filePath);
-        //TODO remove
-//        this.secondsToBeatLevel = 105;
     }
 
     /**

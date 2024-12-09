@@ -162,4 +162,9 @@ public class AmoebaGroup extends Entity {
     public void setGrowthRate(int rate) {
         this.updateRate = rate;
     }
+
+    public int getAmoebaGrowthLimit() {
+        return amoebaGrowthLimit;
+    }
+
 }
