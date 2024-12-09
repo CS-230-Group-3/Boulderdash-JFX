@@ -1,8 +1,9 @@
-public class PatrollingEnemy extends Enemy
-{
+public class PatrollingEnemy extends Enemy {
     protected boolean leftMoving;
 
-    /** Tracks the direction the butterfly is currently "facing". */
+    /**
+     * Tracks the direction the butterfly is currently "facing".
+     */
     private Direction lastMovement = Direction.UP;
 
     public PatrollingEnemy(String pathToSprite, GridPosition position) {
@@ -10,7 +11,7 @@ public class PatrollingEnemy extends Enemy
     }
 
     @Override
-    public void update(Map map){
+    public void update(Map map) {
         this.calculateNextMove(map);
     }
 

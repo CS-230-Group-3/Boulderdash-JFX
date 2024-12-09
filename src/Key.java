@@ -5,6 +5,7 @@
  * @version 1.0.2
  * Last changed: 25/11/2024
  */
+
 import java.util.Objects;
 
 public abstract class Key extends Item {
@@ -28,12 +29,8 @@ public abstract class Key extends Item {
     }
 
 
-
     public void delete() {
         //play key collection sound
-
-
-
 
 
     }

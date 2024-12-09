@@ -17,7 +17,7 @@ public class Goblin extends PathfindingEnemy {
      * Constructor to create a new Goblin instance with a given starting position.
      */
     public Goblin() {
-        super(FILE_PATH, new GridPosition(0,0));
+        super(FILE_PATH, new GridPosition(0, 0));
         this.updateRate = 5;
         this.type = "goblin";
     }
@@ -62,10 +62,8 @@ public class Goblin extends PathfindingEnemy {
      */
     public void move(Map map, final Direction dir) {
         ArrayList<int[]> path = AStarAlgorithm(map, this.getPosition(), map.getPlayerObjectReference().getPosition());
-        if (path != null)
-        {
-            if(collisionCheck(map, new GridPosition(path.get(1)[0], path.get(1)[1])))
-            {
+        if (path != null) {
+            if (collisionCheck(map, new GridPosition(path.get(1)[0], path.get(1)[1]))) {
                 this.setPosition(new GridPosition(path.get(1)[0], path.get(1)[1]));
             } else {
                 this.steal(map.getPlayerObjectReference());

@@ -7,8 +7,6 @@ import java.util.Scanner;
  * @author Yuliia & Spas
  */
 public class SaveLoadController {
-    private static final String PATH_TO_DATA_CLASS_SAVE =
-            "src/resources/data/data.bin";
 
     /**
      * Loads map data from file.
@@ -93,13 +91,68 @@ public class SaveLoadController {
      * The file is created in ...
      * @param mapToSave the Map object to save`
      */
-    public void saveMapToFile(Map mapToSave) {
-        //TODO give the file name a more robust name (date + time maybe?)
-        String outputFile = "src/resources/saves/LevelSave1.txt";
+//    public static void saveMapToFile(Map mapToSave, String filePath) {
+//        //TODO give the file name a more robust name (date + time maybe?)
+//        String outputFile = "src/resources/saves/" + filePath +  ".txt";
+//        try {
+//            PrintWriter writer = new PrintWriter(outputFile);
+//            int mapWidth = mapToSave.getMapWidth();
+//            int mapHeight = mapToSave.getMapHeight();
+//
+//            writer.println(mapWidth + " " + mapHeight);
+//
+//            int charsWritten = 0;
+//            ArrayList<Character> charToWrite = writeObjectsFromMap(mapToSave);
+//            for (Character character : charToWrite) {
+//                writer.print(character);
+//                charsWritten++;
+//                if (charsWritten % mapWidth == 0) {
+//                    writer.println();
+//                }
+//            }
+//            //TODO finalise whenever player collectables are complete
+//            //Player data parsing
+////            Player playerRef = mapToSave.getPlayerObjectReference();
+////            if (!playerRef.getKeyChain().isEmpty()
+////                    || playerRef.getDiamonds() > 0) {
+////                //Map & Player Run stats divider
+////                writer.println("-");
+////                String playerData = playerToDataString(playerRef);
+////                writer.println(playerData);
+////            }
+//            writer.close();
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+    public static void saveMapToFile(Map mapToSave, String filePath) {
+        String outputFile = "src/resources/saves/" + filePath +  ".txt";
         try {
             PrintWriter writer = new PrintWriter(outputFile);
             int mapWidth = mapToSave.getMapWidth();
             int mapHeight = mapToSave.getMapHeight();
+            int remainingTime = mapToSave.getTimeLimit()
+                    - (TimeController.getTickCount() / 5);
+            int gems = mapToSave.getGemsToCollect();
+
+            int amoebaLimit = 0;
+            int amoebaGrowthRate = 0;
+            for (GameObject object: mapToSave.getEntityLayer()) {
+                if (object instanceof AmoebaGroup) {
+                    amoebaGrowthRate = object.getUpdateRate();
+                    amoebaLimit = ((AmoebaGroup) object).getAmoebaGrowthLimit();
+                }
+            }
+
+            writer.println("TIME:" + remainingTime);
+            writer.println("DIAMONDS:" + gems);
+
+            if (amoebaGrowthRate != 0 && amoebaLimit != 0) {
+                writer.println("AMOEBA_LIMIT:" + amoebaLimit);
+                writer.println("AMOEBA_RATE:" + amoebaGrowthRate);
+            }
+            writer.println();
 
             writer.println(mapWidth + " " + mapHeight);
 
@@ -112,68 +165,34 @@ public class SaveLoadController {
                     writer.println();
                 }
             }
-            //TODO finalise whenever player collectables are complete
             //Player data parsing
-//            Player playerRef = mapToSave.getPlayerObjectReference();
-//            if (!playerRef.getKeyChain().isEmpty()
-//                    || playerRef.getDiamonds() > 0) {
-//                //Map & Player Run stats divider
-//                writer.println("-");
-//                String playerData = playerToDataString(playerRef);
-//                writer.println(playerData);
-//            }
+            Player playerRef = mapToSave.getPlayerObjectReference();
+            if (!playerRef.getKeyChain().isEmpty()
+                    || playerRef.getDiamonds() > 0) {
+                //Map & Player Run stats divider
+                writer.println("-");
+                String playerData = playerToDataString(playerRef);
+                System.out.println("PDATA: " + playerData);
+                writer.println(playerData);
+            }
             writer.close();
+
+
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
 
 
-
-    /**
-     * Saves provided data into binary file, preserving it's state.
-     * @param dataToSave data object to save
-     */
-    public static void saveData(Data dataToSave) throws IOException {
-        FileOutputStream fileOutputStream =
-                new FileOutputStream(PATH_TO_DATA_CLASS_SAVE);
-        ObjectOutputStream objectOutputStream =
-                new ObjectOutputStream(fileOutputStream);
-
-        objectOutputStream.writeObject(dataToSave);
-
-        fileOutputStream.close();
-        objectOutputStream.close();
-    }
-
-    /**
-     * Loads the Data class from file.
-     * @return data with preserved state from last save
-     */
-    public static Data loadData() throws IOException, ClassNotFoundException {
-        Data data = null;
-
-        FileInputStream fileInputStream =
-                new FileInputStream(PATH_TO_DATA_CLASS_SAVE);
-        ObjectInputStream outputStream =
-                new ObjectInputStream(fileInputStream);
-
-        data = (Data) outputStream.readObject();
-
-        fileInputStream.close();
-        outputStream.close();
-
-        return data;
-    }
-
-    private ArrayList<Character> writeObjectsFromMap(Map map) {
+    private static ArrayList<Character> writeObjectsFromMap(Map map) {
         ArrayList<Character> output = new ArrayList<>();
-        for (GameObject object: map.getTileLayer()) {
+        for (GameObject object : map.getTileLayer()) {
             output.add(
                     getCharFromObject(object)
             );
         }
-        for (GameObject object: map.getEntityLayer()) {
+        for (GameObject object : map.getEntityLayer()) {
             int index = map.gridToIndex(object.getPosition());
             output.add(index, getCharFromObject(object));
             output.remove(index + 1);
@@ -183,25 +202,43 @@ public class SaveLoadController {
 
     //Loading helpers
     private Player getPlayerFromList(ArrayList<GameObject> objects) {
-        for (GameObject object: objects) {
+        for (GameObject object : objects) {
             if (object instanceof Player) {
                 return (Player) object;
             }
         }
         return null;
     }
+
     private void populatePlayerItem(String item, int amount, Player player) {
         switch (item) {
             case "D":
                 player.setDiamonds(amount);
                 break;
-            //TODO
-//            case 'K':
-//            player.setKeysCollected(amount);
-//            break;
+            case "R":
+                for (int i = 0; i < amount; i++) {
+                    player.getKeyChain().add(new RedKey());
+                }
+                break;
+            case "B":
+                for (int i = 0; i < amount; i++) {
+                    player.getKeyChain().add(new BlueKey());
+                }
+                break;
+            case "Y":
+                for (int i = 0; i < amount; i++) {
+                    player.getKeyChain().add(new YellowKey());
+                }
+                break;
+            case "P":
+                for (int i = 0; i < amount; i++) {
+                    player.getKeyChain().add(new PinkKey());
+                }
+                break;
         }
 
     }
+
     private Map populateMapWithLayers(Map map, ArrayList<GameObject> tileLayer, ArrayList<GameObject> entityLayer) {
         if (map != null) {
             map.setLayersTo(tileLayer, entityLayer);
@@ -274,13 +311,12 @@ public class SaveLoadController {
                     populatePlayerItem(itemToBeRead, amountToAdd, player);
                 }
             }
-
         }
     }
 
     //Saving Helpers
     //TODO Extend for each concrete GameObject
-    private char getCharFromObject(GameObject object) {
+    private static char getCharFromObject(GameObject object) {
         switch (object.getClass().getSimpleName()) {
             case "Path":
                 return 'P';
@@ -315,7 +351,7 @@ public class SaveLoadController {
             case "YellowKey":
                 return '£';
             case "PinkKey":
-                 return '$';
+                return '$';
             case "RedDoor":
                 return '1';
             case "BlueDoor":
@@ -324,20 +360,43 @@ public class SaveLoadController {
                 return '3';
             case "PinkDoor":
                 return '4';
-             default:
+            default:
                 return '*';
 
         }
     }
-    private String playerToDataString(Player player) {
+
+    private static String playerToDataString(Player player) {
         String output = "";
+        ArrayList<Key> keyChain = player.getKeyChain();
         if (player.getDiamonds() > 0) {
             output += "D " + player.getDiamonds() + "\n";
         }
         //TODO Extend so it describes which type of key is collected
-//        if (!player.getKeyChain().isEmpty()) {
-//            output += "K " + player.getKeyChain().size() + "\n";
-//        }
+        if (!keyChain.isEmpty()) {
+            int redKey = 0;
+            int blueKey = 0;
+            int yellowKey = 0;
+            int pinkKey = 0;
+            output += "K " + player.getKeyChain().size() + "\n";
+            for (Key key: keyChain) {
+                if (key instanceof RedKey) {
+                    redKey++;
+                }
+                if (key instanceof BlueKey) {
+                    blueKey++;
+                }
+                if (key instanceof YellowKey) {
+                    yellowKey++;
+                }
+                if (key instanceof PinkKey) {
+                    pinkKey ++;
+                }
+            }
+            output += "R " + redKey + "\nB " + blueKey +
+                    "\nY " + yellowKey + "\nP " + pinkKey;
+
+        }
         return output;
     }
 }

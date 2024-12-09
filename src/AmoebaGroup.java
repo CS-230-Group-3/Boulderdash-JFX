@@ -4,6 +4,7 @@
  * because entities will identify the individual amoebas rather than the whole group.
  * Other than general clean up there is a redundancy issue in that initFirstAmoeba is called every
  * update when it only needs to be called once but idk how to do it
+ *
  * @author Oscar
  */
 
@@ -152,4 +153,9 @@ public class AmoebaGroup extends Entity {
     public void setGrowthRate(int rate) {
         this.updateRate = rate;
     }
+
+    public int getAmoebaGrowthLimit() {
+        return amoebaGrowthLimit;
+    }
+
 }

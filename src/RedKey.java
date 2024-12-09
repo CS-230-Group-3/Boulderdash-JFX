@@ -9,10 +9,9 @@ public class RedKey extends Key {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "Red Key";
     }
-
 
 
 }

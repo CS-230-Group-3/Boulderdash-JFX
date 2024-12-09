@@ -1,6 +1,8 @@
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.scene.input.KeyCode;
+import javafx.scene.robot.Robot;
 import javafx.util.Duration;
 
 public class TimeController {
@@ -15,6 +17,7 @@ public class TimeController {
     /**
      * Creates a new time controller, the game from the passed
      * GameController is automatically updated.
+     *
      * @param gameController the game controller to update game for
      */
     public TimeController(GameController gameController) {
@@ -47,29 +50,67 @@ public class TimeController {
                 gameController.getMap()
         );
 
-        int currentLevel = gameController.getCurrentLevel();
-        int maxLevel = gameController.getMaxLevel();
 
         //Check if player is dead or on top of an exit
         Player player = gameController.getMap().getPlayerObjectReference();
+        if ((tickCount / 5) >= gameController.getSecondsToBeatLevel()) {
+            player.die();
+        }
+
         if (!player.getLivingState()) {
-            handlePause();
             System.out.println("Dead lol");
+            handleLose();
         } else {
             Exit exit = gameController.getMap().getExitObjectReference();
             if (exit != null
                     && player.getPosition().equals(exit.getPosition())) {
-                if (currentLevel != maxLevel)
-                {
-                    gameController.setCurrentLevel(currentLevel++);
-                    System.out.println("Wow you won, NEXT LEVEL :)");
-                } else
-                {
-                    //System.out.println("Wow you won, impressive :)\n" + "Score: " + HighScore.getScore());
-                }
-                handlePause();
+                System.out.println("Wow you won, impressive :)");
+                handleVictory();
             }
         }
+    }
+
+    private void handleLose() {
+        Data data = Data.getInstance();
+        if (data.getCurrentUser().hasLevelInProgress()) {
+            data.getCurrentUser().setHasLevelInProgress(false);
+        }
+        gameController.setGameIsRunning(false);
+        tickCount = 0;
+        showPauseMenu();
+    }
+
+    private void handleVictory() {
+        int collectedGems = gameController.getGemsCollected();
+        int secondsPassed = TimeController.getTickCount() / 5;
+        int remainingSeconds =
+                gameController.getSecondsToBeatLevel() - secondsPassed;
+        int playerScore = collectedGems * remainingSeconds;
+
+        Data data = Data.getInstance();
+        data.addScoreForCurrentUser(playerScore);
+        if (data.getCurrentUser().hasLevelInProgress()) {
+            data.getCurrentUser().setHasLevelInProgress(false);
+        }
+
+        int userLevelsUnlocked = data.getCurrentUser().
+                getUnlockedLevels().size();
+        if (userLevelsUnlocked
+                < data.getAvailableLevels().size()) {
+            data.getCurrentUser().unlockLevel(
+                    data.getAvailableLevels().get(userLevelsUnlocked)
+            );
+        }
+        gameController.setGameIsRunning(false);
+        tickCount = 0;
+        showPauseMenu();
+    }
+
+    private void showPauseMenu() {
+        //Learned from https://stackoverflow.com/questions/24258995/how-to-programmatically-simulate-arrow-key-presses-in-java-fx
+        Robot r = new Robot();
+        r.keyPress(KeyCode.ESCAPE);
+        r.keyRelease(KeyCode.ESCAPE);
     }
 
     /**
@@ -98,5 +139,9 @@ public class TimeController {
      */
     public boolean isPaused() {
         return isPaused;
+    }
+
+    public static void resetTicks() {
+        tickCount = 0;
     }
 }

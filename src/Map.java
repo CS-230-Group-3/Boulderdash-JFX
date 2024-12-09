@@ -121,7 +121,7 @@ public class Map {
         int tileIndex = gridToIndex(tileToDestroy.getPosition());
         tileLayer.add(tileIndex,
                 new Path(tileToDestroy.getPosition())
-                );
+        );
         tileLayer.remove(tileIndex + 1);
     }
 

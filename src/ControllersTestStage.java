@@ -9,7 +9,7 @@ import javafx.scene.Scene;
 public class ControllersTestStage extends Application {
     public void start(Stage primaryStage) {
         // Create a new pane to hold our GUI.
-            Group root = new Group();
+        Group root = new Group();
 
         // Create a scene based on the pane.
 //        Color bg = Color.web("#4B2C3D");
@@ -20,7 +20,6 @@ public class ControllersTestStage extends Application {
         Canvas canvas = new Canvas(1400, 800);
 
         GameController gameController = new GameController(canvas, levelOne);
-
 
 
         scene.addEventFilter(KeyEvent.KEY_PRESSED,

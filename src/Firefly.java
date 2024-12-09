@@ -11,13 +11,19 @@ import java.util.Random;
 
 public class Firefly extends Enemy {
 
-    /** The file path to the butterfly's sprite image. */
+    /**
+     * The file path to the butterfly's sprite image.
+     */
     private static final String FILE_PATH = "resources/assets/firefly.png";
 
-    /** Indicates if the butterfly favours anti-clockwise movement. */
+    /**
+     * Indicates if the butterfly favours anti-clockwise movement.
+     */
     private boolean leftMoving;
 
-    /** Tracks the direction the butterfly is currently "facing". */
+    /**
+     * Tracks the direction the butterfly is currently "facing".
+     */
     private Direction lastMovement = Direction.UP;
 
     /**
@@ -125,7 +131,7 @@ public class Firefly extends Enemy {
     /**
      * Checks for collisions at a specific position on the map.
      *
-     * @param map the current level map.
+     * @param map      the current level map.
      * @param position the position to check for collisions.
      * @return true if a collision is detected, false otherwise.
      */

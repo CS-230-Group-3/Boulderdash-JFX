@@ -10,8 +10,9 @@ public abstract class Entity extends GameObject {
 
     /**
      * Creates a new entity.
+     *
      * @param pathToSprite path to the sprite
-     * @param position initial position of object
+     * @param position     initial position of object
      */
     public Entity(String pathToSprite, GridPosition position) {
         super(pathToSprite, position);
@@ -27,5 +28,6 @@ public abstract class Entity extends GameObject {
     public abstract void move(Map map, Direction dir);
 
     public abstract boolean collisionCheck(Map map, GridPosition position);
+
     public abstract boolean collisionCheck(Map map, Direction dir);
 }
