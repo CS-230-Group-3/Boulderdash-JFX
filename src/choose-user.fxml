@@ -33,7 +33,7 @@
                 <Glow level="0.48" />
             </effect>
         </ListView>
-        <Button fx:id="newProfileButton" layoutX="591.0" layoutY="657.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="295.0" style="-fx-background-color: #ae0017; -fx-background-radius: 5;" text="NEW PROFILE" textFill="WHITE">
+        <Button fx:id="newProfileButton" layoutX="535.0" layoutY="657.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="295.0" style="-fx-background-color: #ae0017; -fx-background-radius: 5;" text="NEW PROFILE" textFill="WHITE">
             <font>
                 <Font name="SimSun" size="30.0" />
             </font>
