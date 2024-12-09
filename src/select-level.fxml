@@ -17,7 +17,7 @@
                 prefHeight="46.0" prefWidth="280.0" style="-fx-background-color: #ae0017; -fx-background-radius: 5;"
                 text="CONTINUE LEVEL" textFill="WHITE">
             <font>
-                <Font name="SimSun" size="22.0"/>
+                <Font name="SimSun" size="15.0"/>
             </font>
         </Button>
         <Pane fx:id="selectLevel1" layoutX="179.0" layoutY="242.0" minHeight="-Infinity" minWidth="-Infinity"
@@ -48,11 +48,11 @@
                 <Font name="SimSun" size="60.0"/>
             </font>
         </Text>
-        <Button fx:id="backButton" layoutX="89.0" layoutY="701.0" mnemonicParsing="false" prefHeight="30.0"
+        <Button fx:id="backButton" layoutX="89.0" layoutY="701.0" mnemonicParsing="false" prefHeight="40.0"
                 prefWidth="178.0" style="-fx-background-color: #ae0017; -fx-border-radius: 5;" text="BACK"
                 textFill="WHITE">
             <font>
-                <Font name="SimSun" size="30.0"/>
+                <Font name="SimSun" size="20.0"/>
             </font>
         </Button>
     </children>
