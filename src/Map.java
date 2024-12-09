@@ -2,11 +2,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Representation of the game's map.
- * A map is constructed from squares.
- * @author Yuliia & Spas
+ * <p> Representation of the game's map.
+ *  A map is constructed from squares.</p>
+ *
+ * @author Yuliia & Spas.
+ * @version 1.0.2
+ * Last Changed: 9/12/24
  */
-
 
 public class Map {
     private final int mapWidth;
@@ -62,6 +64,12 @@ public class Map {
         return tileLayer.get(index);
     }
 
+    /**
+     * Returns the Entity at the provided coordinate.
+     * @param coordinate coordinate to get object at
+     * @return Entity at the coordinate
+     */
+
     public Entity getEntityAt(GridPosition coordinate) {
         for (GameObject object : entityLayer) {
             if (object.getPosition().equals(coordinate)) {
@@ -87,10 +95,10 @@ public class Map {
     /**
      * Returns a grid position from a passes list index.
      * Determines x & y coordinated based on the map's width.
+     * (Uses inverse Row major order index)
      * @param index the list index.
      * @return GridPosition coordinate at index
      */
-    //Uses inverse Row major order index
     public GridPosition indexToGrid(int index) {
         return new GridPosition(
                 index % getMapWidth(),
@@ -183,6 +191,13 @@ public class Map {
         }
     }
 
+    /**
+     * Returns the passed object's neighbouring Tiles at the provided location,
+     * if one exists, null otherwise.
+     * @param object object to get neighbour of
+     * @param direction direction relative to object to check
+     * @return the neighbouring Tile, if one exists, null otherwise
+     */
     public GameObject getTileNeighbourOf(GameObject object, Direction direction) {
         GridPosition offset = directionToOffset(direction);
         GridPosition positionOfNeighbour = new GridPosition(
@@ -196,6 +211,13 @@ public class Map {
         }
     }
 
+    /**
+     * Returns the passed object's neighbouring Entities at the provided location,
+     * if one exists, null otherwise.
+     * @param object object to get neighbour of
+     * @param direction direction relative to object to check
+     * @return the neighbouring Entity, if one exists, null otherwise
+     */
     public Entity getEntityNeighbourOf(GameObject object, Direction direction) {
         GridPosition offset = directionToOffset(direction);
         GridPosition positionOfNeighbour = new GridPosition(
@@ -209,6 +231,11 @@ public class Map {
         }
     }
 
+    /**
+     * Sets parameters for Amoebas growth rate and limit
+     * @param growthRate rate of growth
+     * @param growthLimit limit of growth
+     */
     public void setAmoebaProperties(int growthRate, int growthLimit) {
         for (GameObject object: entityLayer) {
             if (object instanceof AmoebaGroup) {
@@ -260,6 +287,10 @@ public class Map {
         return entityLayer;
     }
 
+    /**
+     * @param dir a direction (Enum)
+     * @return the offset needed for a direction
+     */
     private GridPosition directionToOffset(Direction dir) {
         return switch (dir) {
             case RIGHT -> new GridPosition(1, 0);
@@ -270,6 +301,10 @@ public class Map {
         };
     }
 
+    /**
+     * @param coordinate a coordinate (GridPosition)
+     * @return true/false depending on if a coordinate is within the map
+     */
     private boolean isInBounds(GridPosition coordinate) {
         return 0 <= coordinate.getX()
                 && coordinate.getX() < getMapWidth()
@@ -277,6 +312,10 @@ public class Map {
                 && coordinate.getY() < getMapHeight();
     }
 
+    /**
+     * Validates and spawns a Tile
+     * @param gameObject a Tile to be spawned
+     */
     private void handleTileSpawn(GameObject gameObject) {
         GridPosition objectPosition = gameObject.getPosition();
         boolean isValidPosition = true;
@@ -296,6 +335,10 @@ public class Map {
         }
     }
 
+    /**
+     * Validates and spawns an Entity
+     * @param gameObject an Entity to be spawned
+     */
     private void handleEntitySpawn(GameObject gameObject) {
         GridPosition objectPosition = gameObject.getPosition();
         boolean isValidPosition = true;
@@ -320,25 +363,48 @@ public class Map {
         }
     }
 
+
+    /**
+     * @return pendingAdditions
+     */
     public List<GameObject> getPendingAdditions() {
         return pendingAdditions;
     }
 
+    /**
+     * @return pendingRemovals
+     */
     public List<GameObject> getPendingRemovals() {
         return pendingRemovals;
     }
 
+    /**
+     * @return timeLimit
+     */
     public int getTimeLimit() {
         return timeLimit;
     }
 
+    /**
+     * @return gemsToCollect
+     */
     public int getGemsToCollect() {
         return gemsToCollect;
     }
+
+
+    /**
+     * Sets time limit
+     * @param timeLimit
+     */
     public void setTimeLimit(int timeLimit) {
         this.timeLimit = timeLimit;
     }
 
+    /**
+     * Sets number of gems to be collected
+     * @param gemsToCollect
+     */
     public void setGemsToCollect(int gemsToCollect) {
         this.gemsToCollect = gemsToCollect;
     }

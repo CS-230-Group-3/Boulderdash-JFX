@@ -1,5 +1,13 @@
 import java.util.*;
 
+/**
+ * <p> Super for Frog and Goblin,
+ * uses A* to find the fastest path to the player.</p>
+ *
+ * @author Joseph.
+ * @version 1.0.3
+ * Last Changed: 4/12/24
+ */
 public abstract class PathfindingEnemy extends Enemy {
     Node start, end;
     ArrayList<Node> walkableTiles = new ArrayList<>();
@@ -7,10 +15,22 @@ public abstract class PathfindingEnemy extends Enemy {
     int[] dx = {-1, 1, 0, 0};
     int[] dy = {0, 0, -1, 1};
 
+    /**
+     * PathfindingEnemy Constructor
+     * @param pathToSprite
+     * @param position
+     */
     public PathfindingEnemy(String pathToSprite, GridPosition position) {
         super(pathToSprite, position);
     }
 
+    /**
+     * AStarAlgorithm
+     * @param map
+     * @param enemyPos
+     * @param playerPos
+     * @return path an ArrayList of coordinates in form int[]
+     */
     public ArrayList<int[]> AStarAlgorithm(Map map, GridPosition enemyPos, GridPosition playerPos) {
         walkableTiles.clear();
         walkedTiles.clear();
@@ -24,10 +44,12 @@ public abstract class PathfindingEnemy extends Enemy {
 
         walkableTiles.add(start);
 
+        // iterate through adjacent tiles not walked
         while (!walkableTiles.isEmpty()) {
             Node current = walkableTiles.get(lowestF());
             walkableTiles.remove(current);
 
+            // if found path to player then repeat the steps to the player using parents of nodes
             if (current.x == playerPos.getX() && current.y == playerPos.getY()) {
                 ArrayList<int[]> path = new ArrayList<>();
                 while (current != null) {
@@ -40,6 +62,7 @@ public abstract class PathfindingEnemy extends Enemy {
 
             walkedTiles.add(current);
 
+            // add walkable adjacent tiles to walkable list
             for (int i = 0; i < 4; i++) {
                 int newX = current.x + dx[i];
                 int newY = current.y + dy[i];
@@ -59,6 +82,10 @@ public abstract class PathfindingEnemy extends Enemy {
         return null;
     }
 
+    /**
+     * Finds lowest f cost
+     * @return minFIndex index of minimum F
+     */
     private int lowestF() {
         int minFIndex = 0;
         for (int i = 1; i < walkableTiles.size(); i++) {
@@ -69,6 +96,13 @@ public abstract class PathfindingEnemy extends Enemy {
         return minFIndex;
     }
 
+    /**
+     * is position walkable and in bounds
+     * @param x
+     * @param y
+     * @param map
+     * @return True/False
+     */
     private boolean isValid(int x, int y, Map map) {
         if (x >= 0 && y >= 0 && x < map.getMapHeight() && y < map.getMapWidth()) {
             if (map.getObjectAt(new GridPosition(x, y)) == null) {
@@ -83,10 +117,25 @@ public abstract class PathfindingEnemy extends Enemy {
         return false;
     }
 
+    /**
+     * Calculates H value
+     * @param x
+     * @param y
+     * @param goalX
+     * @param goalY
+     * @return H
+     */
     private int calculateHeuristic(int x, int y, int goalX, int goalY) {
         return Math.abs(x - goalX) + Math.abs(y - goalY);
     }
 
+    /**
+     * finds if a list contains a Node via coordinates
+     * @param list
+     * @param x
+     * @param y
+     * @return True/False
+     */
     private boolean containsNode(List<Node> list, int x, int y) {
         for (Node node : list) {
             if (node.x == x && node.y == y) {
