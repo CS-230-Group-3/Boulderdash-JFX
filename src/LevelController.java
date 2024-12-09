@@ -45,6 +45,7 @@ public class LevelController {
 
     @FXML
     private Button backButton;
+    private static int MAX_LEVEL = 3;
 
     @FXML
     void initialize() {
@@ -95,7 +96,7 @@ public class LevelController {
                     playLevel(event, selectLevel1));
             levelOneHighScores.setOnMouseClicked(event -> playLevel(event, selectLevel1));
 
-        } else if (currentUser.getUnlockedLevels().size() < 3) {
+        } else if (currentUser.getUnlockedLevels().size() < MAX_LEVEL) {
             // 2 levels unlocked
             selectLevel3.setOpacity(0.5);
             selectLevel1.setOnMouseClicked(event ->
