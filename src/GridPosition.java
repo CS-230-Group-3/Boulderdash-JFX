@@ -2,6 +2,7 @@
  * Represents integer position pair.
  *
  * @author Yuliia & Spas
+ * @version 1.0.0
  */
 public class GridPosition {
     private int x;

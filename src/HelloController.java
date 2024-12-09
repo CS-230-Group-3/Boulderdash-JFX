@@ -1,4 +1,3 @@
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -12,6 +11,11 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+/**
+ * handles the functionality for the initial screen
+ * of the application. It provides the logic to open user selection window
+ * when Start App  is clicked. Maybe old.
+ */
 public class HelloController {
 
     @FXML
@@ -26,11 +30,21 @@ public class HelloController {
     @FXML
     private Button startApp;
 
+    /**
+     * Initializes the controller by setting up the event handler for the "Start App" button.
+     * The event handler will open the user selection window when the button is clicked.
+     */
     @FXML
     void initialize() {
         startApp.setOnAction(event -> openUserWindow(event));
     }
 
+    /**
+     * Opens the user selection window by loading the "choose-user.fxml" file.
+     * The current stage is updated with the new scene containing the user selection screen.
+     *
+     * @param event the action event triggered by clicking the "Start App" button
+     */
     private void openUserWindow(ActionEvent event) {
         try {
             helloWindow = (AnchorPane) FXMLLoader.
