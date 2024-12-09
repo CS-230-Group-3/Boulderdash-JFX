@@ -4,6 +4,7 @@ import java.util.List;
 /**
  * Representation of the game's map.
  * A map is constructed from squares.
+ *
  * @author Yuliia & Spas
  */
 
@@ -22,7 +23,8 @@ public class Map {
 
     /**
      * Create a new map with empty game objects.
-     * @param newMapWidth width of the map
+     *
+     * @param newMapWidth  width of the map
      * @param newMapHeight height of the map
      */
     public Map(int newMapWidth, int newMapHeight) {
@@ -34,7 +36,8 @@ public class Map {
 
     /**
      * Assigns the entity and tile layers of the Map.
-     * @param tileLayer tileLayer to assign
+     *
+     * @param tileLayer   tileLayer to assign
      * @param entityLayer entityLayer to assign
      */
     public void setLayersTo(
@@ -46,11 +49,12 @@ public class Map {
 
     /**
      * Returns the object at the provided coordinate.
+     *
      * @param coordinate coordinate to get object at
      * @return Object at the coordinate
      */
     public GameObject getObjectAt(GridPosition coordinate) {
-        for (GameObject object: entityLayer) {
+        for (GameObject object : entityLayer) {
             if (object.getPosition().equals(coordinate)) {
                 return object;
             }
@@ -73,6 +77,7 @@ public class Map {
 
     /**
      * Returns the tile at the provided coordinate.
+     *
      * @param coordinate coordinate to get tile at
      * @return Tile at the coordinate
      */
@@ -87,6 +92,7 @@ public class Map {
     /**
      * Returns a grid position from a passes list index.
      * Determines x & y coordinated based on the map's width.
+     *
      * @param index the list index.
      * @return GridPosition coordinate at index
      */
@@ -102,6 +108,7 @@ public class Map {
      * Spawns the provided GameObject according to its position and type.
      * New tiles can only be spawned on Path tiles.
      * New entities can only be spawned on Paths or in Water.
+     *
      * @param gameObject object to spawn
      */
     public void spawnGameObject(GameObject gameObject) {
@@ -115,22 +122,24 @@ public class Map {
     /**
      * Destroys the passed tile.
      * Places a path on it's position
+     *
      * @param tileToDestroy tile to be dostroied
      */
     public void destroyTile(Tile tileToDestroy) {
         int tileIndex = gridToIndex(tileToDestroy.getPosition());
         tileLayer.add(tileIndex,
                 new Path(tileToDestroy.getPosition())
-                );
+        );
         tileLayer.remove(tileIndex + 1);
     }
 
     /**
      * Removes the passed item from the Map.
+     *
      * @param itemToRemove item to be removed
      */
     public void removeItem(Item itemToRemove) {
-        for (GameObject object: entityLayer) {
+        for (GameObject object : entityLayer) {
             if (object.getPosition().equals(
                     itemToRemove.getPosition())) {
                 entityLayer.remove(itemToRemove);
@@ -139,7 +148,7 @@ public class Map {
     }
 
     public void removeEntity(Entity entityToRemove) {
-        for (GameObject object: entityLayer) {
+        for (GameObject object : entityLayer) {
             if (object.getPosition().equals(
                     entityToRemove.getPosition())) {
                 entityLayer.remove(entityToRemove);
@@ -149,10 +158,11 @@ public class Map {
 
     /**
      * Returns a references to player object on the map.
+     *
      * @return first instance of player object if one exists, null otherwise
      */
     public Player getPlayerObjectReference() {
-        for (GameObject object: entityLayer) {
+        for (GameObject object : entityLayer) {
             if (object instanceof Player) {
                 return (Player) object;
             }
@@ -164,7 +174,7 @@ public class Map {
      * @return first instance of exit object if one exists, null otherwise
      */
     public Exit getExitObjectReference() {
-        for (GameObject object: getTileLayer()) {
+        for (GameObject object : getTileLayer()) {
             if (object instanceof Exit) {
                 return (Exit) object;
             }
@@ -175,7 +185,8 @@ public class Map {
     /**
      * Returns the passed object's neighbour at the provided location,
      * if one exists, null otherwise.
-     * @param object object to get neighbour of
+     *
+     * @param object    object to get neighbour of
      * @param direction direction relative to object to check
      * @return the neighbouring game object, if one exists, null otherwise
      */
@@ -219,7 +230,7 @@ public class Map {
     }
 
     public void setAmoebaProperties(int growthRate, int growthLimit) {
-        for (GameObject object: entityLayer) {
+        for (GameObject object : entityLayer) {
             if (object instanceof AmoebaGroup) {
                 ((AmoebaGroup) object).setGrowthLimit(growthLimit);
                 ((AmoebaGroup) object).setGrowthRate(growthRate);
@@ -230,6 +241,7 @@ public class Map {
     /**
      * Maps the index at the passed grid position
      * to linear array index.
+     *
      * @param mapCoordinate coordinate to return the index of
      * @return an int representing array index based on the size of the map.
      */
@@ -242,13 +254,16 @@ public class Map {
 
     /**
      * Returns the map's width.
+     *
      * @return an integer representing map width
      */
     public int getMapWidth() {
         return mapWidth;
     }
+
     /**
      * Returns the map's height.
+     *
      * @return an integer representing map height
      */
     public int getMapHeight() {
@@ -309,7 +324,7 @@ public class Map {
         GridPosition objectPosition = gameObject.getPosition();
         boolean isValidPosition = true;
 
-        for (GameObject object: entityLayer) {
+        for (GameObject object : entityLayer) {
             if (object.getPosition().equals(objectPosition)) {
                 isValidPosition = false;
             }
@@ -344,6 +359,7 @@ public class Map {
     public int getGemsToCollect() {
         return gemsToCollect;
     }
+
     public void setTimeLimit(int timeLimit) {
         this.timeLimit = timeLimit;
     }

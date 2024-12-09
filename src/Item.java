@@ -56,7 +56,7 @@ public class Item extends Entity {
         if (downNeighbour instanceof Wall || downNeighbour instanceof Boulder ||
                 downNeighbour instanceof Gem) {
             if (map.getNeighbourOf(downNeighbour, Direction.LEFT) instanceof Path &&
-            leftNeighbour instanceof Path) {
+                    leftNeighbour instanceof Path) {
                 this.move(map, Direction.LEFT);
             } else if (map.getNeighbourOf(downNeighbour, Direction.RIGHT) instanceof Path &&
                     rightNeighbour instanceof Path) {
@@ -66,7 +66,8 @@ public class Item extends Entity {
     }
 
     @Override
-    public void update(Map map) { }
+    public void update(Map map) {
+    }
 
     @Override
     public void move(Map map, Direction dir) {
@@ -101,7 +102,8 @@ public class Item extends Entity {
     }
 
     @Override
-    public void delete() {}
+    public void delete() {
+    }
 
 
     @Override

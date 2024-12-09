@@ -48,6 +48,7 @@ public class LevelController {
     private Button backButton;
     @FXML
     private Button continueButton;
+    private static int MAX_LEVEL = 3;
 
     @FXML
     void initialize() {
@@ -59,23 +60,23 @@ public class LevelController {
 //          playLevel(event, selectLevel3));
 
         backButton.setOnAction(event -> handleBackButton(event));
-        //Populate lvl 1 HSs
+        //Populate lvl 1 HS
         Level levelOne = Data.getInstance().getAvailableLevels().getFirst();
-        for (HighScore hs: levelOne.getHighScores()) {
+        for (HighScore hs : levelOne.getHighScores()) {
             levelOneHighScores.getItems().add(
                     hs.getUserName() + "\t\t" + hs.getScore());
         }
 
-        //Populate lvl 2 HSs
+        //Populate lvl 2 HS
         Level levelTwo = Data.getInstance().getAvailableLevels().get(1);
-        for (HighScore hs: levelTwo.getHighScores()) {
+        for (HighScore hs : levelTwo.getHighScores()) {
             levelTwoHighScores.getItems().add(
                     hs.getUserName() + "\t\t" + hs.getScore());
         }
 
-        //Populate lvl 3 HSs
+        //Populate lvl 3 HS
         Level levelThree = Data.getInstance().getAvailableLevels().getLast();
-        for (HighScore hs: levelThree.getHighScores()) {
+        for (HighScore hs : levelThree.getHighScores()) {
             levelThreeHighScores.getItems().add(
                     hs.getUserName() + "\t\t" + hs.getScore());
         }
@@ -104,7 +105,7 @@ public class LevelController {
                     playLevel(event, selectLevel1));
             levelOneHighScores.setOnMouseClicked(event -> playLevel(event, selectLevel1));
 
-        } else if (currentUser.getUnlockedLevels().size() < 3) {
+        } else if (currentUser.getUnlockedLevels().size() < MAX_LEVEL) {
             // 2 levels unlocked
             selectLevel3.setOpacity(DISABLED_ELEMENT_OPACITY);
             selectLevel1.setOnMouseClicked(event ->
@@ -205,7 +206,7 @@ public class LevelController {
         return levelToStart;
     }
 
-    private void handleBackButton(ActionEvent event){
+    private void handleBackButton(ActionEvent event) {
         try {
             selectLevelWindow = (AnchorPane) FXMLLoader.
                     load(getClass().getResource("choose-user.fxml"));

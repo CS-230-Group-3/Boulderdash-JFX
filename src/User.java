@@ -11,6 +11,7 @@ public class User implements Serializable {
     /**
      * Creates a new user with the provided name.
      * New users start with level 1 available to play.
+     *
      * @param name name of user
      */
     public User(String name) {

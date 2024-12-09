@@ -9,8 +9,7 @@ import java.util.List;
  * @version 1.0.4
  * Last Changed: 30/11/24
  */
-public abstract class Enemy extends Entity
-{
+public abstract class Enemy extends Entity {
     private Boolean livingState;
     private int[][] path;
 

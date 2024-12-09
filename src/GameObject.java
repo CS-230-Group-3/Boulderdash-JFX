@@ -22,8 +22,9 @@ public abstract class GameObject {
 
     /**
      * Creates a new game object.
+     *
      * @param pathToSprite path to the sprite
-     * @param position initial position of object
+     * @param position     initial position of object
      */
     public GameObject(String pathToSprite, GridPosition position) {
         this.sprite = new Image(pathToSprite);
@@ -47,6 +48,7 @@ public abstract class GameObject {
 
     /**
      * Returns the object's sprite.
+     *
      * @return javaFx Image instance.
      */
     public Image getSprite() {
@@ -55,6 +57,7 @@ public abstract class GameObject {
 
     /**
      * Retrieves the current position of the game object.
+     *
      * @return the current position as a grid object.
      */
     protected GridPosition getPosition() {
@@ -63,6 +66,7 @@ public abstract class GameObject {
 
     /**
      * Updates the position of the game object.
+     *
      * @param newPos the new position as an array [x, y].
      */
     public void setPosition(GridPosition newPos) {
@@ -72,6 +76,7 @@ public abstract class GameObject {
 
     /**
      * Retrieves the update rate of the game object.
+     *
      * @return the object's update rate.
      */
     protected int getUpdateRate() {
@@ -80,14 +85,14 @@ public abstract class GameObject {
 
     /**
      * Checks whether the game object is currently colliding.
+     *
      * @return true if the game object is colliding, false if not.
      */
     protected boolean isWalkable() {
         return this.isWalkable;
     }
 
-    protected String getType()
-    {
+    protected String getType() {
         return type;
     }
 }

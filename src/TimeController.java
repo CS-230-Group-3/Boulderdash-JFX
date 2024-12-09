@@ -17,6 +17,7 @@ public class TimeController {
     /**
      * Creates a new time controller, the game from the passed
      * GameController is automatically updated.
+     *
      * @param gameController the game controller to update game for
      */
     public TimeController(GameController gameController) {
@@ -79,6 +80,7 @@ public class TimeController {
         gameController.setGameIsRunning(false);
         showPauseMenu();
     }
+
     private void handleVictory() {
         int collectedGems = gameController.getGemsCollected();
         int secondsPassed = TimeController.getTickCount() / 5;

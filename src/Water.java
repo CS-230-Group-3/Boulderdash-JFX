@@ -40,5 +40,6 @@ public class Water extends Tile {
     }
 
     @Override
-    public void delete() {}
+    public void delete() {
+    }
 }

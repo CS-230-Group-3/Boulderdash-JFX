@@ -7,39 +7,53 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="selectLevelWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1400.0" style="-fx-background-image: url('/resources/WallEnter.png');; -fx-background-position: center;; -fx-background-size: cover;;" stylesheets="@resources/level-style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="LevelController">
-   <children>
-      <Button fx:id="continueButton" layoutX="602.0" layoutY="704.0" mnemonicParsing="false" opacity="0.0" prefHeight="46.0" prefWidth="280.0" style="-fx-background-color: #ae0017; -fx-background-radius: 5;" text="CONTINUE LEVEL" textFill="WHITE">
-         <font>
-            <Font name="SimSun" size="22.0" />
-         </font>
-      </Button>
-      <Pane fx:id="selectLevel1" layoutX="179.0" layoutY="242.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="430.0" prefWidth="280.0" styleClass="pane" stylesheets="@resources/level-style.css">
-         <children>
-            <Text layoutX="122.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LEVEL 1" />
-            <ListView fx:id="levelOneHighScores" layoutY="57.0" prefHeight="320.0" prefWidth="280.0" stylesheets="@resources/level-style.css" />
-         </children>
-      </Pane>
-      <Pane fx:id="selectLevel2" layoutX="602.0" layoutY="242.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="430.0" prefWidth="280.0" styleClass="pane" stylesheets="@resources/level-style.css">
-         <children>
-            <Text layoutX="120.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LEVEL 2" />
-            <ListView fx:id="levelTwoHighScores" layoutY="56.0" prefHeight="320.0" prefWidth="280.0" />
-         </children>
-      </Pane>
-      <Pane fx:id="selectLevel3" layoutX="1003.0" layoutY="237.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="440.0" prefWidth="280.0" styleClass="pane" stylesheets="@resources/level-style.css">
-         <children>
-            <Text layoutX="124.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LEVEL 3" />
-            <ListView fx:id="levelThreeHighScores" layoutY="58.0" prefHeight="405.0" prefWidth="310.0" />
-         </children>
-      </Pane>
-      <Text fill="#ae0017" layoutX="440.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SELECT LEVEL TO START" wrappingWidth="639.0338134765625">
-         <font>
-            <Font name="SimSun" size="60.0" />
-         </font></Text>
-      <Button fx:id="backButton" layoutX="89.0" layoutY="701.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="178.0" style="-fx-background-color: #ae0017; -fx-border-radius: 5;" text="BACK" textFill="WHITE">
-         <font>
-            <Font name="SimSun" size="30.0" />
-         </font>
-      </Button>
-   </children>
+<AnchorPane fx:id="selectLevelWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity" prefHeight="800.0" prefWidth="1400.0"
+            style="-fx-background-image: url('/resources/WallEnter.png');; -fx-background-position: center;; -fx-background-size: cover;;"
+            stylesheets="@resources/level-style.css" xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="LevelController">
+    <children>
+        <Button fx:id="continueButton" layoutX="602.0" layoutY="704.0" mnemonicParsing="false" opacity="0.0"
+                prefHeight="46.0" prefWidth="280.0" style="-fx-background-color: #ae0017; -fx-background-radius: 5;"
+                text="CONTINUE LEVEL" textFill="WHITE">
+            <font>
+                <Font name="SimSun" size="15.0"/>
+            </font>
+        </Button>
+        <Pane fx:id="selectLevel1" layoutX="179.0" layoutY="242.0" minHeight="-Infinity" minWidth="-Infinity"
+              prefHeight="430.0" prefWidth="280.0" styleClass="pane" stylesheets="@resources/level-style.css">
+            <children>
+                <Text layoutX="122.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LEVEL 1"/>
+                <ListView fx:id="levelOneHighScores" layoutY="57.0" prefHeight="320.0" prefWidth="280.0"
+                          stylesheets="@resources/level-style.css"/>
+            </children>
+        </Pane>
+        <Pane fx:id="selectLevel2" layoutX="602.0" layoutY="242.0" minHeight="-Infinity" minWidth="-Infinity"
+              prefHeight="430.0" prefWidth="280.0" styleClass="pane" stylesheets="@resources/level-style.css">
+            <children>
+                <Text layoutX="120.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LEVEL 2"/>
+                <ListView fx:id="levelTwoHighScores" layoutY="56.0" prefHeight="320.0" prefWidth="280.0"/>
+            </children>
+        </Pane>
+        <Pane fx:id="selectLevel3" layoutX="1003.0" layoutY="237.0" minHeight="-Infinity" minWidth="-Infinity"
+              prefHeight="440.0" prefWidth="280.0" styleClass="pane" stylesheets="@resources/level-style.css">
+            <children>
+                <Text layoutX="124.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LEVEL 3"/>
+                <ListView fx:id="levelThreeHighScores" layoutY="58.0" prefHeight="405.0" prefWidth="310.0"/>
+            </children>
+        </Pane>
+        <Text fill="#ae0017" layoutX="440.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0"
+              text="SELECT LEVEL TO START" wrappingWidth="639.0338134765625">
+            <font>
+                <Font name="SimSun" size="60.0"/>
+            </font>
+        </Text>
+        <Button fx:id="backButton" layoutX="89.0" layoutY="701.0" mnemonicParsing="false" prefHeight="40.0"
+                prefWidth="178.0" style="-fx-background-color: #ae0017; -fx-border-radius: 5;" text="BACK"
+                textFill="WHITE">
+            <font>
+                <Font name="SimSun" size="20.0"/>
+            </font>
+        </Button>
+    </children>
 </AnchorPane>

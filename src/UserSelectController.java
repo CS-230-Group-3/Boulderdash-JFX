@@ -64,7 +64,7 @@ public class UserSelectController {
     private void updateUsers() {
         userList.getItems().clear();
 
-        for (User user: users) {
+        for (User user : users) {
             userList.getItems().add(user.getName());
         }
     }
@@ -78,7 +78,8 @@ public class UserSelectController {
 
             npfController.setListToUpdate(users);
 
-            Scene newUserScene = new Scene(newUserRoot, MainUI.MAIN_WINDOW_WIDTH, MainUI.MAIN_WINDOW_HEIGHT);
+            Scene newUserScene = new Scene(newUserRoot, MainUI.MAIN_WINDOW_WIDTH,
+                    MainUI.MAIN_WINDOW_HEIGHT);
             Stage newUserStage = new Stage();
 
             newUserStage.setScene(newUserScene);
@@ -107,26 +108,30 @@ public class UserSelectController {
             openLevelWindow(event);
         }
     }
-    private void openLevelWindow(ActionEvent event){
+
+    private void openLevelWindow(ActionEvent event) {
         try {
             selectWindow = (AnchorPane) FXMLLoader.
                     load(getClass().getResource("select-level.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).
                     getScene().getWindow();
-            Scene scene = new Scene(selectWindow, MainUI.MAIN_WINDOW_WIDTH, MainUI.MAIN_WINDOW_HEIGHT);
+            Scene scene = new Scene(selectWindow, MainUI.MAIN_WINDOW_WIDTH,
+                    MainUI.MAIN_WINDOW_HEIGHT);
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    private void handleBackButton(ActionEvent event){
+
+    private void handleBackButton(ActionEvent event) {
         try {
             selectWindow = (AnchorPane) FXMLLoader.
                     load(getClass().getResource("hello-view.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).
                     getScene().getWindow();
-            Scene scene = new Scene(selectWindow, MainUI.MAIN_WINDOW_WIDTH, MainUI.MAIN_WINDOW_HEIGHT);
+            Scene scene = new Scene(selectWindow, MainUI.MAIN_WINDOW_WIDTH,
+                    MainUI.MAIN_WINDOW_HEIGHT);
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
