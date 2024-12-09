@@ -5,6 +5,7 @@
  * @version 1.0.1
  * Last changed: 25/11/2024
  */
+
 import java.util.ArrayList;
 import java.util.Timer;
 
@@ -31,7 +32,7 @@ public class Player extends Entity {
     public Player() {
         super(SPRITE_PATH, new GridPosition(0, 0));
         this.livingState = true;
-      //  this.keyChain = null;
+        //  this.keyChain = null;
         this.diamonds = 0;
         this.type = "player";
         this.keyChain = new ArrayList<>();
@@ -40,6 +41,7 @@ public class Player extends Entity {
 
     /**
      * Creates a new player object.
+     *
      * @param position the position to set player to
      */
     public Player(GridPosition position) {
@@ -49,7 +51,6 @@ public class Player extends Entity {
         this.diamonds = 0;
         this.type = "player";
     }
-
 
 
     /**
@@ -135,7 +136,8 @@ public class Player extends Entity {
             case "enemy":
                 die();
             case "key":
-                pickUpKey(map, (Key)gameObjectAt);
+                pickUpKey(map, (Key) gameObjectAt);
+                return true;
             case "tile":
                 return !gameObjectAt.isWalkable();
             case "boulder":
@@ -144,13 +146,11 @@ public class Player extends Entity {
                 System.out.println("Boulder detected");
                 return true;
             case "gem":
-                map.getPendingRemovals().add(gameObjectAt);
-                this.diamonds++;
-                this.setPosition(gameObjectAt.getPosition());
-                return true;
+                Item gem = (Item) gameObjectAt;
+                collectDiamond(map, gem);
             case "door":
                 LockedDoor doorObject = (LockedDoor) gameObjectAt;
-                if (doorObject.isLocked()){
+                if (doorObject.isLocked()) {
                     doorObject.unlock(keyChain);
                     return true;
                 } else {
@@ -159,6 +159,12 @@ public class Player extends Entity {
             default:
                 return false;
         }
+    }
+
+    public void collectDiamond(Map map, Item diamond) {
+        map.removeItem(diamond);
+        this.diamonds++;
+        System.out.println(diamonds);
     }
 
     @Override
@@ -177,7 +183,7 @@ public class Player extends Entity {
      */
     @Override
     public void update(Map map) {
-        tickCounter ++;
+        tickCounter++;
         System.out.println("PLAYER UPDATING");
         checkForWater(map, position);
         System.out.println("Current tick: " + tickCounter);
@@ -193,15 +199,15 @@ public class Player extends Entity {
      * Starts a countdown from x number of seconds, resulting in the
      * player drowning if they stay underwater too long.
      */
-        public void underwaterCountDown() {
-            int drowningTime = 5;
-            exitCounter = tickCounter + (5* drowningTime);
-            System.out.println("Countdown begun. Start: " + tickCounter + " End: " + exitCounter);
-        }
+    public void underwaterCountDown() {
+        int drowningTime = 5;
+        exitCounter = tickCounter + (5 * drowningTime);
+        System.out.println("Countdown begun. Start: " + tickCounter + " End: " + exitCounter);
+    }
 
-    private boolean checkForWater(Map map, GridPosition currentPosition)  {
+    private boolean checkForWater(Map map, GridPosition currentPosition) {
         if (map.getTileAt(currentPosition) instanceof Water) {
-            if (!isUnderwater){ //Entering water
+            if (!isUnderwater) { //Entering water
                 isUnderwater = true;
                 waterEntryCounter = tickCounter;
                 System.out.println("UNDERWATER DETECTED");
@@ -209,7 +215,7 @@ public class Player extends Entity {
                 return true;
             }
         } else {
-            if (isUnderwater){
+            if (isUnderwater) {
                 System.out.println("Exiting water");
                 isUnderwater = false;
                 exitCounter = 0;
@@ -218,8 +224,8 @@ public class Player extends Entity {
         return false;
     }
 
-    private void checkForDrowning(){
-        if (tickCounter == exitCounter){
+    private void checkForDrowning() {
+        if (tickCounter == exitCounter) {
             die();
         }
     }
@@ -227,6 +233,7 @@ public class Player extends Entity {
 
     /**
      * Handles logic for a player picking up a key
+     *
      * @param keyToPickUp the key the player should pick up
      */
     public void pickUpKey(Map map, final Key keyToPickUp) {
@@ -245,6 +252,7 @@ public class Player extends Entity {
 
     /**
      * Returns the players collection of keys.
+     *
      * @return array list representing all player collected keys
      */
     public ArrayList<Key> getKeyChain() {
@@ -260,6 +268,7 @@ public class Player extends Entity {
 
     /**
      * Returns the diamonds collected by the player.
+     *
      * @return amount of diamonds collected
      */
     public int getDiamonds() {
@@ -268,6 +277,7 @@ public class Player extends Entity {
 
     /**
      * Sets the diamonds collected for the player.
+     *
      * @param diamondsCollected amount
      */
     public void setDiamonds(int diamondsCollected) {
@@ -279,5 +289,9 @@ public class Player extends Entity {
      */
     public Boolean getLivingState() {
         return livingState;
+    }
+
+    public int getSecondsLeft() {
+        return Math.floorDiv((exitCounter - tickCounter), 5);
     }
 }
