@@ -31,11 +31,9 @@ public class GameController {
     private Map map; //Check w spas
 
     private int currentScene; //Maybe of type Scene instead?
-    private final int secondsToBeatLevel;
+//    private final int secondsToBeatLevel;
 
-    public int getSecondsToBeatLevel() {
-        return secondsToBeatLevel;
-    }
+
 
     /**
      * Creates a Game Controller,
@@ -61,7 +59,7 @@ public class GameController {
 
         displayMapFromFilePth(filePath);
         //TODO remove
-        this.secondsToBeatLevel = 105;
+//        this.secondsToBeatLevel = 105;
     }
 
     /**
@@ -143,5 +141,9 @@ public class GameController {
     }
     public int getGemsCollected() {
         return map.getPlayerObjectReference().getDiamonds();
+    }
+
+    public int getSecondsToBeatLevel() {
+        return map.getTimeLimit();
     }
 }
