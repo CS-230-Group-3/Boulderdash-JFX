@@ -91,47 +91,48 @@ public class SaveLoadController {
      * The file is created in ...
      * @param mapToSave the Map object to save`
      */
-    public static void saveMapToFile(Map mapToSave, String filePath) {
-        //TODO give the file name a more robust name (date + time maybe?)
-        String outputFile = "src/resources/saves/" + filePath +  ".txt";
-        try {
-            PrintWriter writer = new PrintWriter(outputFile);
-            int mapWidth = mapToSave.getMapWidth();
-            int mapHeight = mapToSave.getMapHeight();
-
-            writer.println(mapWidth + " " + mapHeight);
-
-            int charsWritten = 0;
-            ArrayList<Character> charToWrite = writeObjectsFromMap(mapToSave);
-            for (Character character : charToWrite) {
-                writer.print(character);
-                charsWritten++;
-                if (charsWritten % mapWidth == 0) {
-                    writer.println();
-                }
-            }
-            //TODO finalise whenever player collectables are complete
-            //Player data parsing
-//            Player playerRef = mapToSave.getPlayerObjectReference();
-//            if (!playerRef.getKeyChain().isEmpty()
-//                    || playerRef.getDiamonds() > 0) {
-//                //Map & Player Run stats divider
-//                writer.println("-");
-//                String playerData = playerToDataString(playerRef);
-//                writer.println(playerData);
+//    public static void saveMapToFile(Map mapToSave, String filePath) {
+//        //TODO give the file name a more robust name (date + time maybe?)
+//        String outputFile = "src/resources/saves/" + filePath +  ".txt";
+//        try {
+//            PrintWriter writer = new PrintWriter(outputFile);
+//            int mapWidth = mapToSave.getMapWidth();
+//            int mapHeight = mapToSave.getMapHeight();
+//
+//            writer.println(mapWidth + " " + mapHeight);
+//
+//            int charsWritten = 0;
+//            ArrayList<Character> charToWrite = writeObjectsFromMap(mapToSave);
+//            for (Character character : charToWrite) {
+//                writer.print(character);
+//                charsWritten++;
+//                if (charsWritten % mapWidth == 0) {
+//                    writer.println();
+//                }
 //            }
-            writer.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
+//            //TODO finalise whenever player collectables are complete
+//            //Player data parsing
+////            Player playerRef = mapToSave.getPlayerObjectReference();
+////            if (!playerRef.getKeyChain().isEmpty()
+////                    || playerRef.getDiamonds() > 0) {
+////                //Map & Player Run stats divider
+////                writer.println("-");
+////                String playerData = playerToDataString(playerRef);
+////                writer.println(playerData);
+////            }
+//            writer.close();
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
-    public static void saveMapToFileB(Map mapToSave, String filePath) {
+    public static void saveMapToFile(Map mapToSave, String filePath) {
         String outputFile = "src/resources/saves/" + filePath +  ".txt";
         try {
             PrintWriter writer = new PrintWriter(outputFile);
             int mapWidth = mapToSave.getMapWidth();
             int mapHeight = mapToSave.getMapHeight();
+            System.out.println("COUNT:" + TimeController.getTickCount() / 5);
             int remainingTime = mapToSave.getTimeLimit()
                     - (TimeController.getTickCount() / 5);
             int gems = mapToSave.getGemsToCollect();
@@ -172,6 +173,7 @@ public class SaveLoadController {
                 //Map & Player Run stats divider
                 writer.println("-");
                 String playerData = playerToDataString(playerRef);
+                System.out.println("PDATA: " + playerData);
                 writer.println(playerData);
             }
             writer.close();
@@ -214,10 +216,26 @@ public class SaveLoadController {
             case "D":
                 player.setDiamonds(amount);
                 break;
-            //TODO
-//            case 'K':
-//            player.setKeysCollected(amount);
-//            break;
+            case "R":
+                for (int i = 0; i < amount; i++) {
+                    player.getKeyChain().add(new RedKey());
+                }
+                break;
+            case "B":
+                for (int i = 0; i < amount; i++) {
+                    player.getKeyChain().add(new BlueKey());
+                }
+                break;
+            case "Y":
+                for (int i = 0; i < amount; i++) {
+                    player.getKeyChain().add(new YellowKey());
+                }
+                break;
+            case "P":
+                for (int i = 0; i < amount; i++) {
+                    player.getKeyChain().add(new PinkKey());
+                }
+                break;
         }
 
     }
@@ -349,7 +367,7 @@ public class SaveLoadController {
         }
     }
 
-    private String playerToDataString(Player player) {
+    private static String playerToDataString(Player player) {
         String output = "";
         ArrayList<Key> keyChain = player.getKeyChain();
         if (player.getDiamonds() > 0) {
@@ -362,9 +380,22 @@ public class SaveLoadController {
             int yellowKey = 0;
             int pinkKey = 0;
             output += "K " + player.getKeyChain().size() + "\n";
-//            for (Key key: keyChain) {
-//                if (key instanceof )
-//            }
+            for (Key key: keyChain) {
+                if (key instanceof RedKey) {
+                    redKey++;
+                }
+                if (key instanceof BlueKey) {
+                    blueKey++;
+                }
+                if (key instanceof YellowKey) {
+                    yellowKey++;
+                }
+                if (key instanceof PinkKey) {
+                    pinkKey ++;
+                }
+            }
+            output += "R " + redKey + "\nB " + blueKey +
+                    "\nY " + yellowKey + "\nP " + pinkKey;
 
         }
         return output;

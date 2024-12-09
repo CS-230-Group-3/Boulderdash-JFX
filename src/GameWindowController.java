@@ -82,7 +82,6 @@ public class GameWindowController {
 
 
         if (levelToLoad != null) {
-            System.out.println(Data.getInstance().getCurrentUser().hasLevelInProgress());
             if (!Data.getInstance().getCurrentUser().hasLevelInProgress()) {
                 this.gameController = new GameController(gameCanvas, levelToLoad.getFilePath());
             } else {
