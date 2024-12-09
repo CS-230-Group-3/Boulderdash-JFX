@@ -3,8 +3,7 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * <p>This Frog class is intended to hold information related to the Sprite, the position as well as an Update,
- * Delete and 3 Collision functions.</p>
+ * <p>This Frog class moves towards the player using A* algorithm and kills on touch</p>
  *
  * @author Joseph Parish.
  * @version 1.0.5
@@ -15,7 +14,7 @@ public class Frog extends PathfindingEnemy {
     private static final String FILE_PATH = "resources/assets/frog.png";
 
     /**
-     * Constructor to create a new Frog instance with a given starting position.
+     * Frog Constructor
      */
     public Frog() {
         super(FILE_PATH, new GridPosition(0, 0));
@@ -24,12 +23,19 @@ public class Frog extends PathfindingEnemy {
     }
 
     /**
-     * Updates the frog's state. This method is called every tick to perform actions such as moving the frog.
+     * Update Implemented
      */
     @Override
     public void update(Map map) {
         move(map, Direction.UP);
     }
+
+    /**
+     * Default implementation of collisionCheck
+     * @param map
+     * @param dir
+     * @return boolean
+     */
     @Override
     public boolean collisionCheck(Map map, Direction dir) {
         return false;
@@ -38,9 +44,9 @@ public class Frog extends PathfindingEnemy {
     /**
      * Checks for potential collisions at a given position.
      * This method checks if the frog collides with the player or an impassable tile.
-     *
-     * @param position the position to check for a collision.
-     * @return boolean indicating whether there is a collision.
+     * @param map
+     * @param position
+     * @return boolean
      */
     public boolean collisionCheck(Map map, GridPosition position) {
         GameObject objectAt = map.getObjectAt(position);
@@ -59,6 +65,8 @@ public class Frog extends PathfindingEnemy {
     /**
      * Moves the frog based on pathfinding logic. This method uses an algorithm called A* to find
      * a path towards the player and update the frog's position accordingly.
+     * @param map
+     * @param dir
      */
     public void move(Map map, final Direction dir) {
         ArrayList<int[]> path = AStarAlgorithm(map, this.getPosition(), map.getPlayerObjectReference().getPosition());

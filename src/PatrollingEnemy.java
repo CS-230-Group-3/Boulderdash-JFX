@@ -2,7 +2,7 @@
  * <p> Super for Butterfly and Firefly,
  * uses Movement priority to find the next path to move to.</p>
  *
- * @author Joseph.
+ * @author Joseph Parish.
  * @version 1.0.1
  * Last Changed: 6/12/24
  */
