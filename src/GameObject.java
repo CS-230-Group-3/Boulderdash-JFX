@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
  * status of game objects. Includes abstract methods update, collisionCheck, onCollision, and delete, as
  * well as getters and setters.
  *
- * @author Oscar and Ahmed.
+ * @author Oscar Baggs, Ahmed Zain
  * @version 1.0.2
  * Last changed: 22/11/2024
  */

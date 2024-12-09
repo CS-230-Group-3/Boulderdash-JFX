@@ -8,9 +8,9 @@ import javafx.scene.robot.Robot;
  * renders the game on the canvas, handles player input, calls for saving, loading,
  * graphics and rendering
  *
- * @author Spas and Bailey (and likely others remember to edit)
- * @version 1.0.1
- * Last changed: 03/12/2024N
+ * @author Spas Dikov, Bailey Cockett
+ * @version 1.0.6
+ * Last changed: 03/12/2024
  */
 
 public class GameController {

@@ -1,37 +1,62 @@
 /**
- * holds a list of amoeba objects. can find available space to grow and add new amoebas to the group.
- * its not a game object so im not 100% sure how thats gonna work. it wont be a problem for collision
- * because entities will identify the individual amoebas rather than the whole group.
- * Other than general clean up there is a redundancy issue in that initFirstAmoeba is called every
- * update when it only needs to be called once but idk how to do it
+ * Manages a group of {@code Amoeba} objects, handling their growth, grouping, and interactions.
+ * The group can find available space to grow and add new Amoebas. Although it is not a game object,
+ * individual Amoebas within the group are treated as entities for collision detection and other logic.
  *
  * @author Oscar
+ * @version 1.0.1
+ * Last Changed: 08/12/24
  */
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class AmoebaGroup extends Entity {
+
+    /**
+     * List of {@code Amoeba} objects that are part of this group.
+     */
     private List<Amoeba> amoebas;
-    int amoebaGrowthLimit = 20; //temporary variable, the growth limit will be specified in level file
+
+    /**
+     * The maximum number of Amoebas that this group can grow to.
+     */
+    private int amoebaGrowthLimit = 20; // Temporary variable; growth limit is specified in the level file.
+
+    /**
+     * The file path to the image asset for the group.
+     */
     private static final String FILE_PATH = "resources/assets/amoeba.png";
+
+    /**
+     * The first Amoeba in the group.
+     */
     private Amoeba firstAmoeba;
 
+    /**
+     * Constructs a new {@code AmoebaGroup} with a default update rate and initializes the first Amoeba.
+     */
     public AmoebaGroup() {
         super(FILE_PATH, new GridPosition(0, 0));
-        this.updateRate = 15; //amoebaGrowthLimit in level file should specify this
-
-        amoebas = new ArrayList<>();
-
+        this.updateRate = 15; // Growth rate specified in the level file.
+        this.amoebas = new ArrayList<>();
         this.firstAmoeba = new Amoeba();
         this.addAmoeba(firstAmoeba);
     }
 
+    /**
+     * Initializes the position of the first Amoeba in the group.
+     */
     public void initFirstAmoeba() {
         firstAmoeba.setPosition(this.getPosition());
     }
 
+    /**
+     * Updates the group's state in the game loop. Handles initialization, growth, or death.
+     *
+     * @param map the level map
+     */
+    @Override
     public void update(Map map) {
         initFirstAmoeba();
         if (this.isLimitReached(amoebaGrowthLimit)) {
@@ -42,18 +67,21 @@ public class AmoebaGroup extends Entity {
     }
 
     /**
-     * add an amoeba to the group
-     * @param amoeba amoeba to be added
+     * Adds a new {@code Amoeba} to the group.
+     *
+     * @param amoeba the Amoeba to be added
      */
     public void addAmoeba(Amoeba amoeba) {
         amoebas.add(amoeba);
     }
 
     /**
-     * gets orthogonal neighbours of every amoeba in the group and checks if they are a path or dirt.
-     * if so, add to freeSpaces list. theres probably a more efficient way to do this. a position can
-     * be added to the list more than once if it has multiple amoeba neighbours but this gives that
-     * position a higher chance of being selected for growth which i think makes sense.
+     * Identifies potential spaces for the group to grow into by checking neighboring positions.
+     * <p>
+     * Positions with multiple Amoeba neighbors are more likely to be selected for growth,
+     * simulating a natural spread.
+     * </p>
+     *
      * @param map the level map
      */
     public void findSpace(Map map) {
@@ -78,8 +106,10 @@ public class AmoebaGroup extends Entity {
     }
 
     /**
-     * randomly selects one of the free spaces found in findSpace and instantiates a new amoeba there
-     * @param freeSpaces
+     * Randomly selects a free space and grows a new Amoeba there.
+     *
+     * @param map the level map
+     * @param freeSpaces the list of available positions for growth
      */
     public void grow(Map map, List<GridPosition> freeSpaces) {
         Random random = new Random();
@@ -95,9 +125,11 @@ public class AmoebaGroup extends Entity {
     }
 
     /**
-     * deletes each amoeba and replaces with
-     * a diamond one by one
-     * @param limitReached flag to mark if growth limit reached
+     * Terminates all Amoebas in the group, replacing them with either {@code Boulder} or {@code Gem}
+     * objects based on whether the growth limit was reached.
+     *
+     * @param map the level map
+     * @param limitReached {@code true} if the growth limit was reached; {@code false} otherwise
      */
     public void die(Map map, boolean limitReached) {
         for (Amoeba amoeba : amoebas) {
@@ -118,44 +150,59 @@ public class AmoebaGroup extends Entity {
     }
 
     /**
-     * checks if growth limit reached
-     * @param amoebaGrowthLimit the growth limit for each level
-     * @return boolean - true if limit reached, false if not
+     * Checks if the group's size has reached the specified growth limit.
+     *
+     * @param amoebaGrowthLimit the growth limit
+     * @return {@code true} if the limit is reached; {@code false} otherwise
      */
     public boolean isLimitReached(int amoebaGrowthLimit) {
-        int amoebaSize = amoebas.size();
-        return amoebaSize >= amoebaGrowthLimit;
+        return amoebas.size() >= amoebaGrowthLimit;
     }
 
+    @Override
     public String toString() {
         return amoebas.toString();
     }
 
     @Override
     public void move(Map map, Direction dir) {
-
+        // No movement logic for the group itself
     }
 
     @Override
     public boolean collisionCheck(Map map, GridPosition position) {
-        return false;
+        return false; // No collision logic for the group itself
     }
 
     @Override
     public boolean collisionCheck(Map map, Direction dir) {
-        return false;
+        return false; // No collision logic for the group itself
     }
 
+    /**
+     * Sets the growth limit for the group.
+     *
+     * @param limit the new growth limit
+     */
     public void setGrowthLimit(int limit) {
         this.amoebaGrowthLimit = limit;
     }
 
+    /**
+     * Sets the growth rate for the group.
+     *
+     * @param rate the new growth rate
+     */
     public void setGrowthRate(int rate) {
         this.updateRate = rate;
     }
 
+    /**
+     * Gets the current growth limit for the group.
+     *
+     * @return the growth limit
+     */
     public int getAmoebaGrowthLimit() {
         return amoebaGrowthLimit;
     }
-
 }

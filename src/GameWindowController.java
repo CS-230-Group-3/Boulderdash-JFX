@@ -18,7 +18,11 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 
-
+/**
+ * Controller class responsible for managing the game window, including game state,
+ * pause menu, and UI updates. It handles user interactions and updates the display.
+ * @author Yuliia Shubina
+ */
 public class GameWindowController {
 
     @FXML
@@ -44,15 +48,17 @@ public class GameWindowController {
     private Text breathRemainingInSeconds;
 
     private boolean pauseMenuIsVisible = false;
-
     private GameController gameController;
     private static Level levelToLoad;
     private int remainingTimeInSeconds;
     private boolean secToBeatLvlRead = false;
 
+    /**
+     * Initializes the game window by setting up event listeners for key inputs and
+     * initializing the game controller. It also starts the UI update timeline.
+     */
     @FXML
     void initialize() {
-
         gameWindow.sceneProperty().addListener(
                 (observable, oldScene, newScene) -> {
                     if (newScene != null) {
@@ -65,7 +71,6 @@ public class GameWindowController {
                     }
                 });
 
-        //TODO hook to SLC to save game in progress for current player
         saveAndExitButton.setOnAction(this::handleSaveAndExitButton);
 
         gameWindow.setFocusTraversable(true);
@@ -80,7 +85,6 @@ public class GameWindowController {
         dTimeline.setCycleCount(Animation.INDEFINITE);
         dTimeline.play();
 
-
         if (levelToLoad != null) {
             if (!Data.getInstance().getCurrentUser().hasLevelInProgress()) {
                 this.gameController = new GameController(gameCanvas, levelToLoad.getFilePath());
@@ -91,6 +95,10 @@ public class GameWindowController {
         }
     }
 
+    /**
+     * Updates the UI elements such as the time left, diamonds collected, and other gameplay statistics.
+     * Called periodically by a timeline to refresh the display.
+     */
     private void handleUiUpdate() {
         if (!secToBeatLvlRead) {
             remainingTimeInSeconds = gameController.getSecondsToBeatLevel();
@@ -102,10 +110,6 @@ public class GameWindowController {
         Integer diamondsCollectedByPlayer =
                 gameController.getMap().getPlayerObjectReference().getDiamonds();
 
-        //TODO add when var is exposed
-//        breathRemainingInSeconds.setText("Time Remaining Under Water: " +
-//                gameController.getMap().getPlayerObjectReference().getSecondsLeft());
-
         diamondsCollected.setText(diamondsCollectedByPlayer.toString());
 
         if (TimeController.getTickCount() % 5 == 0) {
@@ -115,6 +119,12 @@ public class GameWindowController {
         }
     }
 
+    /**
+     * Formats the time in seconds to a "MM : SS" format for display.
+     *
+     * @param seconds the time in seconds
+     * @return the formatted time string
+     */
     private String formatSecondsToString(int seconds) {
         String output;
         if (seconds > 59) {
@@ -137,13 +147,24 @@ public class GameWindowController {
             output = "0 : 00";
         }
         return output;
-
     }
 
+    /**
+     * Sets the level to be loaded in the game.
+     *
+     * @param level the level to be loaded
+     */
     public static void setLevel(Level level) {
         levelToLoad = level;
     }
 
+    /**
+     * Toggles the visibility of the pause menu.
+     * If the game is running, it will either show or hide the pause menu.
+     * If the game is not running, it handles the display of the lose or level complete screens.
+     *
+     * @param e the key event that triggered this action
+     */
     private void togglePauseMenu(KeyEvent e) {
         if (gameController.isGameIsRunning()) {
             if (e.getCode() == KeyCode.ESCAPE) {
@@ -172,6 +193,9 @@ public class GameWindowController {
         }
     }
 
+    /**
+     * Displays the "You Lose!" screen and updates the UI accordingly.
+     */
     public void handleLoseScreen() {
         pauseMenu.setOpacity(1);
         pauseMenuIsVisible = true;
@@ -181,9 +205,11 @@ public class GameWindowController {
         saveAndExitButton.setText("Back to Level Select");
         saveAndExitButton.setOnAction(this::handleBackToLevels);
         pauseTitle.setText("You Lose!");
-
     }
 
+    /**
+     * Displays the "Congratulations!" screen when the player completes the level.
+     */
     private void handleLevelComplete() {
         pauseMenu.setOpacity(1);
         pauseMenuIsVisible = true;
@@ -196,6 +222,11 @@ public class GameWindowController {
         pauseTitle.setText("Congratulations!");
     }
 
+    /**
+     * Handles the transition back to the level selection screen after the player saves or exits.
+     *
+     * @param event the action event that triggered this transition
+     */
     private void handleBackToLevels(ActionEvent event) {
         try {
             gameWindow = (AnchorPane) FXMLLoader.
@@ -210,12 +241,13 @@ public class GameWindowController {
         }
     }
 
-
-
+    /**
+     * Handles the saving of the game progress when the player chooses to save and exit.
+     *
+     * @param event the action event that triggered the save and exit
+     */
     private void handleSaveAndExitButton(ActionEvent event) {
-        //Save GAme in progress
         Data.getInstance().getCurrentUser().setHasLevelInProgress(true);
-        //Call SLC.saveFile(String)
         User currentUser = Data.getInstance().getCurrentUser();
         SaveLoadController.saveMapToFile(gameController.getMap(),
                 currentUser.getName() +

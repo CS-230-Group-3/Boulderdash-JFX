@@ -3,6 +3,9 @@
  * Its movement involves a priority-based system with 90-degree rotations.
  * The direction in which it "faces" is tracked by {@code lastMovement}, and
  * {@code leftMoving} determines whether it prefers anti-clockwise or clockwise rotations.
+ *
+ * @author: Oscar Baggs, Joseph Paris, Diya Patel
+ * @version 1.0.1
  */
 
 import java.util.ArrayList;
