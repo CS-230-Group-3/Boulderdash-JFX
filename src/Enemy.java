@@ -10,13 +10,21 @@ import java.util.List;
  * Last Changed: 30/11/24
  */
 public abstract class Enemy extends Entity {
-    private Boolean livingState;
 
+    /**
+     * Enemy Constructor
+     * @param pathToSprite
+     * @param position
+     */
     public Enemy(String pathToSprite, GridPosition position) {
         super(pathToSprite, position);
         this.type = "enemy";
     }
 
+    /**
+     * Destroys objects in a 9x9 grid
+     * @param map
+     */
     public void destroy(Map map) {
         for (GameObject object : get9x9Grid(map)) {
             if (!(object instanceof TitaniumWall)) {
@@ -25,6 +33,11 @@ public abstract class Enemy extends Entity {
         }
     }
 
+    /**
+     * gets objects in a 9x9 grid
+     * @param map
+     * @return destroyedObjects
+     */
     public List<GameObject> get9x9Grid(Map map) {
         List<GameObject> destroyedObjects = new ArrayList<>();
         List<Direction> northSouthEastWest = new ArrayList<>();
