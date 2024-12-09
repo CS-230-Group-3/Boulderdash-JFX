@@ -138,7 +138,9 @@ public class Player extends Entity {
         }
         switch (gameObjectAt.getType()) {
             case "amoeba":
-                return false;
+                return true;
+            case "goblin":
+                return true;
             case "enemy":
                 die();
             case "key":
