@@ -7,16 +7,16 @@
 
 <AnchorPane fx:id="helloWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1400.0" style="-fx-background-image: url('/resources/entryWay2.jpg'); -fx-background-position: center; -fx-background-size: cover;" stylesheets="@resources/start-style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="HelloController">
     <children>
-        <Label layoutX="350.0" layoutY="163.0" styleClass="jungle-text" text="JUNGLE" textFill="#ae0017">
+        <Label layoutX="400.0" layoutY="161.0" styleClass="jungle-text" text="JUNGLE" textFill="#ae0017">
             <font>
                 <Font name="SimSun" size="200.0" />
             </font></Label>
-        <Label layoutX="534.0" layoutY="363.0" prefHeight="74.0" prefWidth="231.0" styleClass="adventure-text" text="Adventure" textFill="#ae0017">
+        <Label layoutX="584.0" layoutY="363.0" prefHeight="74.0" prefWidth="231.0" styleClass="adventure-text" text="Adventure" textFill="#ae0017">
             <font>
                 <Font name="SimSun" size="50.0" />
             </font>
         </Label>
-        <Button id="startApp" fx:id="startApp" layoutX="398.0" layoutY="479.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#initialize" onMouseClicked="#initialize" prefHeight="106.0" prefWidth="504.0" style="-fx-background-color: #ae0017; -fx-border-color: transparent; -fx-text-fill: white; -fx-font-style: normal; -fx-background-radius: 15; -fx-font-family: SimSun; -fx-font-size: 50;" text="PRESS TO START">
+        <Button id="startApp" fx:id="startApp" layoutX="448.0" layoutY="479.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#initialize" onMouseClicked="#initialize" prefHeight="106.0" prefWidth="504.0" style="-fx-background-color: #ae0017; -fx-border-color: transparent; -fx-text-fill: white; -fx-font-style: normal; -fx-background-radius: 15; -fx-font-family: SimSun; -fx-font-size: 50;" text="PRESS TO START">
             <font>
                 <Font name="SimSun" size="30.0" />
             </font>

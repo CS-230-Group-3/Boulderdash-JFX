@@ -93,23 +93,29 @@ public class LevelController {
             selectLevel3.setOpacity(0.5);
             selectLevel1.setOnMouseClicked(event ->
                     playLevel(event, selectLevel1));
+            levelOneHighScores.setOnMouseClicked(event -> playLevel(event, selectLevel1));
 
         } else if (currentUser.getUnlockedLevels().size() < 3) {
             // 2 levels unlocked
             selectLevel3.setOpacity(0.5);
             selectLevel1.setOnMouseClicked(event ->
                     playLevel(event, selectLevel1));
+            levelOneHighScores.setOnMouseClicked(event -> playLevel(event, selectLevel1));
             selectLevel2.setOnMouseClicked(event ->
                     playLevel(event, selectLevel2));
+            levelTwoHighScores.setOnMouseClicked(event -> playLevel(event, selectLevel2));
 
         } else {
             //All levels unlocked
             selectLevel1.setOnMouseClicked(event ->
                     playLevel(event, selectLevel1));
+            levelOneHighScores.setOnMouseClicked(event -> playLevel(event, selectLevel1));
             selectLevel2.setOnMouseClicked(event ->
                     playLevel(event, selectLevel2));
+            levelTwoHighScores.setOnMouseClicked(event -> playLevel(event, selectLevel2));
             selectLevel3.setOnMouseClicked(event ->
                     playLevel(event, selectLevel3));
+            levelThreeHighScores.setOnMouseClicked(event -> playLevel(event, selectLevel3));
         }
 
     }

@@ -11,7 +11,7 @@
 
 <AnchorPane fx:id="gameWindow" focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1400.0" stylesheets="@resources/pause-style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GameWindowController">
    <children>
-      <Canvas fx:id="gameCanvas" height="800.0" layoutY="20.0" width="1400.0" />
+      <Canvas fx:id="gameCanvas" height="772.0" layoutY="48.0" width="1400.0" />
       <AnchorPane fx:id="pauseMenu" layoutX="-1.0" layoutY="-1.0" minHeight="-Infinity" minWidth="-Infinity" opacity="0.0" prefHeight="800.0" prefWidth="1400.0" style="-fx-background-color: transparent;" stylesheets="@resources/pause-style.css">
          <children>
             <VBox fx:id="buttonsBox" alignment="TOP_CENTER" layoutX="-1.0" layoutY="-1.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1400.0" spacing="25.0" style="-fx-alignment: center;" styleClass="transparent" stylesheets="@resources/pause-style.css">
@@ -37,18 +37,30 @@
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
+                     <font>
+                        <Font size="25.0" />
+                     </font>
                   </Text>
                   <Text fx:id="diamondsCollected" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
                      <HBox.margin>
                         <Insets right="-20.0" />
                      </HBox.margin>
+                     <font>
+                        <Font size="25.0" />
+                     </font>
                   </Text>
                   <Text fx:id="diamondsToCollect" strokeType="OUTSIDE" strokeWidth="0.0" text="/ 20 ">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
+                     <font>
+                        <Font size="25.0" />
+                     </font>
                   </Text>
-                  <Text fx:id="breathLeft" strokeType="OUTSIDE" strokeWidth="0.0" text="RemainingBreath" />
+                  <Text fx:id="breathLeft" strokeType="OUTSIDE" strokeWidth="0.0" text="Remaining Breath">
+                     <font>
+                        <Font size="25.0" />
+                     </font></Text>
                </children>
                <padding>
                   <Insets top="5.0" />
