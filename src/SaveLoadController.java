@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 /**
  * Utility class for saving & loading map data.
+ *
  * @author Yuliia & Spas
  */
 public class SaveLoadController {
@@ -13,6 +14,7 @@ public class SaveLoadController {
     /**
      * Loads map data from file.
      * Creates and returns a new map object
+     *
      * @param filePath path to level file
      * @return a Map object populated with data form the level file
      */
@@ -91,6 +93,7 @@ public class SaveLoadController {
     /**
      * Creates a new save file from Map object.
      * The file is created in ...
+     *
      * @param mapToSave the Map object to save`
      */
     public void saveMapToFile(Map mapToSave) {
@@ -105,7 +108,7 @@ public class SaveLoadController {
 
             int charsWritten = 0;
             ArrayList<Character> charToWrite = writeObjectsFromMap(mapToSave);
-            for (Character character: charToWrite) {
+            for (Character character : charToWrite) {
                 writer.print(character);
                 charsWritten++;
                 if (charsWritten % mapWidth == 0) {
@@ -130,12 +133,12 @@ public class SaveLoadController {
 
     private ArrayList<Character> writeObjectsFromMap(Map map) {
         ArrayList<Character> output = new ArrayList<>();
-        for (GameObject object: map.getTileLayer()) {
+        for (GameObject object : map.getTileLayer()) {
             output.add(
                     getCharFromObject(object)
             );
         }
-        for (GameObject object: map.getEntityLayer()) {
+        for (GameObject object : map.getEntityLayer()) {
             int index = map.gridToIndex(object.getPosition());
             output.add(index, getCharFromObject(object));
             output.remove(index + 1);
@@ -145,13 +148,14 @@ public class SaveLoadController {
 
     //Loading helpers
     private Player getPlayerFromList(ArrayList<GameObject> objects) {
-        for (GameObject object: objects) {
+        for (GameObject object : objects) {
             if (object instanceof Player) {
                 return (Player) object;
             }
         }
         return null;
     }
+
     private void populatePlayerItem(String item, int amount, Player player) {
         switch (item) {
             case "D":
@@ -164,6 +168,7 @@ public class SaveLoadController {
         }
 
     }
+
     private Map populateMapWithLayers(Map map, ArrayList<GameObject> tileLayer, ArrayList<GameObject> entityLayer) {
         if (map != null) {
             map.setLayersTo(tileLayer, entityLayer);
@@ -275,7 +280,7 @@ public class SaveLoadController {
             case "YellowKey":
                 return '£';
             case "PinkKey":
-                 return '$';
+                return '$';
             case "RedDoor":
                 return '1';
             case "BlueDoor":
@@ -284,11 +289,12 @@ public class SaveLoadController {
                 return '3';
             case "PinkDoor":
                 return '4';
-             default:
+            default:
                 return '*';
 
         }
     }
+
     private String playerToDataString(Player player) {
         String output = "";
         if (player.getDiamonds() > 0) {

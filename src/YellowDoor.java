@@ -1,4 +1,4 @@
-public class YellowDoor extends LockedDoor{
+public class YellowDoor extends LockedDoor {
 
     KeyColour colour = KeyColour.YELLOW;
 
@@ -6,11 +6,9 @@ public class YellowDoor extends LockedDoor{
 
 
     public YellowDoor() {
-        super(FILE_PATH,new GridPosition(0,0));
+        super(FILE_PATH, new GridPosition(0, 0));
         this.type = "door";
     }
-
-
 
 
 }

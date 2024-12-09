@@ -36,7 +36,7 @@ public class Level implements Serializable {
             if (highScores.size() > MAX_HIGH_SCORE_ENTRIES) {
                 highScores.removeLast();
             }
-        //Add score if array has room to grow
+            //Add score if array has room to grow
         } else if (index < MAX_HIGH_SCORE_ENTRIES - 1) {
             highScores.add(index, newHighScore);
         }

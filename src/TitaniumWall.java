@@ -9,7 +9,8 @@ public class TitaniumWall extends Tile {
     }
 
     @Override
-    public void update(Map map) {}
+    public void update(Map map) {
+    }
 
     @Override
     public boolean collisionCheck() {
@@ -17,5 +18,6 @@ public class TitaniumWall extends Tile {
     }
 
     @Override
-    public void delete() {}
+    public void delete() {
+    }
 }

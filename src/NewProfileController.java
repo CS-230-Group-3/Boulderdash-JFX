@@ -10,10 +10,14 @@ import java.util.ArrayList;
 
 
 public class NewProfileController {
-    @FXML TextField nameField;
-    @FXML Button cancelButton;
-    @FXML Button createButton;
-    @FXML Pane anchorPane;
+    @FXML
+    TextField nameField;
+    @FXML
+    Button cancelButton;
+    @FXML
+    Button createButton;
+    @FXML
+    Pane anchorPane;
 
     private ArrayList<User> users = new ArrayList<>();
 
@@ -27,7 +31,7 @@ public class NewProfileController {
         this.users = users;
     }
 
-    private void handleCreateButton()  {
+    private void handleCreateButton() {
         String name = nameField.getText();
         User newUser = new User(name);
 

@@ -58,21 +58,21 @@ public class LevelController {
         backButton.setOnAction(event -> handleBackButton(event));
         //Populate lvl 1 HS
         Level levelOne = Data.getInstance().getAvailableLevels().getFirst();
-        for (HighScore hs: levelOne.getHighScores()) {
+        for (HighScore hs : levelOne.getHighScores()) {
             levelOneHighScores.getItems().add(
                     hs.getUserName() + "\t\t" + hs.getScore());
         }
 
         //Populate lvl 2 HS
         Level levelTwo = Data.getInstance().getAvailableLevels().get(1);
-        for (HighScore hs: levelTwo.getHighScores()) {
+        for (HighScore hs : levelTwo.getHighScores()) {
             levelTwoHighScores.getItems().add(
                     hs.getUserName() + "\t\t" + hs.getScore());
         }
 
         //Populate lvl 3 HS
         Level levelThree = Data.getInstance().getAvailableLevels().getLast();
-        for (HighScore hs: levelThree.getHighScores()) {
+        for (HighScore hs : levelThree.getHighScores()) {
             levelThreeHighScores.getItems().add(
                     hs.getUserName() + "\t\t" + hs.getScore());
         }
@@ -119,6 +119,7 @@ public class LevelController {
         }
 
     }
+
     private void openNewWindow(String fxmlFileName) {
         try {
             FXMLLoader loader = new FXMLLoader(
@@ -169,7 +170,7 @@ public class LevelController {
         return levelToStart;
     }
 
-    private void handleBackButton(ActionEvent event){
+    private void handleBackButton(ActionEvent event) {
         try {
             selectLevelWindow = (AnchorPane) FXMLLoader.
                     load(getClass().getResource("choose-user.fxml"));

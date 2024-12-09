@@ -2,13 +2,13 @@ public class PinkKey extends Key {
     private static final String FILE_PATH = "resources/assets/keypink.png";
 
     public PinkKey() {
-        super(FILE_PATH, new GridPosition(0,0));
+        super(FILE_PATH, new GridPosition(0, 0));
         this.type = "key";
 
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "Pink Key";
     }
 }

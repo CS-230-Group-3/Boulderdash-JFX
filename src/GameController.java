@@ -7,6 +7,7 @@ import javafx.scene.robot.Robot;
  * GameController class is responsible for managing the core logic of the game. It
  * renders the game on the canvas, handles player input, calls for saving, loading,
  * graphics and rendering
+ *
  * @author Spas and Bailey (and likely others remember to edit)
  * @version 1.0.1
  * Last changed: 03/12/2024N
@@ -34,10 +35,10 @@ public class GameController {
 //    private final int secondsToBeatLevel;
 
 
-
     /**
      * Creates a Game Controller,
      * responsible for displaying & handling logic for the game.
+     *
      * @param canvasToDisplayGame the canvas to display the game on
      */
     public GameController(Canvas canvasToDisplayGame) {
@@ -49,8 +50,9 @@ public class GameController {
     /**
      * Creates a Game Controller,
      * responsible for displaying & handling logic for the game.
+     *
      * @param canvasToDisplayGame the canvas to display the game on
-     * @param filePath file path to the level
+     * @param filePath            file path to the level
      */
     public GameController(Canvas canvasToDisplayGame, String filePath) {
         this.canvas = canvasToDisplayGame;
@@ -65,6 +67,7 @@ public class GameController {
     /**
      * Displays map from the provided file path, whenever
      * a map has not been assigned.
+     *
      * @param filePath file path to the level
      */
     public void displayMapFromFilePth(String filePath) {
@@ -126,6 +129,7 @@ public class GameController {
 
     /**
      * Returns the canvas the games is displayed on.
+     *
      * @return canvas object containing the game
      */
     public Canvas getCanvas() {
@@ -134,11 +138,13 @@ public class GameController {
 
     /**
      * Returns the graphics controller for game.
+     *
      * @return graphics controller instance
      */
     public GraphicsController getGraphicsController() {
         return graphicsController;
     }
+
     public int getGemsCollected() {
         return map.getPlayerObjectReference().getDiamonds();
     }

@@ -31,13 +31,14 @@ public class HelloController {
         startApp.setOnAction(event -> openUserWindow(event));
     }
 
-    private void openUserWindow(ActionEvent event){
+    private void openUserWindow(ActionEvent event) {
         try {
             helloWindow = (AnchorPane) FXMLLoader.
                     load(getClass().getResource("choose-user.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).
                     getScene().getWindow();
-            Scene scene = new Scene(helloWindow, MainUI.MAIN_WINDOW_WIDTH, MainUI.MAIN_WINDOW_HEIGHT);
+            Scene scene = new Scene(helloWindow,
+                    MainUI.MAIN_WINDOW_WIDTH, MainUI.MAIN_WINDOW_HEIGHT);
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {

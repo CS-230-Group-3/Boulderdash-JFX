@@ -29,6 +29,7 @@ public class Gem extends Item {
             map.getPendingAdditions().add(boulder);
         }
     }
+
     public void delete() {
         //play gem collection sound
     }

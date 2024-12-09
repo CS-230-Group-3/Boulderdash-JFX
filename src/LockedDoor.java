@@ -37,6 +37,4 @@ public class LockedDoor extends Tile {
     }
 
 
-
-
 }

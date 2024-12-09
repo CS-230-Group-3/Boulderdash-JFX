@@ -89,7 +89,7 @@ public class Data implements Serializable {
 
         if (dir.isDirectory()) {
             File[] files = dir.listFiles();
-            for (File file: files) {
+            for (File file : files) {
                 levels.add(
                         new Level(file.getName())
                 );

@@ -7,8 +7,9 @@ public class HighScore implements Serializable {
 
     /**
      * Creates a high score.
+     *
      * @param userName name of user that archived the score
-     * @param score score of the user
+     * @param score    score of the user
      */
     public HighScore(String userName, int score) {
         this.userName = userName;
