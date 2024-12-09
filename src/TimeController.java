@@ -54,7 +54,6 @@ public class TimeController {
         //Check if player is dead or on top of an exit
         Player player = gameController.getMap().getPlayerObjectReference();
         if ((tickCount / 5) >= gameController.getSecondsToBeatLevel()) {
-            System.out.println("TICKS " + tickCount * 5);
             player.die();
         }
 
@@ -77,6 +76,7 @@ public class TimeController {
             data.getCurrentUser().setHasLevelInProgress(false);
         }
         gameController.setGameIsRunning(false);
+        tickCount = 0;
         showPauseMenu();
     }
 
@@ -102,11 +102,11 @@ public class TimeController {
             );
         }
         gameController.setGameIsRunning(false);
+        tickCount = 0;
         showPauseMenu();
     }
 
     private void showPauseMenu() {
-        //Would be part of the handle victory & da feet
         //Learned from https://stackoverflow.com/questions/24258995/how-to-programmatically-simulate-arrow-key-presses-in-java-fx
         Robot r = new Robot();
         r.keyPress(KeyCode.ESCAPE);
@@ -139,5 +139,9 @@ public class TimeController {
      */
     public boolean isPaused() {
         return isPaused;
+    }
+
+    public static void resetTicks() {
+        tickCount = 0;
     }
 }

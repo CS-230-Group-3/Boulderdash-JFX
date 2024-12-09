@@ -103,7 +103,8 @@ public class GameWindowController {
                 gameController.getMap().getPlayerObjectReference().getDiamonds();
 
         //TODO add when var is exposed
-//        breathRemainingInSeconds.setText(gameController.getMap().getPlayerObjectReference().getTimer());
+//        breathRemainingInSeconds.setText("Time Remaining Under Water: " +
+//                gameController.getMap().getPlayerObjectReference().getSecondsLeft());
 
         diamondsCollected.setText(diamondsCollectedByPlayer.toString());
 
@@ -221,6 +222,7 @@ public class GameWindowController {
                         " " +
                         currentUser.getCurrentLevel().getLevelName());
 
+        TimeController.resetTicks();
         handleBackToLevels(event);
     }
 }

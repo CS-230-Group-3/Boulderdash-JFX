@@ -132,7 +132,6 @@ public class SaveLoadController {
             PrintWriter writer = new PrintWriter(outputFile);
             int mapWidth = mapToSave.getMapWidth();
             int mapHeight = mapToSave.getMapHeight();
-            System.out.println("COUNT:" + TimeController.getTickCount() / 5);
             int remainingTime = mapToSave.getTimeLimit()
                     - (TimeController.getTickCount() / 5);
             int gems = mapToSave.getGemsToCollect();
