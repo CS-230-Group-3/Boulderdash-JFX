@@ -25,7 +25,7 @@ public class Item extends Entity {
             }
             case Butterfly _ when (this instanceof Boulder || this instanceof Gem) -> {
                 Butterfly downNeighbourButterfly = (Butterfly) downNeighbour;
-                downNeighbourButterfly.dostroi(map);
+                downNeighbourButterfly.destroy(map);
                 map.getPendingRemovals().add(this);
                 map.getPendingRemovals().add((downNeighbourButterfly));
                 this.move(map, Direction.DOWN);
@@ -34,7 +34,7 @@ public class Item extends Entity {
             }
             case Enemy _ when (this instanceof Boulder || this instanceof Gem) -> {
                 Enemy downNeighbourEnemy = (Enemy) downNeighbour;
-                downNeighbourEnemy.dostroi(map);
+                downNeighbourEnemy.destroy(map);
                 map.getPendingRemovals().add(this);
                 map.getPendingRemovals().add((downNeighbourEnemy));
                 this.move(map, Direction.DOWN);
@@ -94,14 +94,6 @@ public class Item extends Entity {
             ));
         }
     }
-
-    @Override
-    public boolean collisionCheck() {
-        return false;
-    }
-
-    @Override
-    public void delete() {}
 
 
     @Override

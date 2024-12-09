@@ -12,15 +12,4 @@ public class Wall extends Tile {
     public void update(Map map) {
 
     }
-
-    @Override
-    public boolean collisionCheck() {
-        return false;
-    }
-
-
-    @Override
-    public void delete() {
-
-    }
 }

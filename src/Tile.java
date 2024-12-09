@@ -22,6 +22,10 @@ public abstract class Tile extends GameObject {
         this.type = "tile";
     }
 
+    public void delete(Map map){
+        map.destroyTile(this);
+    }
+
     /**
      * Checks if the tile is walkable.
      * @return true if the tile is walkable, false if not.

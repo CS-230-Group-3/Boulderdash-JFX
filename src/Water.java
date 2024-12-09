@@ -33,12 +33,4 @@ public class Water extends Tile {
         map.getPendingAdditions().add(water);
         //play flowing sound
     }
-
-    @Override
-    public boolean collisionCheck() {
-        return false;
-    }
-
-    @Override
-    public void delete() {}
 }

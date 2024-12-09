@@ -20,15 +20,6 @@ public class Amoeba extends Entity {
     }
 
     @Override
-    public boolean collisionCheck() {
-        return false;
-    }
-
-    @Override
-    public void delete() {
-    }
-
-    @Override
     public void move(Map map, Direction dir) {
     }
 

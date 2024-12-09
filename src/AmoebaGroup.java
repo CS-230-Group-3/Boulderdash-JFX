@@ -40,16 +40,6 @@ public class AmoebaGroup extends Entity {
         }
     }
 
-    @Override
-    public boolean collisionCheck() {
-        return false;
-    }
-
-    @Override
-    public void delete() {
-
-    }
-
     /**
      * add an amoeba to the group
      * @param amoeba amoeba to be added

@@ -84,14 +84,4 @@ public class PatrollingEnemy extends Enemy
     public boolean collisionCheck(Map map, Direction dir) {
         return false;
     }
-
-    @Override
-    public boolean collisionCheck() {
-        return false;
-    }
-
-    @Override
-    public void delete() {
-
-    }
 }

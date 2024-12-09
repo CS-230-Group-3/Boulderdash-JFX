@@ -19,16 +19,6 @@ public abstract class LockedDoor extends Tile {
 
     }
 
-    @Override
-    public boolean collisionCheck() {
-        return false;
-    }
-
-    @Override
-    public void delete() {
-
-    }
-
     public abstract void unlock(Map map, ArrayList<Key> keychain);
 
 

@@ -10,12 +10,4 @@ public class MagicWall extends Tile {
 
     @Override
     public void update(Map map) {}
-
-    @Override
-    public boolean collisionCheck() {
-        return false;
-    }
-
-    @Override
-    public void delete() {}
 }

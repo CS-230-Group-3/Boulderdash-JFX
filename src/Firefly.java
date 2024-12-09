@@ -147,16 +147,6 @@ public class Firefly extends Enemy {
     }
 
     /**
-     * Checks for collisions without specifying a direction or position.
-     *
-     * @return true if a collision is detected, false otherwise.
-     */
-    @Override
-    public boolean collisionCheck() {
-        return false; // Implement collision logic as needed.
-    }
-
-    /**
      * Checks for collisions at a specific position, including interactions with the player.
      *
      * @param gameController the game's controller containing map and player references.
@@ -176,15 +166,7 @@ public class Firefly extends Enemy {
         }
     }
 
-    /**
-     * Deletes the butterfly from the game, triggering its destruction sequence.
-     * The destruction includes exploding a 9x9 grid of tiles and spawning diamonds in their place.
-     */
-    @Override
-    public void delete() {
-    }
-
-    public void dostroi(Map map) {
+    public void destroy(Map map) {
         for (GameObject object : get9x9Grid(map)) {
             if (!(object instanceof TitaniumWall)) {
                 map.getPendingRemovals().add(object);
