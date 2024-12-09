@@ -140,7 +140,8 @@ public class Player extends Entity {
             case "amoeba":
                 return true;
             case "goblin":
-                return true;
+                System.out.println("Got goblino'd!");
+                this.diamonds --;
             case "enemy":
                 die();
             case "key":
