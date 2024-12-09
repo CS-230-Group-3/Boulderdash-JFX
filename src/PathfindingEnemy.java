@@ -4,8 +4,6 @@ public abstract class PathfindingEnemy extends Enemy {
     Node start, end;
     ArrayList<Node> walkableTiles = new ArrayList<>();
     ArrayList<Node> walkedTiles = new ArrayList<>();
-
-    int rows, cols;
     int[] dx = {-1, 1, 0, 0};
     int[] dy = {0, 0, -1, 1};
 
@@ -16,8 +14,6 @@ public abstract class PathfindingEnemy extends Enemy {
     public ArrayList<int[]> AStarAlgorithm(Map map, GridPosition enemyPos, GridPosition playerPos) {
         walkableTiles.clear();
         walkedTiles.clear();
-        rows = map.getMapHeight();
-        cols = map.getMapWidth();
 
         start = new Node(enemyPos.getX(), enemyPos.getY(), null);
         end = new Node(playerPos.getX(), playerPos.getY(), null);
@@ -44,7 +40,6 @@ public abstract class PathfindingEnemy extends Enemy {
 
             walkedTiles.add(current);
 
-            // Explore neighbors
             for (int i = 0; i < 4; i++) {
                 int newX = current.x + dx[i];
                 int newY = current.y + dy[i];
@@ -75,7 +70,7 @@ public abstract class PathfindingEnemy extends Enemy {
     }
 
     private boolean isValid(int x, int y, Map map) {
-        if (x >= 0 && y >= 0 && x < rows && y < cols) {
+        if (x >= 0 && y >= 0 && x < map.getMapHeight() && y < map.getMapWidth()) {
             if (map.getObjectAt(new GridPosition(x, y)) == null) {
                 return true;
             } else if (map.getObjectAt(new GridPosition(x, y)) == map.getPlayerObjectReference()) {

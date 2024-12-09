@@ -213,32 +213,16 @@ public class SaveLoadController {
         switch (c) {
             case 'P':
                 return new Path();
-            case 'W':
-                return new Wall();
             case 'D':
                 return new Dirt();
-            case 'R':
-                return new Player();
-            case 'A':
-                return new Water();
-            case 'G':
-                return new MagicWall();
+            case 'W':
+                return new Wall();
             case 'T':
                 return new TitaniumWall();
+            case 'G':
+                return new MagicWall();
             case 'E':
                 return new Exit();
-            case 'B':
-                return new Boulder();
-            case 'U':
-                return new Butterfly();
-            case 'F':
-                return new Frog();
-            case 'O':
-                return new Gem();
-            case 'S':
-                return new Firefly();
-            case '@':
-                return new AmoebaGroup();
             case '!':
                 return new RedKey();
             case '"':
@@ -255,8 +239,24 @@ public class SaveLoadController {
                 return new YellowDoor();
             case '4':
                 return new PinkDoor();
+            case 'R':
+                return new Player();
+            case 'B':
+                return new Boulder();
+            case 'O':
+                return new Gem();
+            case 'U':
+                return new Butterfly();
+            case 'S':
+                return new Firefly();
+            case 'F':
+                return new Frog();
+            case '@':
+                return new AmoebaGroup();
             case 'N':
                 return new Goblin();
+            case 'A':
+                return new Water();
             default:
                 return new Path();
         }

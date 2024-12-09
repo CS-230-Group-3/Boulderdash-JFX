@@ -74,10 +74,18 @@ public class Frog extends PathfindingEnemy {
             Random rand = new Random();
             List<GameObject> neighbours = new ArrayList<>();
 
-            neighbours.add(map.getNeighbourOf(this, Direction.UP));
-            neighbours.add(map.getNeighbourOf(this, Direction.LEFT));
-            neighbours.add(map.getNeighbourOf(this, Direction.RIGHT));
-            neighbours.add(map.getNeighbourOf(this, Direction.DOWN));
+            if (map.getNeighbourOf(this, Direction.UP) != null) {
+                neighbours.add(map.getNeighbourOf(this, Direction.UP));
+            }
+            if (map.getNeighbourOf(this, Direction.LEFT) != null) {
+                neighbours.add(map.getNeighbourOf(this, Direction.LEFT));
+            }
+            if (map.getNeighbourOf(this, Direction.RIGHT) != null) {
+                neighbours.add(map.getNeighbourOf(this, Direction.RIGHT));
+            }
+            if (map.getNeighbourOf(this, Direction.DOWN) != null) {
+                neighbours.add(map.getNeighbourOf(this, Direction.DOWN));
+            }
 
             List<GameObject> pathNeighbours = new ArrayList<>();
             for (GameObject neighbour : neighbours) {
@@ -85,8 +93,10 @@ public class Frog extends PathfindingEnemy {
                     pathNeighbours.add(neighbour);
                 }
             }
-            int randindex = rand.nextInt(pathNeighbours.size());
-            this.setPosition(pathNeighbours.get(randindex).getPosition());
+            if (!pathNeighbours.isEmpty()) {
+                int randindex = rand.nextInt(pathNeighbours.size());
+                this.setPosition(pathNeighbours.get(randindex).getPosition());
+            }
         }
     }
 
