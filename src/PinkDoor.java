@@ -1,12 +1,12 @@
 import java.util.ArrayList;
 
-public class PinkDoor extends LockedDoor{
+public class PinkDoor extends LockedDoor {
 
     private static final String FILE_PATH = "resources/assets/keypink.png";
     public boolean isLocked = true;
 
     public PinkDoor() {
-        super(FILE_PATH, new GridPosition(0,0));
+        super(FILE_PATH, new GridPosition(0, 0));
         this.type = "door";
     }
 

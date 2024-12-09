@@ -1,0 +1,35 @@
+
+.list-view {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: black;
+    -fx-padding: 5px 10px;
+}
+
+.list-cell:hover {
+    -fx-background-color: transparent;
+}
+
+.list-cell:focused, .list-cell:selected {
+    -fx-background-color: transparent;
+    -fx-text-fill: black;
+}
+
+.pane {
+    -fx-background-color: rgba(105, 192, 102, 0.8);
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-effect: none;
+    -fx-transition: all 0.3s ease;
+}
+
+.pane:hover {
+    -fx-background-color: rgba(104, 185, 84, 0.9);
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.5, 0, 0);
+}

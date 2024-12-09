@@ -4,7 +4,6 @@ import javafx.scene.image.Image;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.locks.Lock;
 
 public class GraphicsController {
 
@@ -20,7 +19,7 @@ public class GraphicsController {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
         //Render background
-        for (GameObject object: mapToDraw.getTileLayer()) {
+        for (GameObject object : mapToDraw.getTileLayer()) {
             gc.drawImage(object.getSprite(),
                     object.getPosition().getX()
                             * object.getSprite().getHeight(),
@@ -28,7 +27,7 @@ public class GraphicsController {
                             * object.getSprite().getWidth());
         }
 
-        for (GameObject object: mapToDraw.getEntityLayer()) {
+        for (GameObject object : mapToDraw.getEntityLayer()) {
             gc.drawImage(object.getSprite(),
                     object.getPosition().getX()
                             * object.getSprite().getHeight(),
@@ -51,16 +50,17 @@ public class GraphicsController {
 
         List<Entity> entitiesToRemove = new ArrayList<>();
 
-        for (GameObject object: map.getEntityLayer()) {
+        for (GameObject object : map.getEntityLayer()) {
             /* Update only of UpdateRate is defined
                & UpdateRate Matches TickCount */
             if (object.getUpdateRate() != 0
                     && (TimeController.getTickCount()
-                        % object.getUpdateRate()) == 0) {
+                    % object.getUpdateRate()) == 0) {
                 object.update(map);
             }
         }
-        for (GameObject object: map.getTileLayer()) {
+
+        for (GameObject object : map.getTileLayer()) {
             /* Update only of UpdateRate is defined
                & UpdateRate Matches TickCount */
             if (object.getUpdateRate() != 0
@@ -76,7 +76,7 @@ public class GraphicsController {
             } else if (object instanceof Tile tile) {
                 map.destroyTile(tile);
             }
-        map.getEntityLayer().removeAll(entitiesToRemove);
+            map.getEntityLayer().removeAll(entitiesToRemove);
         }
         for (GameObject object : map.getPendingAdditions()) {
             map.spawnGameObject(object);

@@ -2,10 +2,14 @@
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class HelloController {
@@ -17,23 +21,25 @@ public class HelloController {
     private URL location;
 
     @FXML
+    private AnchorPane helloWindow;
+
+    @FXML
     private Button startApp;
 
     @FXML
     void initialize() {
-        startApp.setOnAction(event -> openUserWindow());
+        startApp.setOnAction(event -> openUserWindow(event));
     }
 
-    private void openUserWindow() {
+    private void openUserWindow(ActionEvent event) {
         try {
-            // user.fxml
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("choose-user.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 700, 400);
-
-            //
-            Stage stage = new Stage();
+            helloWindow = (AnchorPane) FXMLLoader.
+                    load(getClass().getResource("choose-user.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).
+                    getScene().getWindow();
+            Scene scene = new Scene(helloWindow,
+                    MainUI.MAIN_WINDOW_WIDTH, MainUI.MAIN_WINDOW_HEIGHT);
             stage.setScene(scene);
-            stage.setTitle("User Window");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

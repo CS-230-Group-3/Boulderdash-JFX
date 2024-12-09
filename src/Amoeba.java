@@ -1,6 +1,7 @@
 /**
  * can create groups (when the level is loaded) and be assigned to groups
  * ALL THE IMPORTANT LOGIC IS IN AMOEBAGROUP
+ *
  * @author Oscar Anthony Baggs
  */
 

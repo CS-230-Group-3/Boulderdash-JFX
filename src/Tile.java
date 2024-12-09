@@ -14,8 +14,9 @@ public abstract class Tile extends GameObject {
 
     /**
      * Creates a new tile.
+     *
      * @param pathToSprite path to the sprite
-     * @param position initial position of tile
+     * @param position     initial position of tile
      */
     public Tile(String pathToSprite, GridPosition position) {
         super(pathToSprite, position);
@@ -28,6 +29,7 @@ public abstract class Tile extends GameObject {
 
     /**
      * Checks if the tile is walkable.
+     *
      * @return true if the tile is walkable, false if not.
      */
     protected boolean isWalkable() {
@@ -36,6 +38,7 @@ public abstract class Tile extends GameObject {
 
     /**
      * Checks if the tile is destroyable.
+     *
      * @return true if the tile is destroyable, false if not.
      */
     protected boolean isDestroyable() {

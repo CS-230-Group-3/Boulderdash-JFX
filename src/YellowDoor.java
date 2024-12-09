@@ -6,7 +6,7 @@ public class YellowDoor extends LockedDoor{
     public boolean isLocked = true;
 
     public YellowDoor() {
-        super(FILE_PATH, new GridPosition(0,0));
+        super(FILE_PATH, new GridPosition(0, 0));
         this.type = "door";
     }
 

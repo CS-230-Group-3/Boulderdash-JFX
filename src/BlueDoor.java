@@ -5,7 +5,7 @@ public class BlueDoor extends LockedDoor{
     private static final String FILE_PATH = "resources/assets/keyblue.png";
 
     public BlueDoor() {
-        super(FILE_PATH, new GridPosition(0,0));
+        super(FILE_PATH, new GridPosition(0, 0));
         this.type = "door";
     }
 
@@ -18,4 +18,3 @@ public class BlueDoor extends LockedDoor{
     }
 
 }
-

@@ -5,33 +5,39 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 
 public class NewProfileController {
-    @FXML TextField nameField;
-    @FXML Button cancelButton;
-    @FXML Button createButton;
-    @FXML Pane rootPane;
+    @FXML
+    TextField nameField;
+    @FXML
+    Button cancelButton;
+    @FXML
+    Button createButton;
+    @FXML
+    Pane anchorPane;
 
-    private ArrayList<String> users = new ArrayList<>();
+    private ArrayList<User> users = new ArrayList<>();
 
     public void initialize() {
 
         createButton.setOnAction(event -> handleCreateButton());
-
         cancelButton.setOnAction(event -> handleCancelButton());
     }
 
-    public void setListToUpdate(ArrayList<String> users) {
+    public void setListToUpdate(ArrayList<User> users) {
         this.users = users;
     }
 
     private void handleCreateButton() {
         String name = nameField.getText();
+        User newUser = new User(name);
 
-        if (!users.contains(name)) {
-            users.add(name);
+        if (!users.contains(newUser)) {
+            Data.getInstance().addNewUser(newUser);
+
             close();
         } else {
             displayUserExistsAlert();
@@ -43,7 +49,7 @@ public class NewProfileController {
     }
 
     private void close() {
-        Stage stage = (Stage) rootPane.getScene().getWindow();
+        Stage stage = (Stage) anchorPane.getScene().getWindow();
         stage.close();
     }
 

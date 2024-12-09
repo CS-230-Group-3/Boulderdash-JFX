@@ -13,6 +13,7 @@ public class Node {
         this.y = y;
         this.parent = parent;
     }
+
     public Node(int x, int y, int g, int h, Node parent) {
         this(x, y, parent);
         this.g = g;

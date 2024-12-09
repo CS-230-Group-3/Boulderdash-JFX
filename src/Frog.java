@@ -13,11 +13,12 @@ import java.util.Random;
 public class Frog extends PathfindingEnemy {
 
     private static final String FILE_PATH = "resources/assets/frog.png";
+
     /**
      * Constructor to create a new Frog instance with a given starting position.
      */
     public Frog() {
-        super(FILE_PATH, new GridPosition(0,0));
+        super(FILE_PATH, new GridPosition(0, 0));
         this.updateRate = 5;
         this.type = "enemy";
     }
@@ -61,10 +62,8 @@ public class Frog extends PathfindingEnemy {
      */
     public void move(Map map, final Direction dir) {
         ArrayList<int[]> path = AStarAlgorithm(map, this.getPosition(), map.getPlayerObjectReference().getPosition());
-        if (path != null)
-        {
-            if(collisionCheck(map, new GridPosition(path.get(1)[0], path.get(1)[1])))
-            {
+        if (path != null) {
+            if (collisionCheck(map, new GridPosition(path.get(1)[0], path.get(1)[1]))) {
                 this.setPosition(new GridPosition(path.get(1)[0], path.get(1)[1]));
             } else {
                 map.getPlayerObjectReference().die();

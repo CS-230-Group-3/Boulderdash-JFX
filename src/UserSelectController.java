@@ -3,17 +3,24 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class UserSelectController {
+
+    @FXML
+    private AnchorPane selectWindow;
 
     @FXML
     private ResourceBundle resources;
@@ -28,21 +35,24 @@ public class UserSelectController {
     private Button selectButton;
 
     @FXML
+    private Button backButton;
+
+    @FXML
     private BorderPane selectProfile;
 
     @FXML
     private ListView<String> userList;
 
-    private ArrayList<String> users = new ArrayList<>();
+    private ArrayList<User> users = new ArrayList<>();
 
     @FXML
-    void initialize() {
-        users.add("User1");
-        users.add("User2");
-        users.add("User3");
+    void initialize() throws IOException, ClassNotFoundException {
+        users = Data.getInstance().getUsers();
+
 
         newProfileButton.setOnAction(event -> handleNewProfileButton());
-        selectButton.setOnAction(event -> handleSelectButton());
+        backButton.setOnAction(event -> handleBackButton(event));
+        selectButton.setOnAction(event -> handleSelectButton(event));
         selectButton.setDisable(true);
         userList.getSelectionModel().selectedItemProperty().addListener(
                 observable -> selectButton.setDisable(false)
@@ -54,8 +64,8 @@ public class UserSelectController {
     private void updateUsers() {
         userList.getItems().clear();
 
-        for (String user: users) {
-            userList.getItems().add(user);
+        for (User user : users) {
+            userList.getItems().add(user.getName());
         }
     }
 
@@ -63,12 +73,13 @@ public class UserSelectController {
         try {
             FXMLLoader loader =
                     new FXMLLoader(getClass().getResource("new-profile.fxml"));
-            BorderPane newUserRoot = (BorderPane) loader.load();
+            AnchorPane newUserRoot = (AnchorPane) loader.load();
             NewProfileController npfController = loader.getController();
 
             npfController.setListToUpdate(users);
 
-            Scene newUserScene = new Scene(newUserRoot);
+            Scene newUserScene = new Scene(newUserRoot, MainUI.MAIN_WINDOW_WIDTH,
+                    MainUI.MAIN_WINDOW_HEIGHT);
             Stage newUserStage = new Stage();
 
             newUserStage.setScene(newUserScene);
@@ -82,7 +93,7 @@ public class UserSelectController {
         }
     }
 
-    private void handleSelectButton() {
+    private void handleSelectButton(ActionEvent event) {
         int index = userList.getSelectionModel().getSelectedIndex();
 
         if (index < 0) {
@@ -92,23 +103,39 @@ public class UserSelectController {
             alert.setContentText("Please select a user first :) ");
             alert.showAndWait();
         } else {
-           openLevelWindow();
+            User selectedUser = users.get(index);
+            Data.getInstance().setCurrentUser(selectedUser);
+            openLevelWindow(event);
         }
     }
-    private void openLevelWindow() {
-        try {
-            // user.fxml
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("select-level.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 700, 400);
 
-            //
-            Stage stage = new Stage();
+    private void openLevelWindow(ActionEvent event) {
+        try {
+            selectWindow = (AnchorPane) FXMLLoader.
+                    load(getClass().getResource("select-level.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).
+                    getScene().getWindow();
+            Scene scene = new Scene(selectWindow, MainUI.MAIN_WINDOW_WIDTH,
+                    MainUI.MAIN_WINDOW_HEIGHT);
             stage.setScene(scene);
-            stage.setTitle("Level Window");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void handleBackButton(ActionEvent event) {
+        try {
+            selectWindow = (AnchorPane) FXMLLoader.
+                    load(getClass().getResource("hello-view.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).
+                    getScene().getWindow();
+            Scene scene = new Scene(selectWindow, MainUI.MAIN_WINDOW_WIDTH,
+                    MainUI.MAIN_WINDOW_HEIGHT);
+            stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 }
-

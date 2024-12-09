@@ -9,5 +9,15 @@ public class Exit extends Tile {
     }
 
     @Override
-    public void update(Map map) {}
+    public void update(Map map) {
+    }
+
+    @Override
+    public boolean collisionCheck() {
+        return false;
+    }
+
+    @Override
+    public void delete() {
+    }
 }

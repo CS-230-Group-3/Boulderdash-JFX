@@ -3,14 +3,13 @@ public enum KeyColour {
     PINK, YELLOW, BLUE, RED, GREEN;
 
 
-    public KeyColour getKeyColour(){
+    public KeyColour getKeyColour() {
         return this;
     }
 
 
-
     @Override
-    public String toString(){
+    public String toString() {
         return "Key Colour " + getKeyColour();
     }
 

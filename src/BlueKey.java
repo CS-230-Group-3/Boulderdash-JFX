@@ -1,4 +1,4 @@
-public class BlueKey extends Key{
+public class BlueKey extends Key {
 
     private static final String FILE_PATH = "resources/assets/keyblue.png";
 
@@ -8,7 +8,7 @@ public class BlueKey extends Key{
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "Blue Key";
     }
 }
