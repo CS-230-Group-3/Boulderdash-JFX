@@ -104,14 +104,6 @@ public class Goblin extends PathfindingEnemy {
         }
     }
 
-    /**
-     * Deletes the Goblin object from the game.
-     */
-    @Override
-    public void delete() {
-        // Add logic to remove the Frog object from the game world
-    }
-
     public void steal(Player player) {
         player.setDiamonds(player.getDiamonds() / 2);
     }

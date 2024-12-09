@@ -95,6 +95,4 @@ public abstract class PathfindingEnemy extends Enemy {
         }
         return false;
     }
-
-    public abstract void delete();
 }

@@ -99,13 +99,5 @@ public class Frog extends PathfindingEnemy {
             }
         }
     }
-
-    /**
-     * Deletes the Frog object from the game.
-     */
-    @Override
-    public void delete() {
-        // Add logic to remove the Frog object from the game world
-    }
 }
 
