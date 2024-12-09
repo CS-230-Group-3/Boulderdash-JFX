@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 
 import java.io.IOException;
 
+
 public class MainUI extends Application {
     public static final int MAIN_WINDOW_WIDTH = 1400;
     public static final int MAIN_WINDOW_HEIGHT = 800;

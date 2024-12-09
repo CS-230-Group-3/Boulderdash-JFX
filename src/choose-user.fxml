@@ -7,47 +7,35 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="selectWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="800.0" prefWidth="1400.0"
-            style="-fx-background-image: url('/resources/WallEnter.png'); -fx-background-size: cover;"
-            xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="UserSelectController">
+<AnchorPane fx:id="selectWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1400.0" style="-fx-background-image: url('/resources/WallEnter.png'); -fx-background-size: cover;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UserSelectController">
     <children>
-        <Text fill="#ae0017" fontSmoothingType="LCD" layoutX="383.0" layoutY="188.0" strokeType="OUTSIDE"
-              strokeWidth="0.0" text="SELECT THE USER" textAlignment="CENTER">
+        <Text fill="#ae0017" fontSmoothingType="LCD" layoutX="383.0" layoutY="188.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SELECT THE USER" textAlignment="CENTER">
             <font>
-                <Font name="SimSun" size="80.0"/>
+                <Font name="SimSun" size="80.0" />
             </font>
         </Text>
-        <Button fx:id="selectButton" layoutX="984.0" layoutY="657.0" maxHeight="-Infinity" maxWidth="-Infinity"
-                minHeight="-Infinity" minWidth="-Infinity" prefHeight="48.0" prefWidth="163.0"
-                style="-fx-background-color: #ae0017; -fx-background-radius: 5;" text="SELECT" textFill="WHITE">
+        <Button fx:id="selectButton" layoutX="984.0" layoutY="657.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="163.0" style="-fx-background-color: #ae0017; -fx-background-radius: 5;" text="SELECT" textFill="WHITE">
             <font>
-                <Font name="SimSun" size="30.0"/>
+                <Font name="SimSun" size="30.0" />
             </font>
         </Button>
-        <Button fx:id="backButton" layoutX="261.0" layoutY="657.0" minHeight="-Infinity" minWidth="-Infinity"
-                mnemonicParsing="false" prefHeight="48.0" prefWidth="150.0"
-                style="-fx-background-color: #ae0017; -fx-background-radius: 5;" text="BACK" textFill="WHITE">
+        <Button fx:id="backButton" layoutX="261.0" layoutY="657.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="150.0" style="-fx-background-color: #ae0017; -fx-background-radius: 5;" text="BACK" textFill="WHITE">
             <font>
-                <Font name="SimSun" size="30.0"/>
+                <Font name="SimSun" size="30.0" />
             </font>
         </Button>
-        <ListView fx:id="userList" editable="true" layoutX="137.0" layoutY="220.0" prefHeight="426.0" prefWidth="1124.0"
-                  stylesheets="@resources/style.css">
+        <ListView fx:id="userList" editable="true" layoutX="137.0" layoutY="220.0" prefHeight="426.0" prefWidth="1124.0" stylesheets="@resources/style.css">
             <style>-fx-font-family: "PO52 Roman"; -fx-text-fill: #ae0017; -fx-font-size: 30; -fx-background-color:
                 transparent; -fx-background-position: center; -fx-background-size: cover; -fx-background-color:
                 transparent;
             </style>
             <effect>
-                <Glow level="0.48"/>
+                <Glow level="0.48" />
             </effect>
         </ListView>
-        <Button fx:id="newProfileButton" layoutX="591.0" layoutY="657.0" maxHeight="-Infinity" maxWidth="-Infinity"
-                minHeight="-Infinity" minWidth="-Infinity" prefHeight="48.0" prefWidth="218.0"
-                style="-fx-background-color: #ae0017; -fx-background-radius: 5;" text="NEW PROFILE" textFill="WHITE">
+        <Button fx:id="newProfileButton" layoutX="591.0" layoutY="657.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="218.0" style="-fx-background-color: #ae0017; -fx-background-radius: 5;" text="NEW PROFILE" textFill="WHITE">
             <font>
-                <Font name="SimSun" size="30.0"/>
+                <Font name="SimSun" size="30.0" />
             </font>
         </Button>
     </children>
