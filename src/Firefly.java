@@ -29,6 +29,7 @@ public class Firefly extends Enemy {
         Random random = new Random();
         leftMoving = random.nextInt(2) == 0;
         this.updateRate = 3;
+        this.type = "enemy";
     }
 
     /**

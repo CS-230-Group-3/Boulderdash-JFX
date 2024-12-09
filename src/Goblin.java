@@ -19,6 +19,7 @@ public class Goblin extends PathfindingEnemy {
     public Goblin() {
         super(FILE_PATH, new GridPosition(0,0));
         this.updateRate = 5;
+        this.type = "enemy";
     }
 
     /**
