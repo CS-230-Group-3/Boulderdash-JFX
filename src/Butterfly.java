@@ -14,36 +14,24 @@ import java.util.Random;
 
 public class Butterfly extends PatrollingEnemy {
 
-    /**
-     * The file path to the butterfly's sprite image.
-     */
     private static final String FILE_PATH = "resources/assets/butterfly.png";
-
-    /**
-     * Indicates if the butterfly favours anti-clockwise movement.
-     */
-    private boolean leftMoving;
-
-    /**
-     * Tracks the direction the butterfly is currently "facing".
-     */
+    private boolean isleftMoving;
     private Direction lastMovement = Direction.UP;
 
     /**
-     * Constructs a Butterfly object, initialising its position and determining
+     * Butterfly Constructor
      * its movement preference (left or right) randomly with a 50/50 chance.
      */
     public Butterfly() {
         super(FILE_PATH, new GridPosition(0, 0));
         Random random = new Random();
-        leftMoving = random.nextInt(2) == 0;
+        isleftMoving = random.nextInt(2) == 0;
         this.updateRate = 3;
         this.type = "enemy";
     }
 
     /**
      * Updates the butterfly's state. This method calculates and executes its next move.
-     *
      * @param map the current level map.
      */
     @Override
@@ -53,7 +41,6 @@ public class Butterfly extends PatrollingEnemy {
 
     /**
      * Checks for collisions at a specific position on the map.
-     *
      * @param map      the current level map.
      * @param position the position to check for collisions.
      * @return true if a collision is detected, false otherwise.
@@ -65,7 +52,6 @@ public class Butterfly extends PatrollingEnemy {
 
     /**
      * Checks for collisions in the specified direction on the map.
-     *
      * @param map the current level map.
      * @param dir the direction to check for collisions.
      * @return true if a collision is detected, false otherwise.
@@ -77,7 +63,6 @@ public class Butterfly extends PatrollingEnemy {
 
     /**
      * Checks for collisions at a specific position, including interactions with the player.
-     *
      * @param gameController the game's controller containing map and player references.
      * @param position       the position to check for collisions.
      * @return true if a collision is detected, false otherwise.
@@ -95,6 +80,10 @@ public class Butterfly extends PatrollingEnemy {
         }
     }
 
+    /**
+     * Destroies destroyable tiles in 9x9 grid and spawns gems
+     * @param map
+     */
     public void destroy(Map map) {
         for (GameObject object : get9x9Grid(map)) {
             if (!(object instanceof TitaniumWall)) {
@@ -107,6 +96,10 @@ public class Butterfly extends PatrollingEnemy {
         }
     }
 
+    /**
+     * Gets instances of objects to be destroyed in 9x9 grid
+     * @param map
+     */
     public List<GameObject> get9x9Grid(Map map) {
         List<GameObject> destroyedObjects = new ArrayList<>();
         destroyedObjects.add(this);
