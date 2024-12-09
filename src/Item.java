@@ -25,7 +25,7 @@ public class Item extends Entity {
             }
             case Butterfly _ when (this instanceof Boulder || this instanceof Gem) -> {
                 Butterfly downNeighbourButterfly = (Butterfly) downNeighbour;
-                downNeighbourButterfly.dostroi(map);
+                downNeighbourButterfly.destroy(map);
                 map.getPendingRemovals().add(this);
                 map.getPendingRemovals().add((downNeighbourButterfly));
                 this.move(map, Direction.DOWN);
